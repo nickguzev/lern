@@ -4,1334 +4,1527 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meridian — CFO Learning</title>
+<title>Lern</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #0f0e0c;
-    --paper: #f5f2ec;
-    --cream: #ede9e0;
-    --gold: #c9a84c;
-    --gold-light: #e8d5a0;
-    --rust: #b84c2a;
-    --sage: #4a6741;
-    --muted: #7a7568;
-    --border: #d4cfc4;
-    --card: #faf8f4;
-  }
-
-- { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-font-family: ‘DM Sans’, sans-serif;
-background: var(–paper);
-color: var(–ink);
-min-height: 100vh;
-overflow-x: hidden;
+/* ── TOKENS ─────────────────────────────────────────── */
+:root {
+  --bg:       #f7f5f0;
+  --surface:  #ffffff;
+  --surface2: #f0ede6;
+  --border:   #e4e0d8;
+  --border2:  #ccc8be;
+  --ink:      #1a1814;
+  --ink2:     #4a4740;
+  --muted:    #8a8680;
+  --accent:   #2d5be3;
+  --accent-s: rgba(45,91,227,0.08);
+  --green:    #1a7a4a;
+  --green-s:  rgba(26,122,74,0.08);
+  --red:      #c0392b;
+  --red-s:    rgba(192,57,43,0.08);
+  --amber:    #b8860b;
+  --r: 10px;
+  --r-sm: 6px;
 }
 
-/* TYPOGRAPHY */
-.display { font-family: ‘Playfair Display’, serif; }
-.mono { font-family: ‘DM Mono’, monospace; }
+/* ── RESET ───────────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+font-family: ‘Manrope’, sans-serif;
+background: var(–bg);
+color: var(–ink);
+min-height: 100vh;
+-webkit-font-smoothing: antialiased;
+}
 
-/* LAYOUT */
+/* ── SCREENS ─────────────────────────────────────────── */
 .screen {
 min-height: 100vh;
 display: flex;
 flex-direction: column;
 align-items: center;
-justify-content: center;
-padding: 2rem;
-animation: fadeIn 0.5s ease;
+padding: 0 1.25rem 3rem;
+animation: rise .35s cubic-bezier(.4,0,.2,1) both;
 }
-
-@keyframes fadeIn {
-from { opacity: 0; transform: translateY(12px); }
-to { opacity: 1; transform: translateY(0); }
+@keyframes rise {
+from { opacity:0; transform:translateY(10px); }
+to   { opacity:1; transform:translateY(0); }
 }
+.wrap { width: 100%; max-width: 600px; }
 
-.container {
+/* ── TOPBAR ──────────────────────────────────────────── */
+.topbar {
 width: 100%;
-max-width: 680px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 1.1rem 0;
+margin-bottom: 0.5rem;
 }
+.logo {
+font-family: ‘Instrument Serif’, serif;
+font-size: 1.5rem;
+letter-spacing: -0.01em;
+color: var(–ink);
+}
+.topbar-right { display:flex; align-items:center; gap:0.75rem; }
 
-/* HEADER STRIPE */
-.top-bar {
-position: fixed;
-top: 0; left: 0; right: 0;
-height: 4px;
-background: linear-gradient(90deg, var(–gold), var(–rust));
-z-index: 100;
-}
+/* ── TYPOGRAPHY ──────────────────────────────────────── */
+.serif { font-family: ‘Instrument Serif’, serif; }
+.mono  { font-family: ‘JetBrains Mono’, monospace; }
 
-/* PROGRESS BAR */
-.progress-track {
-width: 100%;
-height: 3px;
-background: var(–border);
-border-radius: 2px;
-margin-bottom: 2.5rem;
-overflow: hidden;
-}
-.progress-fill {
-height: 100%;
-background: linear-gradient(90deg, var(–gold), var(–rust));
-border-radius: 2px;
-transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
-}
-
-/* CARDS */
-.card {
-background: var(–card);
-border: 1px solid var(–border);
-border-radius: 2px;
-padding: 2.5rem;
-margin-bottom: 1.5rem;
-position: relative;
-}
-
-.card::before {
-content: ‘’;
-position: absolute;
-top: 0; left: 0;
-width: 3px; height: 100%;
-background: var(–gold);
-border-radius: 2px 0 0 2px;
-}
-
-/* TAGS */
-.tag {
-font-family: ‘DM Mono’, monospace;
+.eyebrow {
 font-size: 0.7rem;
-font-weight: 500;
+font-weight: 600;
 letter-spacing: 0.12em;
 text-transform: uppercase;
 color: var(–muted);
-margin-bottom: 0.75rem;
 display: block;
+margin-bottom: 0.5rem;
 }
+.eyebrow-accent { color: var(–accent); }
 
-/* BUTTONS */
-.btn {
-display: inline-flex;
-align-items: center;
-gap: 0.5rem;
-padding: 0.85rem 1.75rem;
-font-family: ‘DM Mono’, monospace;
-font-size: 0.82rem;
-letter-spacing: 0.06em;
-font-weight: 500;
-border: none;
-cursor: pointer;
-transition: all 0.2s ease;
-border-radius: 1px;
-text-transform: uppercase;
-}
-
-.btn-primary {
-background: var(–ink);
-color: var(–paper);
-}
-.btn-primary:hover {
-background: #2a2820;
-transform: translateY(-1px);
-box-shadow: 0 6px 20px rgba(15,14,12,0.2);
-}
-
-.btn-ghost {
-background: transparent;
-color: var(–ink);
-border: 1px solid var(–border);
-}
-.btn-ghost:hover {
-border-color: var(–ink);
-background: var(–cream);
-}
-
-.btn-gold {
-background: var(–gold);
+h1.display {
+font-family: ‘Instrument Serif’, serif;
+font-size: clamp(2rem, 5vw, 2.8rem);
+line-height: 1.12;
+letter-spacing: -0.02em;
 color: var(–ink);
 }
-.btn-gold:hover {
-background: #b8933e;
-transform: translateY(-1px);
-box-shadow: 0 6px 20px rgba(201,168,76,0.3);
+h2.title {
+font-family: ‘Instrument Serif’, serif;
+font-size: clamp(1.5rem, 4vw, 2rem);
+line-height: 1.2;
+letter-spacing: -0.01em;
 }
-
-.btn-correct {
-background: var(–sage);
-color: white;
-}
-.btn-wrong {
-background: var(–rust);
-color: white;
-}
-
-/* OPTION BUTTONS */
-.option-btn {
-width: 100%;
-text-align: left;
-padding: 1rem 1.25rem;
-background: var(–card);
-border: 1px solid var(–border);
-border-radius: 2px;
-cursor: pointer;
-font-family: ‘DM Sans’, sans-serif;
+.body-text {
 font-size: 0.95rem;
-color: var(–ink);
-transition: all 0.2s ease;
-margin-bottom: 0.6rem;
-display: flex;
-align-items: center;
-gap: 0.75rem;
-}
-
-.option-btn:hover:not(:disabled) {
-border-color: var(–gold);
-background: var(–cream);
-transform: translateX(3px);
-}
-
-.option-btn.selected-correct {
-border-color: var(–sage);
-background: rgba(74,103,65,0.08);
-color: var(–sage);
-}
-
-.option-btn.selected-wrong {
-border-color: var(–rust);
-background: rgba(184,76,42,0.08);
-color: var(–rust);
-}
-
-.option-btn.reveal-correct {
-border-color: var(–sage);
-background: rgba(74,103,65,0.05);
-color: var(–sage);
-}
-
-.option-letter {
-font-family: ‘DM Mono’, monospace;
-font-size: 0.75rem;
-font-weight: 500;
-width: 22px;
-height: 22px;
-border-radius: 50%;
-border: 1px solid currentColor;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-shrink: 0;
-opacity: 0.6;
-}
-
-/* SLIDER */
-.slider-group {
-margin: 1.5rem 0;
-}
-.slider-label {
-display: flex;
-justify-content: space-between;
-margin-bottom: 0.6rem;
-font-size: 0.85rem;
-color: var(–muted);
-font-family: ‘DM Mono’, monospace;
-}
-.slider-value {
-color: var(–ink);
-font-weight: 500;
-}
-input[type=“range”] {
-width: 100%;
--webkit-appearance: none;
-height: 3px;
-background: var(–border);
-border-radius: 2px;
-outline: none;
-}
-input[type=“range”]::-webkit-slider-thumb {
--webkit-appearance: none;
-width: 18px;
-height: 18px;
-border-radius: 50%;
-background: var(–ink);
-cursor: pointer;
-border: 3px solid var(–paper);
-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-/* DIFFICULTY PILLS */
-.pill-group {
-display: flex;
-gap: 0.5rem;
-margin-top: 1rem;
-}
-.pill {
-flex: 1;
-padding: 0.6rem;
-text-align: center;
-border: 1px solid var(–border);
-border-radius: 1px;
-cursor: pointer;
-font-family: ‘DM Mono’, monospace;
-font-size: 0.75rem;
-letter-spacing: 0.08em;
-text-transform: uppercase;
-color: var(–muted);
-transition: all 0.2s ease;
-background: var(–card);
-}
-.pill:hover { border-color: var(–gold); color: var(–ink); }
-.pill.active {
-background: var(–ink);
-color: var(–paper);
-border-color: var(–ink);
-}
-
-/* AI CHAT */
-.ai-panel {
-background: var(–ink);
-color: var(–paper);
-border-radius: 2px;
-padding: 1.5rem;
-margin-top: 1rem;
-animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-from { opacity: 0; transform: translateY(8px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-.ai-panel .tag { color: var(–gold); }
-
-.ai-message {
-font-size: 0.9rem;
 line-height: 1.7;
-color: #d4cfc4;
+color: var(–ink2);
 }
 
-.ai-loading {
-display: flex;
-gap: 4px;
-align-items: center;
-padding: 0.5rem 0;
-}
-.ai-loading span {
-width: 6px; height: 6px;
-background: var(–gold);
-border-radius: 50%;
-animation: pulse 1.2s infinite;
-}
-.ai-loading span:nth-child(2) { animation-delay: 0.2s; }
-.ai-loading span:nth-child(3) { animation-delay: 0.4s; }
+/* ── DIVIDER ─────────────────────────────────────────── */
+.divider { height:1px; background:var(–border); margin: 1.5rem 0; }
 
-@keyframes pulse {
-0%, 60%, 100% { transform: scale(1); opacity: 0.5; }
-30% { transform: scale(1.3); opacity: 1; }
-}
-
-.ai-input-row {
-display: flex;
-gap: 0.5rem;
-margin-top: 1rem;
-padding-top: 1rem;
-border-top: 1px solid rgba(255,255,255,0.1);
-}
-.ai-input {
-flex: 1;
-background: rgba(255,255,255,0.07);
-border: 1px solid rgba(255,255,255,0.15);
-border-radius: 1px;
-padding: 0.6rem 0.9rem;
-color: var(–paper);
-font-family: ‘DM Sans’, sans-serif;
-font-size: 0.85rem;
-outline: none;
-}
-.ai-input::placeholder { color: rgba(255,255,255,0.3); }
-.ai-input:focus { border-color: var(–gold); }
-.ai-send {
-background: var(–gold);
-color: var(–ink);
+/* ── BUTTONS ─────────────────────────────────────────── */
+.btn {
+display: inline-flex; align-items:center; justify-content:center; gap:0.4rem;
+padding: 0.8rem 1.5rem;
+font-family: ‘Manrope’, sans-serif;
+font-size: 0.875rem;
+font-weight: 600;
 border: none;
-padding: 0.6rem 1rem;
+border-radius: var(–r-sm);
 cursor: pointer;
-border-radius: 1px;
-font-family: ‘DM Mono’, monospace;
-font-size: 0.75rem;
-font-weight: 500;
-transition: background 0.2s;
+transition: all .18s ease;
+white-space: nowrap;
 }
-.ai-send:hover { background: #b8933e; }
+.btn-primary { background:var(–ink); color:#fff; }
+.btn-primary:hover { background:#2d2a24; transform:translateY(-1px); box-shadow:0 4px 16px rgba(26,24,20,.18); }
+.btn-accent  { background:var(–accent); color:#fff; }
+.btn-accent:hover  { opacity:.9; transform:translateY(-1px); }
+.btn-ghost   { background:transparent; color:var(–ink2); border:1px solid var(–border2); }
+.btn-ghost:hover   { border-color:var(–ink); color:var(–ink); background:var(–surface2); }
+.btn-surface { background:var(–surface); color:var(–ink); border:1px solid var(–border); }
+.btn-surface:hover { border-color:var(–border2); background:var(–surface2); }
+.btn-danger  { background:var(–red-s); color:var(–red); border:1px solid rgba(192,57,43,.2); }
+.btn-success { background:var(–green-s); color:var(–green); border:1px solid rgba(26,122,74,.2); }
+.btn-full { width:100%; }
+.btn-lg { padding:1rem 1.75rem; font-size:0.95rem; }
+.btn-sm { padding:0.5rem 0.875rem; font-size:0.8rem; }
 
-/* RESULT BLOCK */
-.result-icon {
-font-size: 2.5rem;
-margin-bottom: 1rem;
+/* ── INPUT ───────────────────────────────────────────── */
+.field { margin-bottom:1rem; }
+.field label { display:block; font-size:0.8rem; font-weight:600; color:var(–ink2); margin-bottom:0.4rem; }
+.input {
+width:100%;
+background:var(–surface);
+border:1px solid var(–border);
+border-radius:var(–r-sm);
+padding: 0.8rem 1rem;
+font-family:‘Manrope’,sans-serif;
+font-size:0.9rem;
+color:var(–ink);
+outline:none;
+transition: border-color .18s;
 }
-.score-display {
-font-family: ‘Playfair Display’, serif;
-font-size: 4rem;
-line-height: 1;
-margin: 1rem 0;
+.input:focus { border-color:var(–accent); box-shadow:0 0 0 3px var(–accent-s); }
+.input::placeholder { color:var(–muted); }
+select.input { cursor:pointer; }
+
+/* ── CARD ────────────────────────────────────────────── */
+.card {
+background:var(–surface);
+border:1px solid var(–border);
+border-radius:var(–r);
+padding:1.5rem;
+margin-bottom:0.75rem;
 }
 
-/* MODULE MAP */
-.module-map {
-display: flex;
-flex-direction: column;
-gap: 0.5rem;
-margin: 1.5rem 0;
+/* ── PILL / TAG ──────────────────────────────────────── */
+.tag {
+display:inline-flex; align-items:center; gap:0.3rem;
+padding:0.25rem 0.65rem;
+border-radius:100px;
+font-size:0.72rem;
+font-weight:600;
+letter-spacing:0.04em;
+border:1px solid var(–border);
+color:var(–muted);
+background:var(–surface2);
 }
-.module-item {
-display: flex;
-align-items: center;
-gap: 1rem;
-padding: 1rem 1.25rem;
-background: var(–card);
-border: 1px solid var(–border);
-border-radius: 2px;
-cursor: pointer;
-transition: all 0.2s ease;
-}
-.module-item:hover:not(.locked) { border-color: var(–gold); transform: translateX(4px); }
-.module-item.locked { opacity: 0.45; cursor: default; }
-.module-item.completed { border-color: var(–sage); }
-.module-num {
-font-family: ‘DM Mono’, monospace;
-font-size: 0.75rem;
-font-weight: 500;
-width: 32px; height: 32px;
-border-radius: 50%;
-border: 1px solid var(–border);
-display: flex;
-align-items: center;
-justify-content: center;
-flex-shrink: 0;
-color: var(–muted);
-}
-.module-item.completed .module-num {
-background: var(–sage);
-color: white;
-border-color: var(–sage);
-}
-.module-title { font-weight: 500; font-size: 0.95rem; }
-.module-sub { font-size: 0.8rem; color: var(–muted); margin-top: 0.15rem; }
+.tag-accent { border-color:rgba(45,91,227,.25); color:var(–accent); background:var(–accent-s); }
+.tag-green  { border-color:rgba(26,122,74,.25);  color:var(–green);  background:var(–green-s); }
+.tag-amber  { border-color:rgba(184,134,11,.25); color:var(–amber);  background:rgba(184,134,11,.07); }
 
-/* LESSON CONTENT */
+/* ── PILLS GROUP ─────────────────────────────────────── */
+.pills { display:flex; flex-wrap:wrap; gap:0.5rem; }
+.pill {
+padding:0.45rem 1rem;
+border-radius:100px;
+border:1px solid var(–border);
+font-size:0.82rem; font-weight:600;
+cursor:pointer; color:var(–ink2);
+background:var(–surface);
+transition: all .18s;
+}
+.pill:hover { border-color:var(–border2); color:var(–ink); }
+.pill.on { background:var(–ink); color:#fff; border-color:var(–ink); }
+
+/* ── PROGRESS BAR ────────────────────────────────────── */
+.pbar { height:3px; background:var(–border); border-radius:2px; overflow:hidden; margin-bottom:2rem; }
+.pbar-fill { height:100%; background:var(–accent); border-radius:2px; transition:width .5s cubic-bezier(.4,0,.2,1); }
+
+/* ── STREAK ──────────────────────────────────────────── */
+.streak-badge {
+display:flex; align-items:center; gap:0.35rem;
+font-size:0.8rem; font-weight:700; color:var(–amber);
+background:rgba(184,134,11,.1);
+border:1px solid rgba(184,134,11,.2);
+border-radius:100px;
+padding:0.3rem 0.7rem;
+}
+
+/* ── XP ──────────────────────────────────────────────── */
+.xp-badge {
+display:flex; align-items:center; gap:0.3rem;
+font-size:0.8rem; font-weight:700; color:var(–accent);
+background:var(–accent-s);
+border:1px solid rgba(45,91,227,.2);
+border-radius:100px;
+padding:0.3rem 0.7rem;
+}
+
+/* ── OPTIONS ─────────────────────────────────────────── */
+.option {
+width:100%; text-align:left;
+background:var(–surface); border:1px solid var(–border);
+border-radius:var(–r-sm);
+padding:0.9rem 1.1rem;
+margin-bottom:0.5rem;
+cursor:pointer;
+font-family:‘Manrope’,sans-serif; font-size:0.9rem;
+color:var(–ink);
+display:flex; align-items:center; gap:0.75rem;
+transition: all .16s;
+}
+.option:hover:not(:disabled) { border-color:var(–border2); background:var(–surface2); transform:translateX(3px); }
+.option.opt-correct { border-color:var(–green); background:var(–green-s); color:var(–green); }
+.option.opt-wrong   { border-color:var(–red);   background:var(–red-s);   color:var(–red);   }
+.option.opt-reveal  { border-color:var(–green); color:var(–green); opacity:.55; }
+.opt-key {
+width:24px; height:24px; flex-shrink:0;
+border-radius:5px; border:1.5px solid currentColor;
+display:flex; align-items:center; justify-content:center;
+font-family:‘JetBrains Mono’,monospace; font-size:0.68rem; font-weight:400;
+opacity:.6;
+}
+
+/* ── RANGE ───────────────────────────────────────────── */
+.range-wrap { margin-top:0.75rem; }
+.range-row  { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; font-size:0.85rem; }
+.range-val  { font-family:‘JetBrains Mono’,monospace; font-size:0.8rem; color:var(–accent); font-weight:500; }
+input[type=range] {
+width:100%; -webkit-appearance:none;
+height:3px; background:var(–border); border-radius:2px; outline:none; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+-webkit-appearance:none; width:17px; height:17px;
+border-radius:50%; background:var(–ink); cursor:pointer;
+border:2.5px solid var(–bg);
+box-shadow:0 1px 6px rgba(26,24,20,.2);
+}
+
+/* ── AI PANEL ────────────────────────────────────────── */
+.ai-panel {
+background:var(–ink);
+border-radius:var(–r);
+padding:1.25rem 1.5rem;
+margin-top:1rem;
+animation: rise .3s ease;
+}
+.ai-eyebrow { font-size:0.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:0.6rem; display:block; }
+.ai-text { font-family:‘Instrument Serif’,serif; font-size:1.05rem; line-height:1.7; color:rgba(255,255,255,.85); }
+.ai-input-row { display:flex; gap:0.5rem; margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,.1); }
+.ai-input {
+flex:1; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15);
+border-radius:var(–r-sm); padding:0.65rem 0.875rem;
+color:#fff; font-family:‘Manrope’,sans-serif; font-size:0.85rem; outline:none;
+}
+.ai-input::placeholder { color:rgba(255,255,255,.3); }
+.ai-input:focus { border-color:rgba(255,255,255,.4); }
+.ai-send {
+background:#fff; color:var(–ink);
+border:none; border-radius:var(–r-sm);
+padding:0.65rem 1rem; cursor:pointer;
+font-family:‘Manrope’,sans-serif; font-size:0.8rem; font-weight:700;
+transition:opacity .18s;
+}
+.ai-send:hover { opacity:.85; }
+.ai-premium-lock {
+display:flex; align-items:center; gap:0.5rem;
+padding:0.75rem 0; color:rgba(255,255,255,.35);
+font-size:0.8rem;
+}
+
+/* ── DOTS LOADER ─────────────────────────────────────── */
+.dots { display:flex; gap:4px; align-items:center; }
+.dots span {
+width:6px; height:6px; border-radius:50%;
+background:rgba(255,255,255,.5);
+animation: dotpop 1.1s infinite;
+}
+.dots span:nth-child(2) { animation-delay:.18s; }
+.dots span:nth-child(3) { animation-delay:.36s; }
+@keyframes dotpop {
+0%,60%,100% { transform:scale(1); opacity:.4; }
+30%          { transform:scale(1.35); opacity:1; }
+}
+
+/* ── LESSON CONTENT ──────────────────────────────────── */
 .lesson-body {
-font-size: 1rem;
-line-height: 1.8;
-color: #2a2820;
+font-family:‘Instrument Serif’,serif;
+font-size:1.08rem;
+line-height:1.85;
+color:var(–ink2);
 }
 .lesson-body h3 {
-font-family: ‘Playfair Display’, serif;
-font-size: 1.15rem;
-margin: 1.5rem 0 0.5rem;
-color: var(–ink);
+font-family:‘Manrope’,sans-serif;
+font-size:0.9rem; font-weight:700;
+color:var(–ink); letter-spacing:.01em;
+margin:1.5rem 0 0.5rem;
+text-transform:uppercase;
 }
-.lesson-body p { margin-bottom: 0.75rem; }
-.lesson-body .highlight {
-background: var(–gold-light);
-padding: 0.15rem 0.4rem;
-border-radius: 2px;
-font-weight: 500;
+.lesson-body p { margin-bottom:0.75rem; }
+.lesson-body em { font-style:italic; color:var(–ink); }
+.lesson-body strong { font-weight:600; color:var(–ink); font-style:normal; }
+.lesson-body .hl {
+background:rgba(45,91,227,.08);
+color:var(–accent);
+padding:0.1rem 0.35rem;
+border-radius:3px;
+font-style:normal;
 }
-.lesson-body .example-box {
-background: var(–cream);
-border-left: 3px solid var(–gold);
-padding: 1rem 1.25rem;
-margin: 1rem 0;
-border-radius: 0 2px 2px 0;
-font-size: 0.9rem;
+.lesson-body .example {
+background:var(–surface2);
+border-left:2px solid var(–border2);
+padding:1rem 1.25rem;
+margin:1rem 0;
+border-radius:0 var(–r-sm) var(–r-sm) 0;
+font-size:0.95rem;
 }
 .lesson-body .formula {
-font-family: ‘DM Mono’, monospace;
-font-size: 0.9rem;
-background: var(–ink);
-color: var(–gold);
-padding: 0.75rem 1rem;
-border-radius: 2px;
-margin: 1rem 0;
-display: block;
+font-family:‘JetBrains Mono’,monospace;
+font-size:0.82rem;
+background:var(–ink);
+color:#a8c4ff;
+padding:0.75rem 1rem;
+border-radius:var(–r-sm);
+margin:1rem 0;
+display:block;
+line-height:1.6;
 }
 
-/* MISC */
-.divider {
-width: 40px;
-height: 2px;
-background: var(–gold);
-margin: 1rem 0;
+/* ── COURSE CARD ─────────────────────────────────────── */
+.course-card {
+background:var(–surface);
+border:1px solid var(–border);
+border-radius:var(–r);
+padding:1.5rem;
+cursor:pointer;
+transition: all .2s ease;
+margin-bottom:0.75rem;
+display:flex;
+gap:1.25rem;
+align-items:flex-start;
 }
+.course-card:hover { border-color:var(–border2); transform:translateY(-2px); box-shadow:0 8px 24px rgba(26,24,20,.07); }
+.course-card.locked { opacity:.45; cursor:default; }
+.course-card.locked:hover { transform:none; box-shadow:none; border-color:var(–border); }
+.course-icon {
+width:44px; height:44px; flex-shrink:0;
+border-radius:10px;
+background:var(–surface2);
+border:1px solid var(–border);
+display:flex; align-items:center; justify-content:center;
+font-size:1.3rem;
+}
+.course-info { flex:1; min-width:0; }
+.course-title { font-size:1rem; font-weight:700; margin-bottom:0.25rem; }
+.course-desc  { font-size:0.82rem; color:var(–muted); line-height:1.5; margin-bottom:0.6rem; }
+.course-meta  { display:flex; gap:0.5rem; flex-wrap:wrap; }
 
-.stats-row {
-display: flex;
-gap: 1.5rem;
-margin: 1.5rem 0;
+/* ── CHAPTER LIST ────────────────────────────────────── */
+.chapter-item {
+display:flex; align-items:center; gap:0.875rem;
+padding:0.875rem 0;
+border-bottom:1px solid var(–border);
 }
-.stat {
-text-align: center;
+.chapter-item:last-child { border-bottom:none; }
+.chapter-num {
+width:28px; height:28px; flex-shrink:0;
+border-radius:7px;
+background:var(–surface2);
+border:1px solid var(–border);
+display:flex; align-items:center; justify-content:center;
+font-family:‘JetBrains Mono’,monospace;
+font-size:0.68rem; color:var(–muted);
 }
-.stat-num {
-font-family: ‘Playfair Display’, serif;
-font-size: 1.8rem;
-line-height: 1;
-}
-.stat-label {
-font-family: ‘DM Mono’, monospace;
-font-size: 0.7rem;
-color: var(–muted);
-letter-spacing: 0.1em;
-text-transform: uppercase;
-margin-top: 0.25rem;
-}
+.chapter-num.done { background:var(–green); border-color:var(–green); color:#fff; }
+.chapter-num.current { background:var(–accent); border-color:var(–accent); color:#fff; }
+.chapter-name { font-size:0.9rem; font-weight:500; flex:1; }
+.chapter-name.done { text-decoration:line-through; color:var(–muted); font-weight:400; }
+.chapter-name.current { color:var(–accent); font-weight:600; }
 
-.xp-badge {
-display: inline-flex;
-align-items: center;
-gap: 0.35rem;
-background: var(–gold-light);
-color: #7a5a1a;
-padding: 0.3rem 0.7rem;
-border-radius: 20px;
-font-family: ‘DM Mono’, monospace;
-font-size: 0.75rem;
-font-weight: 500;
+/* ── SUMMARY CARD ────────────────────────────────────── */
+.summary-item {
+display:flex; gap:0.75rem; align-items:flex-start;
+padding:0.75rem 0; border-bottom:1px solid var(–border);
 }
+.summary-item:last-child { border-bottom:none; }
+.summary-dot {
+width:6px; height:6px; border-radius:50%;
+background:var(–accent); flex-shrink:0; margin-top:0.55rem;
+}
+.summary-text { font-size:0.9rem; line-height:1.6; color:var(–ink2); }
 
-.hidden { display: none; }
+/* ── GENERATING ──────────────────────────────────────── */
+.generating {
+display:flex; flex-direction:column; align-items:center;
+justify-content:center; min-height:50vh; gap:1.25rem; text-align:center;
+}
+.spin {
+width:40px; height:40px; border-radius:50%;
+border:2px solid var(–border);
+border-top-color:var(–accent);
+animation:spin .8s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
 
-/* RESPONSIVE */
-@media (max-width: 600px) {
-.screen { padding: 1rem; }
-.card { padding: 1.5rem; }
-.score-display { font-size: 3rem; }
+/* ── SEARCH ──────────────────────────────────────────── */
+.search-wrap { position:relative; margin-bottom:1.25rem; }
+.search-wrap .input { padding-left:2.5rem; }
+.search-icon { position:absolute; left:0.875rem; top:50%; transform:translateY(-50%); color:var(–muted); font-size:0.9rem; pointer-events:none; }
+
+/* ── MODULE PROGRESS ─────────────────────────────────── */
+.mod-progress {
+display:flex; gap:3px; margin:0.75rem 0;
+}
+.mod-pip {
+height:4px; flex:1; border-radius:2px; background:var(–border);
+transition:background .3s;
+}
+.mod-pip.done { background:var(–green); }
+.mod-pip.active { background:var(–accent); }
+
+/* ── PREMIUM GATE ────────────────────────────────────── */
+.premium-banner {
+background:linear-gradient(135deg,#1a1814,#2d2a24);
+border-radius:var(–r);
+padding:1.5rem;
+color:#fff;
+margin-top:1rem;
+}
+.premium-banner h3 { font-family:‘Instrument Serif’,serif; font-size:1.2rem; margin-bottom:0.4rem; }
+.premium-banner p  { font-size:0.85rem; color:rgba(255,255,255,.6); margin-bottom:1rem; line-height:1.6; }
+
+/* ── STAT GRID ───────────────────────────────────────── */
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin:1.25rem 0; }
+.stat-cell {
+background:var(–surface);
+border:1px solid var(–border);
+border-radius:var(–r-sm);
+padding:1.1rem;
+}
+.stat-val { font-family:‘Instrument Serif’,serif; font-size:1.8rem; line-height:1; margin-bottom:0.25rem; }
+.stat-lbl { font-size:0.75rem; color:var(–muted); font-weight:500; }
+
+/* ── BACK BTN ────────────────────────────────────────── */
+.back-btn {
+display:inline-flex; align-items:center; gap:0.4rem;
+font-size:0.82rem; font-weight:600; color:var(–muted);
+cursor:pointer; background:none; border:none;
+padding:0; margin-bottom:1.5rem;
+transition:color .18s;
+}
+.back-btn:hover { color:var(–ink); }
+
+/* ── UTILITY ─────────────────────────────────────────── */
+.mt-xs { margin-top:.35rem; }
+.mt-sm { margin-top:.75rem; }
+.mt-md { margin-top:1.25rem; }
+.mt-lg { margin-top:2rem; }
+.mb-sm { margin-bottom:.75rem; }
+.mb-md { margin-bottom:1.25rem; }
+.gap-sm { gap:.5rem; }
+.flex   { display:flex; }
+.flex-col { flex-direction:column; }
+.items-center { align-items:center; }
+.justify-between { justify-content:space-between; }
+.text-muted { color:var(–muted); }
+.text-sm { font-size:.85rem; }
+.text-xs { font-size:.75rem; }
+.fw-600 { font-weight:600; }
+.fw-700 { font-weight:700; }
+
+@media(max-width:480px){
+.screen { padding:0 1rem 3rem; }
+.stat-grid { grid-template-columns:1fr 1fr; }
 }
 </style>
 
 </head>
 <body>
-
-<div class="top-bar"></div>
-
 <div id="app"></div>
 
 <script>
-// ============================================================
-// STATE
-// ============================================================
-const state = {
-  screen: 'welcome',       // welcome | placement | settings | course-map | lesson | result | complete
-  placementScore: 0,
-  placementAnswers: [],
-  level: 'practitioner',  // beginner | practitioner | expert
-  duration: 30,           // minutes
-  xp: 0,
-  completedModules: [],
-  currentModule: 0,
-  currentLesson: null,
-  lessonStep: 0,          // 0=content, 1=question, 2=feedback
-  questionAnswered: false,
-  lastAnswerCorrect: false,
-  aiMessages: [],
-  aiLoading: false,
-  placementStep: 0,
-};
+/* ═══════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════ */
+const DB_KEY = 'lern_v3';
 
-// ============================================================
-// CONTENT
-// ============================================================
-
-const PLACEMENT_QUESTIONS = [
-  {
-    q: "Что такое EBITDA?",
-    options: [
-      "Прибыль до вычета налогов",
-      "Прибыль до вычета процентов, налогов, износа и амортизации",
-      "Выручка минус себестоимость",
-      "Чистая прибыль компании"
-    ],
-    correct: 1
-  },
-  {
-    q: "Компания имеет актив стоимостью $1M, который финансируется на 60% долгом. Каков собственный капитал?",
-    options: ["$600K", "$400K", "$1M", "$1.6M"],
-    correct: 1
-  },
-  {
-    q: "Что измеряет коэффициент P/E?",
-    options: [
-      "Рентабельность продаж",
-      "Долговую нагрузку компании",
-      "Сколько инвесторы платят за $1 прибыли",
-      "Операционный денежный поток"
-    ],
-    correct: 2
-  },
-  {
-    q: "Что происходит с NPV проекта при росте ставки дисконтирования?",
-    options: [
-      "NPV растёт",
-      "NPV не меняется",
-      "NPV падает",
-      "Зависит от типа проекта"
-    ],
-    correct: 2
-  },
-  {
-    q: "Компания генерирует $2M выручки, $800K EBITDA, $200K амортизации, $150K процентов. Какова EBIT?",
-    options: ["$800K", "$650K", "$600K", "$450K"],
-    correct: 2
-  }
-];
-
-const MODULES = [
-  {
-    id: 0,
-    title: "Финансовая отчётность",
-    sub: "P&L, баланс, cash flow — как это читать",
-    lessons: [
-      {
-        title: "Три кита финансов: отчётность как система",
-        tag: "Концепция",
-        content: {
-          beginner: `<p>Финансовая отчётность — это три документа, которые вместе рассказывают полную историю о компании. Представьте их как медицинские анализы: каждый показывает что-то своё, но диагноз ставится по всем трём вместе.</p>
-          <h3>Отчёт о прибылях и убытках (P&L)</h3>
-          <p>Отвечает на вопрос: <span class="highlight">зарабатывает ли компания деньги?</span> Он показывает выручку, расходы и итоговую прибыль за период — например, за квартал или год.</p>
-          <div class="example-box">Аналогия: P&L — это как ваша зарплатная квитанция. Получили 100, потратили 70 на жизнь — осталось 30. Прибыль есть.</div>
-          <h3>Баланс (Balance Sheet)</h3>
-          <p>Отвечает на вопрос: <span class="highlight">что у компании есть и откуда это взялось?</span> Левая сторона — активы (всё, чем владеет компания). Правая — пассивы (долги) и собственный капитал (деньги акционеров).</p>
-          <code class="formula">Активы = Обязательства + Собственный капитал</code>
-          <h3>Отчёт о движении денежных средств (Cash Flow)</h3>
-          <p>Отвечает на вопрос: <span class="highlight">где физически находятся деньги?</span> Компания может показывать бухгалтерскую прибыль, но быть пустой — именно cash flow показывает реальность.</p>`,
-
-          practitioner: `<p>Три формы отчётности — не просто документы для налоговой. Это система взаимосвязанных показателей, где каждая цифра влияет на другие формы. CFO читает их не последовательно, а одновременно.</p>
-          <h3>P&L: от выручки до чистой прибыли</h3>
-          <p>Ключевой принцип — <span class="highlight">метод начисления (accrual basis)</span>: выручка признаётся при отгрузке, а не при получении денег. Это создаёт разрыв между P&L и реальным cash flow.</p>
-          <code class="formula">Выручка → Валовая прибыль → EBITDA → EBIT → EBT → Чистая прибыль</code>
-          <div class="example-box"><strong>Пример:</strong> Компания продала товар в декабре на $500K, деньги придут в феврале. В P&L декабря — выручка $500K. В cash flow декабря — ноль. Баланс покажет дебиторскую задолженность $500K.</div>
-          <h3>Баланс: момент времени vs. период</h3>
-          <p>В отличие от P&L (который показывает период), баланс — это <span class="highlight">снимок на конкретную дату</span>. Именно поэтому компании умеют "украшать" балансовую дату, временно закрывая долги.</p>
-          <h3>Cash Flow: три секции</h3>
-          <p>Операционный CF (OCF) — главный индикатор здоровья. Инвестиционный — CapEx и M&A. Финансовый — дивиденды, кредиты, buybacks. <span class="highlight">Хроническое расхождение OCF и прибыли — красный флаг.</span></p>`,
-
-          expert: `<p>Понимание трёх форм отчётности на уровне CFO — это не чтение цифр, а понимание учётных политик, которые их формируют. Две компании с одинаковой экономикой могут показывать принципиально разные результаты.</p>
-          <h3>Учётная политика как инструмент</h3>
-          <p>P&L формируется через <span class="highlight">суждения менеджмента</span>: срок полезного использования активов, метод списания запасов (FIFO vs LIFO vs weighted average), признание выручки по IFRS 15 / ASC 606, оценка резервов.</p>
-          <div class="example-box"><strong>Кейс:</strong> Две SaaS-компании с идентичными контрактами. Компания А признаёт выручку ежемесячно (ratable). Компания Б — при go-live клиента. При росте 50% YoY разница в выручке за год может составить 20-30%. P&L несопоставимы без нормализации.</div>
-          <h3>Reconciliation как главный навык</h3>
-          <code class="formula">Net Income → +DA → ±Working Capital changes → OCF</code>
-          <p>Ключ к чтению отчётности — <span class="highlight">reconciliation чистой прибыли к OCF</span>. Аномалии здесь (особенно рост receivables при росте выручки, раздувание запасов, изменение payables) — первые признаки качества прибыли.</p>
-          <h3>Off-balance sheet риски</h3>
-          <p>После IFRS 16 операционный лизинг вошёл в баланс, но остались: contingent liabilities, unfunded pension obligations, take-or-pay контракты, SPV. CFO обязан знать полное экономическое обязательство, а не только бухгалтерское.</p>`
-        },
-        question: {
-          beginner: {
-            text: "Компания отгрузила товар клиенту 31 декабря на сумму $200K. Оплата придёт 15 января. Где эта операция отразится в отчётности за декабрь?",
-            options: [
-              "Только в Cash Flow — деньги поступят в январе",
-              "В P&L как выручка $200K, в балансе как дебиторская задолженность $200K",
-              "В P&L как выручка $200K и в Cash Flow как приход $200K",
-              "Нигде — операция завершится только в январе"
-            ],
-            correct: 1,
-            explanation: "Метод начисления (accrual basis): выручка признаётся в момент отгрузки, независимо от оплаты. В P&L — выручка $200K. В балансе — дебиторка $200K (актив, деньги которые должны прийти). В Cash Flow — ноль, деньги физически не поступили."
-          },
-          practitioner: {
-            text: "OCF компании за год составил $50M, чистая прибыль — $80M. Дебиторская задолженность выросла на $40M, запасы упали на $15M, кредиторская задолженность выросла на $5M. Какой вывод наиболее вероятен?",
-            options: [
-              "Компания эффективно управляет оборотным капиталом",
-              "Компания агрессивно признаёт выручку — возможны проблемы с качеством прибыли",
-              "Компания сократила операционные расходы",
-              "Разрыв OCF/NI нормален для растущего бизнеса"
-            ],
-            correct: 1,
-            explanation: "Разрыв OCF ($50M) vs Net Income ($80M) = -$30M. Рост дебиторки на $40M при росте выручки — классический признак агрессивного признания выручки или проблем с собираемостью. Снижение запасов и рост payables частично компенсируют, но не объясняют масштаб разрыва. Red flag для аудитора."
-          },
-          expert: {
-            text: "SaaS-компания переходит с кассового метода на accrual basis. ARR $120M, средний срок контракта 18 мес, деньги собираются авансом. Как изменится отчётность при переходе?",
-            options: [
-              "Выручка вырастет, Cash Flow упадёт",
-              "Выручка упадёт, появится статья Deferred Revenue на балансе, Cash Flow не изменится",
-              "Выручка упадёт, Deferred Revenue на балансе вырастет, но денежные потоки останутся прежними",
-              "Ничего не изменится — итоговая прибыль одинакова при обоих методах"
-            ],
-            correct: 2,
-            explanation: "При переходе на accrual: (1) выручка признаётся равномерно за 18 мес, не в момент получения денег — в начале периода выручка падает; (2) на балансе появляется Deferred Revenue (обязательство отработать полученные авансы); (3) Cash Flow не меняется — деньги собираются так же. Типичная ловушка: рост Deferred Revenue выглядит как рост долга, хотя это просто учётный артефакт роста ARR."
-          }
-        }
-      },
-      {
-        title: "Анатомия P&L: от выручки до EBITDA",
-        tag: "Инструмент",
-        content: {
-          beginner: `<p>P&L читается сверху вниз, и каждая строка — это ответ на вопрос "что осталось после следующего вычета?"</p>
-          <h3>Структура сверху вниз</h3>
-          <code class="formula">Выручка → Валовая прибыль → Операционная прибыль → Чистая прибыль</code>
-          <p><span class="highlight">Валовая прибыль</span> = Выручка минус прямые затраты на производство/продажу (COGS). Показывает, насколько прибыльна сама продажа.</p>
-          <div class="example-box">Пример: Кофейня продала кофе на 100 руб. Зерно, молоко, стакан обошлись в 30 руб. Валовая прибыль — 70 руб. (маржа 70%).</div>
-          <p><span class="highlight">EBITDA</span> — прибыль до вычета процентов, налогов, амортизации. Грубо говоря — операционный денежный поток компании. Именно по нему сравнивают компании разных стран и структур капитала.</p>`,
-
-          practitioner: `<p>EBITDA — главный операционный показатель, но CFO должен понимать его ограничения и то, как компании умеют им манипулировать.</p>
-          <h3>Что скрывает EBITDA</h3>
-          <p>EBITDA игнорирует: CapEx (без которого бизнес не работает), изменения оборотного капитала, налоги. Поэтому в капиталоёмких бизнесах (производство, телеком) <span class="highlight">EBITDA минус CapEx (= FCF proxy)</span> гораздо информативнее.</p>
-          <code class="formula">EBITDA margin = EBITDA / Revenue × 100%</code>
-          <div class="example-box"><strong>Сравнение:</strong> Ритейл с EBITDA 8% и SaaS с EBITDA 25% — несравнимы напрямую. У ритейла высокий CapEx и оборотный капитал. Нужно смотреть FCF margin.</div>
-          <h3>Adjusted EBITDA — осторожно</h3>
-          <p>Компании любят добавлять "одноразовые" корректировки: реструктуризация, опционы, M&A расходы. Если "одноразовые" расходы повторяются каждый год — это операционные расходы. <span class="highlight">Читайте footnotes.</span></p>`,
-
-          expert: `<p>На уровне CFO работа с P&L — это не чтение отчёта, а управление им через учётные решения и операционные рычаги.</p>
-          <h3>Revenue recognition как стратегия</h3>
-          <p>Под IFRS 15 пятишаговая модель: контракт → обязательства к исполнению → цена транзакции → аллокация → признание. Для сложных контрактов (bundled products, variable consideration, milestone-based) <span class="highlight">способ аллокации цены между deliverables принципиально меняет ритм признания выручки</span>.</p>
-          <h3>Gross Margin как операционный рычаг</h3>
-          <code class="formula">Contribution Margin = (Revenue - Variable COGS) / Revenue</code>
-          <p>При росте выручки fixed costs размазываются — gross margin растёт. Это <span class="highlight">операционный леверидж</span>: компании с высокой долей fixed costs имеют более высокую волатильность прибыли при изменении выручки.</p>
-          <div class="example-box"><strong>Кейс:</strong> SaaS компания с $50M ARR и 75% gross margin. При росте на $10M ARR при прочих равных contribution почти весь идёт в EBITDA. Та же компания с 40% gross margin (например, managed services) — операционный леверидж минимален.</div>
-          <h3>Нормализация для M&A</h3>
-          <p>В сделках LTM EBITDA нормализуется: убираются owner-specific costs, run-rate синергии, one-time items. Покупатель и продавец всегда спорят об этом — именно здесь формируется оценка.</p>`
-        },
-        question: {
-          beginner: {
-            text: "Кофейня заработала 1000 руб. выручки. COGS (зерно, молоко) — 300 руб. Аренда и зарплата — 400 руб. Амортизация кофемашины — 50 руб. Какова EBITDA?",
-            options: ["250 руб.", "300 руб.", "700 руб.", "650 руб."],
-            correct: 1,
-            explanation: "EBITDA = Выручка - COGS - Операционные расходы (без амортизации) = 1000 - 300 - 400 = 300 руб. Амортизация при расчёте EBITDA не вычитается — она добавляется обратно. Поэтому EBITDA выше операционной прибыли (EBIT) на величину амортизации."
-          },
-          practitioner: {
-            text: "Компания показывает Adjusted EBITDA $100M с корректировками: реструктуризация $8M (3й год подряд), stock-based compensation $12M, M&A costs $5M. Какова реальная EBITDA?",
-            options: [
-              "$100M — менеджмент правильно исключает нефинансовые статьи",
-              "~$80M — реструктуризация как повторяющаяся статья должна остаться",
-              "~$75M — SBC экономически является расходом и не должна исключаться",
-              "$75M — все корректировки обоснованы кроме реструктуризации"
-            ],
-            correct: 2,
-            explanation: "SBC ($12M) — реальный экономический расход (разводнение акционеров), его исключение завышает EBITDA. Реструктуризация ($8M) третий год подряд — фактически операционный расход. M&A costs ($5M) — спорно, зависит от частоты сделок. Если компания делает M&A ежегодно, это тоже операционный расход. Реальная EBITDA: $100M - $12M - $8M = $80M, и даже это оптимистично."
-          },
-          expert: {
-            text: "Hardware+SaaS компания: $30M hardware rev (gross margin 20%), $20M SaaS rev (gross margin 80%). Конкурент чисто SaaS с $20M rev и 80% GM. EV/Gross Profit мультипликатор рынка — 8x. Как обосновать оценку выше, чем у чистого SaaS?",
-            options: [
-              "Никак — hardware снижает blended margin, оценка будет ниже",
-              "Через SaaS attach rate: hardware создаёт locked-in ARR, нужно сегментировать мультипликаторы",
-              "Через EBITDA — если hardware прибыльный, суммарная EBITDA выше",
-              "Через выручку — $50M vs $20M даёт premium"
-            ],
-            correct: 1,
-            explanation: "Ключ — в структуре. Hardware в данном случае не standalone бизнес, а customer acquisition channel, который генерирует high-margin locked-in SaaS ARR. Правильная оценка: (1) SaaS сегмент оценивается отдельно по SaaS мультипликаторам; (2) Hardware оценивается по EBITDA или даже по cost, если это glorified CAC; (3) нужно показать cohort data: hardware customers имеют LTV в N раз выше из-за attached SaaS. Это narratives for premium, а не discount."
-          }
-        }
-      }
-    ]
-  },
-  {
-    id: 1,
-    title: "Оценка и стоимость",
-    sub: "DCF, мультипликаторы, M&A логика",
-    lessons: [
-      {
-        title: "DCF: от теории к реальным цифрам",
-        tag: "Методология",
-        content: {
-          beginner: `<p>DCF (Discounted Cash Flow) — метод оценки компании через её будущие денежные потоки. Идея проста: деньги сегодня стоят больше, чем те же деньги завтра.</p>
-          <h3>Почему деньги дешевеют со временем?</h3>
-          <p>Три причины: инфляция, риск (деньги могут не прийти), альтернативная доходность (эти деньги можно было вложить).</p>
-          <div class="example-box">Пример: Вам обещают $100 через год. Если ставка дисконтирования 10%, сегодня это стоит $100 / 1.1 = $90.9</div>
-          <code class="formula">PV = CF / (1 + r)^n</code>
-          <p>DCF суммирует все будущие денежные потоки, приведённые к сегодняшнему моменту. Плюс терминальная стоимость — стоимость компании после прогнозного периода.</p>`,
-          practitioner: `<p>DCF на практике — это не расчёт, а управление допущениями. Погрешность в ставке дисконтирования на 1% меняет стоимость компании на 10-30%.</p>
-          <h3>WACC: взвешенная стоимость капитала</h3>
-          <code class="formula">WACC = E/(E+D) × Ke + D/(E+D) × Kd × (1-T)</code>
-          <p>Где Ke (стоимость equity) = Rf + β × (Rm - Rf) по модели CAPM. Каждый компонент несёт неопределённость.</p>
-          <div class="example-box"><strong>Чувствительность:</strong> При WACC 10% vs 12% и одинаковых CF — стоимость компании отличается на ~20%. Именно поэтому в инвест-банкинге строят таблицы чувствительности WACC × Terminal growth rate.</div>
-          <h3>Terminal Value — слон в комнате</h3>
-          <p>В типичном DCF 60-80% стоимости приходится на Terminal Value. Это делает точность прогноза на 5 лет почти несущественной.</p>`,
-          expert: `<p>DCF как CFO — это не valuation tool, а стратегический инструмент принятия решений. Реальная ценность — в понимании value drivers.</p>
-          <h3>ROIC vs WACC: источник стоимости</h3>
-          <code class="formula">Value Creation = (ROIC - WACC) × Invested Capital</code>
-          <p>Компания создаёт стоимость только если ROIC > WACC. Рост при ROIC < WACC — уничтожение стоимости. Это контринтуитивно для операционных менеджеров.</p>
-          <div class="example-box"><strong>Импликация для M&A:</strong> Если target имеет ROIC 8% при вашем WACC 12%, рост через acquistion уничтожает стоимость, если нет синергий, поднимающих ROIC выше WACC.</div>
-          <h3>Adjusted DCF для реального применения</h3>
-          <p>Профессиональные оценщики используют APV (Adjusted Present Value) = Unlevered Firm Value + PV(Tax Shield) — разделяя операционную стоимость и benefit от долга. Это важно для LBO и компаний с меняющейся структурой капитала.</p>`
-        },
-        question: {
-          beginner: {
-            text: "Компания генерирует $100 денежного потока в год бесконечно. Ставка дисконтирования 10%. Какова её стоимость по модели вечной ренты?",
-            options: ["$100", "$1000", "$10", "$110"],
-            correct: 1,
-            explanation: "Perpetuity formula: Value = CF / r = $100 / 0.10 = $1000. Интуиция: если вложить $1000 под 10%, каждый год получаешь $100. Это и есть справедливая цена актива, генерирующего $100/год при ставке 10%."
-          },
-          practitioner: {
-            text: "DCF даёт EV = $500M. Долг $150M, cash $30M, миноритарная доля 10% (EV миноритарной части $40M). Какова Equity Value на акцию при 10M акций?",
-            options: ["$50", "$34", "$33.6", "$46"],
-            correct: 2,
-            explanation: "Bridge от EV к Equity Value: $500M (EV) - $150M (долг) + $30M (cash) - $40M (minority interest) = $340M Equity Value. На акцию: $340M / 10M = $34. Типичная ошибка — забыть вычесть minority interest или перепутать знаки долга/кэша."
-          },
-          expert: {
-            text: "Компания рассматривает проект: CapEx $200M, WACC 10%, ROIC проекта 8%, срок 10 лет. CFO должен...",
-            options: [
-              "Принять — проект генерирует положительный cash flow",
-              "Отклонить — ROIC < WACC означает уничтожение стоимости",
-              "Принять при наличии стратегической опционности",
-              "Нейтрально — NPV нужно считать отдельно"
-            ],
-            correct: 1,
-            explanation: "ROIC 8% < WACC 10% → проект имеет отрицательный Economic Value Added (EVA). NPV будет отрицательным: компания возвращает меньше, чем стоит привлечённый капитал. Исключение — если проект создаёт реальные опционы (ramp-up рынка, platform для будущих проектов с ROIC > WACC). Но CFO должен это явно обосновать, а не просто принять убыточный проект."
-          }
-        }
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: "Управление капиталом",
-    sub: "Структура капитала, дивиденды, buybacks",
-    lessons: [
-      {
-        title: "Оптимальная структура капитала",
-        tag: "Стратегия",
-        content: {
-          beginner: `<p>Каждая компания финансируется двумя способами: берёт в долг или привлекает акционеров. Соотношение долга и капитала — это структура капитала.</p>
-          <h3>Долг vs. Equity: в чём разница?</h3>
-          <p><span class="highlight">Долг дешевле</span>, но создаёт обязательства. Проценты нужно платить всегда — даже если прибыли нет. <span class="highlight">Equity дороже</span>, но гибче — дивиденды не обязательны.</p>
-          <div class="example-box">Аналогия: ипотека vs. продажа доли в квартире. Ипотека дешевле (ставка < ожидаемая доходность покупателя доли), но требует ежемесячных платежей.</div>
-          <p>Налоговый щит: проценты по долгу вычитаются из налогооблагаемой базы. При ставке налога 20% каждый рубль процентов реально стоит 0.8 руб. — государство субсидирует долг.</p>`,
-          practitioner: `<p>Теорема Модильяни-Миллера (в идеальном мире): структура капитала не влияет на стоимость. В реальном мире — три фактора делают её критически важной.</p>
-          <h3>Три фактора реального мира</h3>
-          <p><span class="highlight">1. Tax shield</span>: долг создаёт налоговую выгоду → компании с долгом стоят больше. <span class="highlight">2. Financial distress costs</span>: слишком много долга → риск банкротства, операционные потери (уход клиентов, сотрудников). <span class="highlight">3. Agency costs</span>: конфликт интересов между кредиторами и акционерами.</p>
-          <code class="formula">Optimal leverage: Tax Shield benefit = Distress costs (на марже)</code>
-          <h3>Практические индикаторы</h3>
-          <p>Net Debt / EBITDA: 0-1x — консервативно, 2-3x — умеренно, 4x+ — агрессивно. Interest Coverage (EBIT/Interest): должен быть > 2-3x для инвестиционного рейтинга.</p>`,
-          expert: `<p>Структура капитала — это не оптимизационная задача, а динамическое управление через бизнес-цикл и стратегические цели.</p>
-          <h3>Dynamic capital structure</h3>
-          <p>Target leverage меняется: в фазе роста — больше equity (flexibility), в зрелости — больше долга (tax efficiency, discipline). После крупного M&A — временно высокий leverage с планом делевериджа. <span class="highlight">CFO управляет не точкой оптимума, а траекторией.</span></p>
-          <div class="example-box"><strong>LBO логика:</strong> PE фонды целенаправленно перегружают компанию долгом (6-8x EBITDA), используя tax shield и дисциплинирующий эффект долга для роста EBITDA. Exit через 5 лет с делевериджем до 3-4x даёт equity returns > 20% IRR даже без роста EBITDA мультипликатора.</div>
-          <h3>Hedging как часть capital structure</h3>
-          <p>Валютный долг создаёт скрытый риск: при девальвации рублёвый эквивалент долга растёт, но EBITDA остаётся рублёвой. Natural hedge (рублёвая выручка = рублёвый долг) или financial hedge (currency swaps) — часть оптимальной структуры для российских компаний с валютными обязательствами.</p>`
-        },
-        question: {
-          beginner: {
-            text: "Компания платит $10M процентов по долгу. Ставка налога на прибыль 20%. Какова реальная стоимость этих процентов с учётом налогового щита?",
-            options: ["$10M", "$8M", "$2M", "$12M"],
-            correct: 1,
-            explanation: "Налоговый щит: проценты уменьшают налогооблагаемую базу. При ставке 20% компания экономит на налогах 20% × $10M = $2M. Реальная стоимость долга: $10M - $2M = $8M. Именно поэтому after-tax cost of debt = Kd × (1 - T)."
-          },
-          practitioner: {
-            text: "Компания с Net Debt/EBITDA 1.5x рассматривает buyback на $500M через новый долг. EBITDA $300M. Стоит ли?",
-            options: [
-              "Да — leverage останется комфортным, tax shield выгоден",
-              "Зависит от стоимости акций — buyback выгоден только если акции undervalued",
-              "Нет — любое увеличение долга для buyback — плохая практика",
-              "Только если FCF покрывает новые процентные платежи 2x+"
-            ],
-            correct: 1,
-            explanation: "После buyback: Net Debt = 1.5x × $300M + $500M = $950M. Net Debt/EBITDA = $950M/$300M = 3.2x — агрессивно, но управляемо. Ключевой вопрос: buyback создаёт стоимость только если акции торгуются ниже intrinsic value. Если акции переоценены — лучше держать cash или платить дивиденды. Это суждение менеджмента, а не механический расчёт."
-          },
-          expert: {
-            text: "Российская компания: 70% выручки в рублях, долг $800M в долларах (при курсе 80 руб./$). ЦБ повышает ставку, рубль слабеет до 100. Как изменится экономика?",
-            options: [
-              "Только P&L пострадает от курсовых разниц, cash flow не изменится",
-              "Рублёвый эквивалент долга вырастет с 64B до 80B руб. — это реальное ухудшение leverage и risk of covenant breach",
-              "Компании выгодно — слабый рубль повышает конкурентоспособность",
-              "Зависит от hedging позиции"
-            ],
-            correct: 3,
-            explanation: "Правильный ответ D, но требует уточнения: без hedging — рублёвый долг вырастает с 64B до 80B руб. (+25%), leverage ухудшается, возможен covenant breach по Net Debt/EBITDA. При наличии currency swap или рублёвого долга — эффект нейтрализован. CFO обязан заранее структурировать natural hedge (максимизировать рублёвые обязательства) или купить FX protection. Ответ D правильный, потому что без информации о hedging — невозможно дать однозначный ответ."
-          }
-        }
-      }
-    ]
-  }
-];
-
-// ============================================================
-// RENDER ENGINE
-// ============================================================
-
-function render() {
-  const app = document.getElementById('app');
-  switch (state.screen) {
-    case 'welcome':    app.innerHTML = renderWelcome(); break;
-    case 'placement':  app.innerHTML = renderPlacement(); break;
-    case 'settings':   app.innerHTML = renderSettings(); break;
-    case 'course-map': app.innerHTML = renderCourseMap(); break;
-    case 'lesson':     app.innerHTML = renderLesson(); break;
-    case 'result':     app.innerHTML = renderResult(); break;
-  }
-  attachHandlers();
+function loadState() {
+  try {
+    const raw = localStorage.getItem(DB_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
 }
 
-// ============================================================
-// SCREENS
-// ============================================================
+function saveState() {
+  try { localStorage.setItem(DB_KEY, JSON.stringify(S)); } catch {}
+}
 
-function renderWelcome() {
+const defaults = {
+  screen: 'welcome',
+  user: null,           // { name, email, isPremium }
+  xp: 0,
+  streak: 0,
+  lastStudyDate: null,
+  lang: 'ru',           // interface + default course lang
+
+  // catalog
+  searchQuery: '',
+  enrolledCourses: {},  // { courseId: { progress, completedLessons:[], generatedLessons:{} } }
+
+  // current course
+  courseId: null,
+
+  // settings
+  level: 'practitioner',
+  duration: 20,
+  goal: 'interest',
+  courseLang: 'ru',
+
+  // placement
+  placementStep: 0,
+  placementScore: 0,
+  placementQs: [],
+
+  // lesson
+  lessonIdx: 0,
+  lessonTotal: 0,
+  lessonStep: 0,        // 0=gen 1=content 2=question 3=feedback 4=summary
+  lessonData: null,     // { title, body, question:{text,options,correct,explanation}, keypoints:[] }
+  selectedAnswer: null,
+  lastCorrect: false,
+  aiMessages: [],
+
+  // create course
+  newCourseTitle: '',
+  newCourseDesc: '',
+};
+
+const saved = loadState();
+const S = saved ? { ...defaults, ...saved, screen: 'welcome' } : { ...defaults };
+
+// Update streak
+const today = new Date().toDateString();
+if (S.lastStudyDate && S.lastStudyDate !== today) {
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (S.lastStudyDate !== yesterday) S.streak = 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CATALOG DATA
+═══════════════════════════════════════════════════════ */
+const CATALOG = [
+  {
+    id: 'cfo',
+    icon: '📊',
+    tag: 'Финансы',
+    title: 'Думай как CFO',
+    desc: 'Отчётность, оценка компаний, структура капитала — от основ до сделок',
+    modules: ['Финансовая отчётность', 'Оценка и стоимость', 'Управление капиталом', 'M&A и сделки'],
+    lessons: 8,
+    free: true,
+  },
+  {
+    id: 'quantum',
+    icon: '⚛️',
+    tag: 'Наука',
+    title: 'Квантовый мир',
+    desc: 'Суперпозиция, запутанность и квантовые компьютеры — без формул',
+    modules: ['Основы квантового мира', 'Запутанность', 'Квантовые технологии'],
+    lessons: 6,
+    free: false,
+  },
+  {
+    id: 'chemistry',
+    icon: '🧪',
+    tag: 'Наука',
+    title: 'Химия вокруг нас',
+    desc: 'Почему всё горит, ржавеет и взрывается — химия в жизни',
+    modules: ['Атомы и связи', 'Реакции и энергия', 'Химия в быту'],
+    lessons: 6,
+    free: false,
+  },
+  {
+    id: 'macro',
+    icon: '🌍',
+    tag: 'Экономика',
+    title: 'Макроэкономика за кофе',
+    desc: 'Инфляция, ставки, кризисы — как устроена мировая экономика',
+    modules: ['Деньги и инфляция', 'Центробанки', 'Кризисы и циклы'],
+    lessons: 6,
+    free: false,
+  },
+];
+
+function getCourse(id) { return CATALOG.find(c => c.id === id) || S.enrolledCourses[id]?._meta; }
+function getEnrolled(id) { return S.enrolledCourses[id]; }
+function getProgress(id) {
+  const e = getEnrolled(id);
+  if (!e) return 0;
+  const c = getCourse(id);
+  return c ? Math.round((e.completedLessons.length / c.lessons) * 100) : 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RENDER ENGINE
+═══════════════════════════════════════════════════════ */
+function render() {
+  saveState();
+  const map = {
+    welcome, register, catalog, course,
+    settings, placement, lesson, summary, result, create
+  };
+  document.getElementById('app').innerHTML = (map[S.screen] || welcome)();
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCREEN: WELCOME
+═══════════════════════════════════════════════════════ */
+function welcome() {
   return `
-  <div class="screen">
-    <div class="container">
+  <div class="screen" style="justify-content:center;min-height:100vh;">
+    <div class="wrap">
       <div style="margin-bottom:3rem;">
-        <span class="tag">Meridian Learning</span>
-        <h1 class="display" style="font-size:3.2rem;line-height:1.15;margin:0.5rem 0 1rem;">
-          Финансы на<br><em>уровне CFO</em>
+        <div class="logo" style="font-size:2rem;margin-bottom:2rem;">lern.</div>
+        <h1 class="display" style="margin-bottom:1rem;">
+          Привет.<br>
+          <em>Я твой личный</em><br>
+          AI-преподаватель.
         </h1>
-        <div class="divider"></div>
-        <p style="color:var(--muted);font-size:1rem;line-height:1.7;max-width:480px;margin-top:1rem;">
-          Структурированный курс с AI-репетитором. Учитесь в своём темпе — от основ до инвестиционных решений.
+        <p class="body-text" style="max-width:420px;margin-top:1rem;">
+          Короткие курсы по любой теме, которые подстраиваются под тебя.
+          Никаких лекций на час — только то, что нужно.
         </p>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:2.5rem;">
-        <div style="text-align:center;padding:1rem;background:var(--cream);border-radius:2px;">
-          <div class="display" style="font-size:1.8rem;">3</div>
-          <div class="mono" style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.25rem;">модуля</div>
-        </div>
-        <div style="text-align:center;padding:1rem;background:var(--cream);border-radius:2px;">
-          <div class="display" style="font-size:1.8rem;">AI</div>
-          <div class="mono" style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.25rem;">репетитор</div>
-        </div>
-        <div style="text-align:center;padding:1rem;background:var(--cream);border-radius:2px;">
-          <div class="display" style="font-size:1.8rem;">3</div>
-          <div class="mono" style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.25rem;">уровня</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.6rem;margin-bottom:2.5rem;">
+        ${[
+          ['Адаптивно','Уровень и темп — под тебя'],
+          ['Офлайн','Курсы работают без сети'],
+          ['Любой язык','Учись на удобном языке'],
+        ].map(([t,d]) => `
+          <div class="card" style="padding:1rem;margin:0;">
+            <div class="fw-700" style="font-size:0.82rem;margin-bottom:0.25rem;">${t}</div>
+            <div class="text-xs text-muted" style="line-height:1.4;">${d}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <button class="btn btn-primary btn-full btn-lg" onclick="go('register')">Начать бесплатно →</button>
+      <button class="btn btn-ghost btn-full mt-sm" onclick="quickLogin()" style="margin-top:0.5rem;">
+        Уже есть аккаунт
+      </button>
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCREEN: REGISTER
+═══════════════════════════════════════════════════════ */
+function register() {
+  return `
+  <div class="screen" style="justify-content:center;min-height:100vh;">
+    <div class="wrap" style="max-width:400px;">
+      <button class="back-btn" onclick="go('welcome')">← Назад</button>
+
+      <span class="eyebrow">Регистрация</span>
+      <h2 class="title" style="margin-bottom:0.5rem;">Создать аккаунт</h2>
+      <p class="body-text text-sm mb-md">Зарегистрируйтесь, чтобы сохранять прогресс</p>
+
+      <div class="field">
+        <label>Как тебя зовут?</label>
+        <input class="input" id="r-name" placeholder="Николай" />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input class="input" id="r-email" placeholder="you@example.com" type="email" />
+      </div>
+
+      <button class="btn btn-primary btn-full btn-lg mt-sm" onclick="doRegister()">Создать аккаунт →</button>
+
+      <div class="divider"></div>
+
+      <button class="btn btn-surface btn-full" onclick="alert('Google авторизация — скоро!')">
+        G &nbsp; Продолжить с Google
+        <span class="tag" style="margin-left:auto;">скоро</span>
+      </button>
+
+      <p class="text-xs text-muted" style="margin-top:1.25rem;text-align:center;line-height:1.6;">
+        Данные сохраняются локально в вашем браузере.<br>
+        Полноценный бэкенд — в следующей версии.
+      </p>
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCREEN: CATALOG
+═══════════════════════════════════════════════════════ */
+function catalog() {
+  const q = S.searchQuery.toLowerCase();
+  const filtered = CATALOG.filter(c =>
+    !q || c.title.toLowerCase().includes(q) || c.tag.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q)
+  );
+  const name = S.user?.name?.split(' ')[0] || '';
+
+  return `
+  <div class="screen" style="padding-top:0;">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="logo">lern.</div>
+        <div class="topbar-right">
+          ${S.streak > 0 ? `<div class="streak-badge">🔥 ${S.streak}</div>` : ''}
+          <div class="xp-badge">⚡ ${S.xp} XP</div>
         </div>
       </div>
 
-      <button class="btn btn-primary" onclick="startPlacement()" style="width:100%;justify-content:center;font-size:0.85rem;padding:1rem;">
-        Начать — пройти тест на уровень →
+      <div style="margin-bottom:1.5rem;">
+        <span class="eyebrow eyebrow-accent">${name ? `Привет, ${name}` : 'Каталог'}</span>
+        <h2 class="title">Выбери курс</h2>
+      </div>
+
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input class="input" id="search-input" placeholder="Поиск курсов..."
+          value="${S.searchQuery}"
+          oninput="S.searchQuery=this.value;render()" />
+      </div>
+
+      ${filtered.map(c => {
+        const prog = getProgress(c.id);
+        const enrolled = !!getEnrolled(c.id);
+        const locked = !c.free && !S.user?.isPremium && !enrolled;
+        return `
+        <div class="course-card ${locked ? 'locked' : ''}" onclick="${!locked ? `selectCourse('${c.id}')` : 'showPremium()'}">
+          <div class="course-icon">${c.icon}</div>
+          <div class="course-info">
+            <div class="flex items-center justify-between mb-sm">
+              <span class="tag ${c.free ? 'tag-green' : ''}">${c.tag}${!c.free ? ' · Premium' : ''}</span>
+              ${locked ? '<span class="tag">🔒 Premium</span>' : ''}
+              ${enrolled && prog > 0 ? `<span class="text-xs text-muted mono">${prog}%</span>` : ''}
+            </div>
+            <div class="course-title">${c.title}</div>
+            <div class="course-desc">${c.desc}</div>
+            ${enrolled && prog > 0 ? `
+              <div class="mod-progress">
+                ${c.modules.map((_,i) => {
+                  const e = getEnrolled(c.id);
+                  const lessonsPerMod = Math.ceil(c.lessons / c.modules.length);
+                  const modDone = e.completedLessons.filter(l => Math.floor(l/lessonsPerMod)===i).length;
+                  return `<div class="mod-pip ${modDone === lessonsPerMod ? 'done' : modDone > 0 ? 'active' : ''}"></div>`;
+                }).join('')}
+              </div>
+            ` : ''}
+            <div class="course-meta">
+              ${enrolled ? `<span class="tag tag-accent">Начат</span>` : ''}
+              <span class="tag">📚 ${c.lessons} уроков</span>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+
+      ${!S.user?.isPremium ? `
+      <div class="premium-banner mt-md">
+        <h3>Lern Premium</h3>
+        <p>Все курсы, офлайн-режим, создание своих курсов и AI-репетитор без ограничений.</p>
+        <button class="btn btn-full" style="background:#fff;color:var(--ink);font-size:0.875rem;" onclick="activatePremium()">
+          Попробовать Premium →
+        </button>
+      </div>
+      ` : ''}
+
+      ${S.user?.isPremium ? `
+      <button class="btn btn-surface btn-full mt-md" onclick="go('create')">
+        + Создать свой курс
       </button>
-      <button class="btn btn-ghost" onclick="skipToSettings()" style="width:100%;justify-content:center;margin-top:0.75rem;font-size:0.8rem;">
+      ` : ''}
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCREEN: COURSE DETAIL
+═══════════════════════════════════════════════════════ */
+function course() {
+  const c = getCourse(S.courseId);
+  if (!c) { go('catalog'); return ''; }
+  const enrolled = getEnrolled(S.courseId);
+  const prog = getProgress(S.courseId);
+  const completedLessons = enrolled?.completedLessons || [];
+
+  return `
+  <div class="screen" style="padding-top:1.25rem;">
+    <div class="wrap">
+      <button class="back-btn" onclick="go('catalog')">← Каталог</button>
+
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+        <div class="course-icon" style="width:56px;height:56px;font-size:1.6rem;border-radius:12px;">${c.icon}</div>
+        <div>
+          <span class="tag ${c.free ? 'tag-green' : 'tag-amber'}">${c.tag}</span>
+          <h2 class="title" style="margin-top:0.3rem;">${c.title}</h2>
+        </div>
+      </div>
+
+      <p class="body-text mb-md">${c.desc}</p>
+
+      ${prog > 0 ? `
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem;">
+        <div class="flex justify-between items-center mb-sm">
+          <span class="eyebrow" style="margin:0;">Прогресс</span>
+          <span class="mono text-xs" style="color:var(--accent);">${prog}%</span>
+        </div>
+        <div class="pbar" style="margin:0.5rem 0 0;height:5px;">
+          <div class="pbar-fill" style="width:${prog}%;"></div>
+        </div>
+      </div>
+      ` : ''}
+
+      <div class="card">
+        <span class="eyebrow">Программа</span>
+        ${c.modules.map((m, mi) => {
+          const lessonsPerMod = Math.ceil(c.lessons / c.modules.length);
+          const modStart = mi * lessonsPerMod;
+          const modLessons = Array.from({length:lessonsPerMod}, (_,i) => modStart+i).filter(i=>i<c.lessons);
+          const allDone = modLessons.every(i => completedLessons.includes(i));
+          const anyDone = modLessons.some(i => completedLessons.includes(i));
+          const isCurrent = !allDone && anyDone;
+          return `
+          <div class="chapter-item">
+            <div class="chapter-num ${allDone?'done':isCurrent?'current':''}">
+              ${allDone ? '✓' : mi+1}
+            </div>
+            <div class="chapter-name ${allDone?'done':isCurrent?'current':''}">${m}</div>
+            <span class="text-xs text-muted mono">${modLessons.length} ур.</span>
+          </div>`;
+        }).join('')}
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.6rem;margin:1rem 0;">
+        ${[
+          ['📚', c.lessons + ' уроков'],
+          ['🤖', 'AI-репетитор'],
+          ['📥', 'Офлайн'],
+        ].map(([i,l]) => `
+          <div class="card" style="padding:1rem;margin:0;text-align:center;">
+            <div style="font-size:1.2rem;margin-bottom:0.25rem;">${i}</div>
+            <div class="text-xs text-muted">${l}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <button class="btn btn-primary btn-full btn-lg" onclick="go('settings')">
+        ${enrolled && prog > 0 ? 'Продолжить курс →' : 'Настроить и начать →'}
+      </button>
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCREEN: SETTINGS
+═══════════════════════════════════════════════════════ */
+function settings() {
+  const c = getCourse(S.courseId);
+  const durLabel = S.duration<=15?'Быстро (15 мин)':S.duration<=25?'Стандартно':S.duration<=40?'Углублённо':'Полное погружение';
+  return `
+  <div class="screen" style="padding-top:1.25rem;">
+    <div class="wrap">
+      <button class="back-btn" onclick="go('course')">← Назад</button>
+
+      <span class="eyebrow eyebrow-accent">Персонализация</span>
+      <h2 class="title mb-md">Настрой под себя</h2>
+
+      <div class="card">
+        <span class="eyebrow">Цель обучения</span>
+        <p class="text-sm text-muted mb-sm">Влияет на примеры и контекст</p>
+        <div class="pills">
+          ${[['interest','Из интереса'],['career','Для карьеры'],['work','Для работы']].map(([id,l]) =>
+            `<div class="pill ${S.goal===id?'on':''}" onclick="S.goal='${id}';render()">${l}</div>`
+          ).join('')}
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="eyebrow">Уровень</span>
+        <p class="text-sm text-muted mb-sm">Глубина и сложность материала</p>
+        <div class="pills">
+          ${[['beginner','Новичок'],['practitioner','Практик'],['expert','Эксперт']].map(([id,l]) =>
+            `<div class="pill ${S.level===id?'on':''}" onclick="S.level='${id}';render()">${l}</div>`
+          ).join('')}
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="eyebrow">Длина урока</span>
+        <div class="range-wrap">
+          <div class="range-row">
+            <span class="text-sm text-muted" id="dur-label">${durLabel}</span>
+            <span class="range-val" id="dur-val">${S.duration} мин</span>
+          </div>
+          <input type="range" min="10" max="60" step="5" value="${S.duration}" oninput="liveRange(this.value)" />
+          <div class="flex justify-between mt-xs">
+            <span class="text-xs text-muted">10 мин</span>
+            <span class="text-xs text-muted">60 мин</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="eyebrow">Язык курса</span>
+        <select class="input" onchange="S.courseLang=this.value" style="margin-top:0.5rem;">
+          ${[['ru','Русский'],['en','English'],['de','Deutsch'],['fr','Français'],['es','Español']].map(([v,l]) =>
+            `<option value="${v}" ${S.courseLang===v?'selected':''}>${l}</option>`
+          ).join('')}
+        </select>
+      </div>
+
+      <button class="btn btn-primary btn-full btn-lg mt-sm" onclick="startPlacement()">
+        Пройти тест на уровень →
+      </button>
+      <button class="btn btn-ghost btn-full mt-sm" style="margin-top:0.5rem;" onclick="skipPlacement()">
         Пропустить тест
       </button>
     </div>
   </div>`;
 }
 
-function renderPlacement() {
-  const q = PLACEMENT_QUESTIONS[state.placementStep];
-  const progress = ((state.placementStep) / PLACEMENT_QUESTIONS.length) * 100;
-  const letters = ['A','B','C','D'];
-
-  return `
-  <div class="screen">
-    <div class="container">
-      <div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div>
-      <span class="tag">Тест на уровень · Вопрос ${state.placementStep + 1} из ${PLACEMENT_QUESTIONS.length}</span>
-      <h2 class="display" style="font-size:1.5rem;line-height:1.4;margin:0.75rem 0 2rem;">${q.q}</h2>
-      <div>
-        ${q.options.map((opt, i) => `
-          <button class="option-btn" onclick="answerPlacement(${i})">
-            <span class="option-letter">${letters[i]}</span>
-            ${opt}
-          </button>
-        `).join('')}
-      </div>
-    </div>
-  </div>`;
-}
-
-function renderSettings() {
-  const levelLabels = { beginner: 'Новичок', practitioner: 'Практик', expert: 'Эксперт' };
-  const durationLabel = state.duration <= 15 ? 'Короткий урок' : state.duration <= 30 ? 'Стандартный' : 'Глубокое погружение';
-
-  return `
-  <div class="screen">
-    <div class="container">
-      <span class="tag">Настройки курса</span>
-      <h2 class="display" style="font-size:2rem;margin:0.5rem 0 0.5rem;">Настройте под себя</h2>
-      <p style="color:var(--muted);margin-bottom:2rem;font-size:0.9rem;">
-        ${state.screen === 'settings' && state.placementScore !== undefined ?
-          `Ваш результат теста: ${state.placementScore} из ${PLACEMENT_QUESTIONS.length}` : ''}
-      </p>
-
-      <div class="card">
-        <span class="tag">Уровень сложности</span>
-        <p style="font-size:0.9rem;color:var(--muted);margin-bottom:1rem;">Определяет глубину объяснений и сложность вопросов</p>
-        <div class="pill-group">
-          <div class="pill ${state.level === 'beginner' ? 'active' : ''}" onclick="setLevel('beginner')">Новичок</div>
-          <div class="pill ${state.level === 'practitioner' ? 'active' : ''}" onclick="setLevel('practitioner')">Практик</div>
-          <div class="pill ${state.level === 'expert' ? 'active' : ''}" onclick="setLevel('expert')">Эксперт</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="tag">Длина урока</span>
-        <div class="slider-group">
-          <div class="slider-label">
-            <span>${durationLabel}</span>
-            <span class="slider-value">${state.duration} мин</span>
-          </div>
-          <input type="range" min="10" max="60" step="5" value="${state.duration}"
-            oninput="setDuration(this.value)" />
-          <div style="display:flex;justify-content:space-between;margin-top:0.4rem;">
-            <span style="font-size:0.75rem;color:var(--muted);font-family:'DM Mono',monospace;">10 мин</span>
-            <span style="font-size:0.75rem;color:var(--muted);font-family:'DM Mono',monospace;">60 мин</span>
-          </div>
-        </div>
-      </div>
-
-      <button class="btn btn-primary" onclick="goToCourseMap()" style="width:100%;justify-content:center;padding:1rem;">
-        Начать курс →
-      </button>
-    </div>
-  </div>`;
-}
-
-function renderCourseMap() {
-  return `
-  <div class="screen">
-    <div class="container">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;">
-        <div>
-          <span class="tag">CFO Course · ${['Новичок','Практик','Эксперт'][['beginner','practitioner','expert'].indexOf(state.level)]}</span>
-          <h2 class="display" style="font-size:1.75rem;margin-top:0.25rem;">Программа курса</h2>
-        </div>
-        <div class="xp-badge">⚡ ${state.xp} XP</div>
-      </div>
-
-      <div class="module-map">
-        ${MODULES.map((mod, mi) => {
-          const isCompleted = state.completedModules.includes(mi);
-          const isLocked = mi > 0 && !state.completedModules.includes(mi - 1);
-          return `
-          <div class="module-item ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}"
-               onclick="${!isLocked ? `startModule(${mi})` : ''}">
-            <div class="module-num">${isCompleted ? '✓' : mi + 1}</div>
-            <div>
-              <div class="module-title">${mod.title}</div>
-              <div class="module-sub">${mod.sub}</div>
-            </div>
-            <div style="margin-left:auto;color:var(--muted);font-size:0.75rem;font-family:'DM Mono',monospace;">
-              ${isLocked ? '🔒' : isCompleted ? '' : `${mod.lessons.length} урока →`}
-            </div>
-          </div>`;
-        }).join('')}
-      </div>
-
-      <button class="btn btn-ghost" onclick="goToSettings()" style="margin-top:1rem;font-size:0.8rem;">
-        ⚙ Настройки курса
-      </button>
-    </div>
-  </div>`;
-}
-
-function renderLesson() {
-  const mod = MODULES[state.currentModule];
-  const lesson = mod.lessons[state.currentLesson];
-  const lvl = state.level;
-  const progress = ((state.currentLesson + (state.lessonStep / 3)) / mod.lessons.length) * 100;
-
-  if (state.lessonStep === 0) {
+/* ═══════════════════════════════════════════════════════
+   SCREEN: PLACEMENT
+═══════════════════════════════════════════════════════ */
+function placement() {
+  if (!S.placementQs.length) {
     return `
-    <div class="screen" style="justify-content:flex-start;padding-top:5rem;">
-      <div class="container">
-        <div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-          <button class="btn btn-ghost" onclick="goToCourseMap()" style="padding:0.5rem 0.75rem;font-size:0.75rem;">← Назад</button>
-          <span class="xp-badge">⚡ ${state.xp} XP</span>
+    <div class="screen" style="justify-content:center;">
+      <div class="wrap">
+        <div class="generating">
+          <div class="spin"></div>
+          <div>
+            <span class="eyebrow eyebrow-accent">Составляю тест</span>
+            <p class="text-sm text-muted mt-xs">AI генерирует вопросы для определения уровня...</p>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  const q = S.placementQs[S.placementStep];
+  const pct = (S.placementStep / S.placementQs.length) * 100;
+  const keys = ['A','B','C','D'];
+
+  return `
+  <div class="screen" style="padding-top:1.25rem;">
+    <div class="wrap">
+      <div class="flex justify-between items-center mb-md">
+        <button class="back-btn" style="margin:0;" onclick="go('settings')">← Настройки</button>
+        <span class="text-xs text-muted mono">${S.placementStep+1} / ${S.placementQs.length}</span>
+      </div>
+      <div class="pbar"><div class="pbar-fill" style="width:${pct}%"></div></div>
+
+      <span class="eyebrow eyebrow-accent">Определяем уровень</span>
+      <p class="serif" style="font-size:1.2rem;line-height:1.55;margin:0.6rem 0 1.5rem;color:var(--ink);">${q.text}</p>
+
+      ${q.options.map((o,i) => `
+        <button class="option" onclick="answerPlacement(${i})">
+          <span class="opt-key">${keys[i]}</span>${o}
+        </button>
+      `).join('')}
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCREEN: LESSON
+═══════════════════════════════════════════════════════ */
+function lesson() {
+  const c = getCourse(S.courseId);
+
+  // Step 0 — generating
+  if (S.lessonStep === 0) {
+    return `
+    <div class="screen" style="justify-content:center;">
+      <div class="wrap">
+        <div class="generating">
+          <div class="spin"></div>
+          <div>
+            <span class="eyebrow eyebrow-accent">Генерирую урок ${S.lessonIdx+1}</span>
+            <p class="text-sm text-muted mt-xs">Подготавливаю материал на уровне «${lvlLabel()}»...</p>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Step 1 — content
+  if (S.lessonStep === 1) {
+    const pct = (S.lessonIdx / S.lessonTotal) * 100;
+    return `
+    <div class="screen" style="padding-top:1.25rem;">
+      <div class="wrap">
+        <div class="flex justify-between items-center" style="margin-bottom:1rem;">
+          <button class="back-btn" style="margin:0;" onclick="go('catalog')">← Курсы</button>
+          <div class="xp-badge">⚡ ${S.xp} XP</div>
+        </div>
+        <div class="pbar"><div class="pbar-fill" style="width:${pct}%"></div></div>
+
+        <span class="eyebrow eyebrow-accent">${c?.title} · Урок ${S.lessonIdx+1} из ${S.lessonTotal}</span>
+        <h2 class="title" style="margin:0.4rem 0 1.5rem;">${S.lessonData?.title || ''}</h2>
+
+        <div class="card" style="padding:1.75rem;">
+          <div class="lesson-body">${S.lessonData?.body || ''}</div>
         </div>
 
-        <span class="tag">${mod.title} · ${lesson.tag}</span>
-        <h2 class="display" style="font-size:1.6rem;line-height:1.3;margin:0.5rem 0 2rem;">${lesson.title}</h2>
-
-        <div class="card">
-          <div class="lesson-body">${lesson.content[lvl]}</div>
-        </div>
-
-        <button class="btn btn-primary" onclick="nextStep()" style="width:100%;justify-content:center;padding:1rem;margin-top:0.5rem;">
+        <button class="btn btn-primary btn-full btn-lg mt-sm" onclick="S.lessonStep=2;render()">
           К вопросу →
         </button>
       </div>
     </div>`;
   }
 
-  if (state.lessonStep === 1 || state.lessonStep === 2) {
-    const q = lesson.question[lvl];
-    const letters = ['A','B','C','D'];
-    const answered = state.lessonStep === 2;
-
+  // Step 2 — question
+  if (S.lessonStep === 2) {
+    const q = S.lessonData?.question;
+    const keys = ['A','B','C','D'];
     return `
-    <div class="screen" style="justify-content:flex-start;padding-top:5rem;">
-      <div class="container">
-        <div class="progress-track"><div class="progress-fill" style="width:${progress + 30}%"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-          <button class="btn btn-ghost" onclick="prevStep()" style="padding:0.5rem 0.75rem;font-size:0.75rem;">← Теория</button>
-          <span class="xp-badge">⚡ ${state.xp} XP</span>
+    <div class="screen" style="padding-top:1.25rem;">
+      <div class="wrap">
+        <div class="flex justify-between items-center" style="margin-bottom:1rem;">
+          <button class="back-btn" style="margin:0;" onclick="S.lessonStep=1;render()">← Теория</button>
+          <div class="xp-badge">⚡ ${S.xp} XP</div>
         </div>
 
-        <span class="tag">Проверь себя</span>
-        <h2 class="display" style="font-size:1.3rem;line-height:1.4;margin:0.5rem 0 1.5rem;">${q.text}</h2>
+        <span class="eyebrow eyebrow-accent">Проверь себя</span>
+        <p class="serif" style="font-size:1.15rem;line-height:1.55;margin:0.6rem 0 1.5rem;color:var(--ink);">${q?.text || ''}</p>
 
-        <div id="options">
-          ${q.options.map((opt, i) => {
-            let cls = '';
-            if (answered) {
-              if (i === q.correct) cls = 'reveal-correct';
-              else if (i === state.selectedAnswer && i !== q.correct) cls = 'selected-wrong';
-            }
-            return `<button class="option-btn ${cls}" onclick="answerQuestion(${i})" ${answered ? 'disabled' : ''}>
-              <span class="option-letter">${letters[i]}</span>${opt}
-            </button>`;
-          }).join('')}
-        </div>
-
-        ${answered ? `
-        <div class="ai-panel" id="ai-panel">
-          <span class="tag">AI Репетитор</span>
-          <div class="ai-message" id="ai-message">
-            <div class="ai-loading"><span></span><span></span><span></span></div>
-          </div>
-          <div class="ai-input-row">
-            <input class="ai-input" id="ai-follow-up" placeholder="Задайте уточняющий вопрос..." onkeydown="if(event.key==='Enter')sendFollowUp()" />
-            <button class="ai-send" onclick="sendFollowUp()">→</button>
-          </div>
-        </div>
-
-        <button class="btn ${state.lastAnswerCorrect ? 'btn-correct' : 'btn-gold'}"
-                onclick="finishLesson()" style="width:100%;justify-content:center;padding:1rem;margin-top:1rem;">
-          ${state.currentLesson < mod.lessons.length - 1 ? 'Следующий урок →' : 'Завершить модуль →'}
-        </button>
-        ` : ''}
+        ${(q?.options||[]).map((o,i) => `
+          <button class="option" onclick="answerLesson(${i})">
+            <span class="opt-key">${keys[i]}</span>${o}
+          </button>
+        `).join('')}
       </div>
     </div>`;
   }
+
+  // Step 3 — feedback
+  if (S.lessonStep === 3) {
+    const q = S.lessonData?.question;
+    const keys = ['A','B','C','D'];
+    const isPremium = S.user?.isPremium;
+
+    return `
+    <div class="screen" style="padding-top:1.25rem;">
+      <div class="wrap">
+        <div class="flex justify-between items-center" style="margin-bottom:1rem;">
+          <span class="tag ${S.lastCorrect?'tag-green':''}">
+            ${S.lastCorrect ? '✓ Верно' : '✗ Не совсем'}
+          </span>
+          <div class="xp-badge">⚡ ${S.xp} XP</div>
+        </div>
+
+        <p class="serif" style="font-size:1.1rem;line-height:1.5;margin-bottom:1.25rem;color:var(--ink);">${q?.text||''}</p>
+
+        ${(q?.options||[]).map((o,i) => {
+          let cls = '';
+          if (i === q.correct) cls = 'opt-correct';
+          else if (i === S.selectedAnswer) cls = 'opt-wrong';
+          return `<button class="option ${cls}" disabled><span class="opt-key">${keys[i]}</span>${o}</button>`;
+        }).join('')}
+
+        <div class="ai-panel">
+          <span class="ai-eyebrow">AI Репетитор</span>
+          <div class="ai-text" id="ai-body"><div class="dots"><span></span><span></span><span></span></div></div>
+          ${isPremium ? `
+          <div class="ai-input-row">
+            <input class="ai-input" id="ai-q" placeholder="Задай уточняющий вопрос..."
+              onkeydown="if(event.key==='Enter')sendAI()" />
+            <button class="ai-send" onclick="sendAI()">→</button>
+          </div>
+          ` : `
+          <div class="ai-premium-lock">
+            🔒 Уточняющие вопросы — функция Premium
+            <button class="btn btn-sm" style="margin-left:auto;background:rgba(255,255,255,.1);color:#fff;border:none;" onclick="activatePremium()">Открыть</button>
+          </div>
+          `}
+        </div>
+
+        <button class="btn btn-primary btn-full btn-lg mt-md" onclick="S.lessonStep=4;render()">
+          Резюме урока →
+        </button>
+      </div>
+    </div>`;
+  }
+
+  // Step 4 — summary
+  if (S.lessonStep === 4) {
+    const kp = S.lessonData?.keypoints || [];
+    return `
+    <div class="screen" style="padding-top:1.25rem;">
+      <div class="wrap">
+        <span class="eyebrow eyebrow-accent">Резюме урока</span>
+        <h2 class="title" style="margin:0.4rem 0 1.25rem;">${S.lessonData?.title||''}</h2>
+
+        <div class="card">
+          <span class="eyebrow">Ключевые тезисы</span>
+          ${kp.length ? kp.map(k => `
+            <div class="summary-item">
+              <div class="summary-dot"></div>
+              <div class="summary-text">${k}</div>
+            </div>
+          `).join('') : '<p class="text-sm text-muted">Загрузка...</p>'}
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-cell">
+            <div class="stat-val">${S.lastCorrect?'+30':'+10'}</div>
+            <div class="stat-lbl">XP за урок</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-val">${S.lessonIdx+1}/${S.lessonTotal}</div>
+            <div class="stat-lbl">Прогресс</div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-full btn-lg mt-sm" onclick="nextLesson()">
+          ${S.lessonIdx+1 < S.lessonTotal ? 'Следующий урок →' : 'Завершить курс →'}
+        </button>
+        <button class="btn btn-ghost btn-full mt-sm" style="margin-top:0.5rem;" onclick="go('catalog')">
+          Вернуться к курсам
+        </button>
+      </div>
+    </div>`;
+  }
+
+  return '<div class="screen"></div>';
 }
 
-function renderResult() {
-  const mod = MODULES[state.currentModule];
+/* ═══════════════════════════════════════════════════════
+   SCREEN: RESULT
+═══════════════════════════════════════════════════════ */
+function result() {
+  const c = getCourse(S.courseId);
+  const name = S.user?.name?.split(' ')[0] || '';
   return `
-  <div class="screen">
-    <div class="container" style="text-align:center;">
-      <div class="result-icon">${state.lastAnswerCorrect ? '🎯' : '📖'}</div>
-      <span class="tag" style="display:block;text-align:center;">Модуль завершён</span>
-      <h2 class="display" style="font-size:2rem;margin:0.5rem 0;">${mod.title}</h2>
-      <div class="divider" style="margin:1rem auto;"></div>
+  <div class="screen" style="justify-content:center;min-height:100vh;">
+    <div class="wrap" style="text-align:center;">
+      <div style="font-size:3rem;margin-bottom:1rem;">🎯</div>
+      <span class="eyebrow eyebrow-accent">Курс завершён</span>
+      <h2 class="title" style="margin:0.5rem 0;">${c?.title}</h2>
+      ${name ? `<p class="body-text mt-xs">Отлично, ${name}!</p>` : ''}
 
-      <div class="stats-row" style="justify-content:center;">
-        <div class="stat">
-          <div class="stat-num">+${state.xp > 0 ? Math.min(state.xp, 50) : 25} XP</div>
-          <div class="stat-label">Получено</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">${state.currentModule + 1}/${MODULES.length}</div>
-          <div class="stat-label">Прогресс</div>
-        </div>
+      <div class="stat-grid mt-md">
+        <div class="stat-cell"><div class="stat-val">${S.xp}</div><div class="stat-lbl">Всего XP</div></div>
+        <div class="stat-cell"><div class="stat-val">${S.streak}🔥</div><div class="stat-lbl">Дней подряд</div></div>
       </div>
 
-      <button class="btn btn-primary" onclick="goToCourseMap()" style="width:100%;justify-content:center;padding:1rem;margin-top:2rem;">
-        К курсу →
-      </button>
+      <button class="btn btn-primary btn-full btn-lg mt-md" onclick="go('catalog')">К каталогу →</button>
     </div>
   </div>`;
 }
 
-// ============================================================
-// HANDLERS
-// ============================================================
+/* ═══════════════════════════════════════════════════════
+   SCREEN: CREATE COURSE (PREMIUM)
+═══════════════════════════════════════════════════════ */
+function create() {
+  return `
+  <div class="screen" style="padding-top:1.25rem;">
+    <div class="wrap">
+      <button class="back-btn" onclick="go('catalog')">← Каталог</button>
 
-function attachHandlers() {}
+      <span class="eyebrow eyebrow-accent">Premium · Создать курс</span>
+      <h2 class="title mb-md">Свой курс</h2>
+      <p class="body-text text-sm mb-md">Введи тему — AI сгенерирует полный курс и сохранит его офлайн.</p>
 
-function startPlacement() {
-  state.screen = 'placement';
-  state.placementStep = 0;
-  state.placementScore = 0;
-  render();
+      <div class="field">
+        <label>Название или тема курса</label>
+        <input class="input" id="nc-title" placeholder="Например: История джаза" value="${S.newCourseTitle}" />
+      </div>
+      <div class="field">
+        <label>Дополнительный контекст (необязательно)</label>
+        <textarea class="input" id="nc-desc" rows="3"
+          placeholder="Для кого, какой фокус, что хочешь понять..."
+          style="resize:vertical;">${S.newCourseDesc}</textarea>
+
+```
+  </div>
+
+  <div class="card">
+    <span class="eyebrow">Параметры</span>
+    <div class="pills mt-sm">
+      ${[['beginner','Новичок'],['practitioner','Практик'],['expert','Эксперт']].map(([id,l]) =>
+        `<div class="pill ${S.level===id?'on':''}" onclick="S.level='${id}';render()">${l}</div>`
+      ).join('')}
+    </div>
+    <div class="range-wrap mt-sm">
+      <div class="range-row">
+        <span class="text-sm text-muted">Уроков в курсе</span>
+        <span class="range-val" id="lc-val">${S.lessonTotal||6}</span>
+      </div>
+      <input type="range" min="3" max="12" step="1" value="${S.lessonTotal||6}"
+        oninput="S.lessonTotal=+this.value;document.getElementById('lc-val').textContent=this.value" />
+    </div>
+  </div>
+
+  <button class="btn btn-primary btn-full btn-lg mt-sm" onclick="createCourse()">
+    Создать курс →
+  </button>
+</div>
+```
+
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+ACTIONS
+═══════════════════════════════════════════════════════ */
+function go(screen) { S.screen = screen; render(); }
+
+function quickLogin() {
+const name = prompt(‘Введи своё имя:’);
+if (!name) return;
+S.user = { name: name.trim(), email: ‘’, isPremium: false };
+go(‘catalog’);
+}
+
+function doRegister() {
+const name = (document.getElementById(‘r-name’)?.value || ‘’).trim() || ‘Пользователь’;
+const email = (document.getElementById(‘r-email’)?.value || ‘’).trim();
+S.user = { name, email, isPremium: false };
+go(‘catalog’);
+}
+
+function selectCourse(id) {
+S.courseId = id;
+go(‘course’);
+}
+
+function liveRange(v) {
+S.duration = +v;
+const lbl = v<=15?‘Быстро’:v<=25?‘Стандартно’:v<=40?‘Углублённо’:‘Полное погружение’;
+const el = document.getElementById(‘dur-label’);
+const ev = document.getElementById(‘dur-val’);
+if (el) el.textContent = lbl;
+if (ev) ev.textContent = v + ’ мин’;
+}
+
+function lvlLabel() {
+return {beginner:‘Новичок’,practitioner:‘Практик’,expert:‘Эксперт’}[S.level];
+}
+
+function goalText() {
+return {interest:‘из интереса’,career:‘для карьеры’,work:‘для работы’}[S.goal];
+}
+
+function activatePremium() {
+if (confirm(‘Активировать Premium-режим (демо)?’)) {
+if (!S.user) S.user = { name:‘Пользователь’, email:’’, isPremium:false };
+S.user.isPremium = true;
+render();
+}
+}
+
+function showPremium() {
+alert(‘Этот курс доступен в Premium. Нажмите «Попробовать Premium» внизу страницы.’);
+}
+
+/* ═══════════════════════════════════════════════════════
+PLACEMENT
+═══════════════════════════════════════════════════════ */
+async function startPlacement() {
+S.placementQs = [];
+S.placementStep = 0;
+S.placementScore = 0;
+go(‘placement’);
+
+const c = getCourse(S.courseId);
+const langNote = S.courseLang !== ‘ru’ ? `Questions in ${S.courseLang}.` : ‘Вопросы на русском языке.’;
+
+const prompt = `Составь тест для определения уровня знаний по теме: "${c?.title}". Ровно 4 вопроса с возрастающей сложностью. ${langNote} Верни ТОЛЬКО валидный JSON массив без markdown: [{"text":"...","options":["...","...","...","..."],"correct":0}] correct — индекс правильного ответа (0–3). Дистракторы должны быть правдоподобными.`;
+
+try {
+const r = await callAI(prompt);
+S.placementQs = JSON.parse(r.replace(/`json|`/g,’’).trim());
+} catch {
+skipPlacement();
+return;
+}
+render();
 }
 
 function answerPlacement(idx) {
-  const q = PLACEMENT_QUESTIONS[state.placementStep];
-  if (idx === q.correct) state.placementScore++;
-  state.placementStep++;
-  if (state.placementStep >= PLACEMENT_QUESTIONS.length) {
-    // Determine level
-    if (state.placementScore <= 1) state.level = 'beginner';
-    else if (state.placementScore <= 3) state.level = 'practitioner';
-    else state.level = 'expert';
-    state.screen = 'settings';
-  }
-  render();
+if (S.placementQs[S.placementStep].correct === idx) S.placementScore++;
+S.placementStep++;
+if (S.placementStep >= S.placementQs.length) {
+const ratio = S.placementScore / S.placementQs.length;
+S.level = ratio <= 0.3 ? ‘beginner’ : ratio <= 0.7 ? ‘practitioner’ : ‘expert’;
+beginCourse();
+} else render();
 }
 
-function skipToSettings() {
-  state.screen = 'settings';
-  render();
+function skipPlacement() { beginCourse(); }
+
+/* ═══════════════════════════════════════════════════════
+COURSE ENGINE
+═══════════════════════════════════════════════════════ */
+function beginCourse() {
+const c = getCourse(S.courseId);
+if (!S.enrolledCourses[S.courseId]) {
+S.enrolledCourses[S.courseId] = { completedLessons: [], generatedLessons: {} };
+}
+const enrolled = S.enrolledCourses[S.courseId];
+// Find next uncompleted lesson
+const nextLesson = enrolled.completedLessons.length < c.lessons
+? enrolled.completedLessons.length : 0;
+S.lessonIdx = nextLesson;
+S.lessonTotal = c.lessons;
+S.lessonStep = 0;
+S.lessonData = null;
+S.aiMessages = [];
+go(‘lesson’);
+generateLesson();
 }
 
-function setLevel(lvl) {
-  state.level = lvl;
-  render();
+async function generateLesson() {
+const c = getCourse(S.courseId);
+const enrolled = S.enrolledCourses[S.courseId];
+
+// Check cache (offline support)
+if (enrolled?.generatedLessons?.[S.lessonIdx]) {
+S.lessonData = enrolled.generatedLessons[S.lessonIdx];
+S.lessonStep = 1;
+render();
+return;
 }
 
-function setDuration(val) {
-  state.duration = parseInt(val);
-  // Update label live
-  const label = document.querySelector('.slider-label span:first-child');
-  if (label) {
-    label.textContent = val <= 15 ? 'Короткий урок' : val <= 30 ? 'Стандартный' : 'Глубокое погружение';
-  }
-  const valueEl = document.querySelector('.slider-value');
-  if (valueEl) valueEl.textContent = val + ' мин';
+const moduleIdx = Math.floor(S.lessonIdx / Math.ceil(S.lessonTotal / c.modules.length));
+const moduleName = c.modules[Math.min(moduleIdx, c.modules.length-1)];
+const langInstr = S.courseLang===‘ru’ ? ‘Весь контент на русском языке.’ : `All content in ${S.courseLang}.`;
+
+const prompt = `Ты AI-преподаватель. Создай урок ${S.lessonIdx+1} из ${S.lessonTotal} для курса “${c.title}”, модуль “${moduleName}”.
+
+Параметры:
+
+- Уровень: ${lvlLabel()}
+- Цель: ${goalText()}
+- Длина чтения: ~${S.duration} минут
+  ${langInstr}
+
+Верни ТОЛЬКО валидный JSON без markdown:
+{
+“title”: “Название урока”,
+“body”: “HTML-контент”,
+“question”: {“text”:”…”,“options”:[”…”,”…”,”…”,”…”],“correct”:0,“explanation”:”…”},
+“keypoints”: [“тезис 1”,“тезис 2”,“тезис 3”]
 }
 
-function goToCourseMap() {
-  state.screen = 'course-map';
-  render();
+HTML теги для body: <p>, <h3>, <em class="hl">, <div class="example">, <code class="formula">
+Примеры реальные, конкретные, с цифрами.
+keypoints — 3 ключевых вывода урока одной фразой каждый.`;
+
+try {
+const raw = await callAI(prompt, 1800);
+const data = JSON.parse(raw.replace(/`json|`/g,’’).trim());
+S.lessonData = data;
+// Cache for offline
+if (enrolled) enrolled.generatedLessons[S.lessonIdx] = data;
+S.lessonStep = 1;
+} catch(e) {
+S.lessonData = {
+title: ‘Ошибка загрузки’,
+body: ‘<p>Не удалось загрузить урок. Проверьте соединение с интернетом.</p>’,
+question: { text:‘Тест недоступен’, options:[’—’,’—’,’—’,’—’], correct:0, explanation:’’ },
+keypoints: []
+};
+S.lessonStep = 1;
+}
+render();
 }
 
-function goToSettings() {
-  state.screen = 'settings';
-  render();
+function answerLesson(idx) {
+S.selectedAnswer = idx;
+S.lastCorrect = idx === S.lessonData?.question?.correct;
+S.xp += S.lastCorrect ? 30 : 10;
+// Update streak
+const today = new Date().toDateString();
+if (S.lastStudyDate !== today) {
+S.streak = (S.lastStudyDate === new Date(Date.now()-86400000).toDateString()) ? S.streak+1 : 1;
+S.lastStudyDate = today;
+}
+S.lessonStep = 3;
+render();
+setTimeout(loadAIFeedback, 80);
 }
 
-function startModule(moduleIdx) {
-  state.currentModule = moduleIdx;
-  state.currentLesson = 0;
-  state.lessonStep = 0;
-  state.screen = 'lesson';
-  state.aiMessages = [];
-  render();
+async function loadAIFeedback() {
+const q = S.lessonData?.question;
+const keys = [‘A’,‘B’,‘C’,‘D’];
+const prompt = `AI-репетитор. Ответь 2-3 предложениями, без markdown. Вопрос: "${q?.text}" Правильный: ${keys[q?.correct]}. ${q?.options?.[q?.correct]} Ответ пользователя: ${keys[S.selectedAnswer]}. ${q?.options?.[S.selectedAnswer]} Результат: ${S.lastCorrect?'ВЕРНО':'НЕВЕРНО'} Объяснение: "${q?.explanation}" Уровень: ${lvlLabel()} ${S.lastCorrect?'Подтверди + одна интересная деталь.':'Объясни ошибку, supportive тон.'}`;
+
+try {
+const text = await callAI(prompt);
+S.aiMessages = [{role:‘assistant’,content:text}];
+const el = document.getElementById(‘ai-body’);
+if (el) el.innerHTML = text;
+} catch {
+const el = document.getElementById(‘ai-body’);
+if (el) el.innerHTML = q?.explanation || ‘Объяснение недоступно.’;
+}
 }
 
-function nextStep() {
-  state.lessonStep = 1;
-  render();
+async function sendAI() {
+const input = document.getElementById(‘ai-q’);
+if (!input?.value.trim()) return;
+const q = input.value.trim();
+input.value = ‘’;
+S.aiMessages.push({role:‘user’,content:q});
+
+const bodyEl = document.getElementById(‘ai-body’);
+if (bodyEl) bodyEl.innerHTML += `<br><br><span style="color:rgba(255,255,255,.5);font-size:0.82rem;">Ты:</span> ${q}<br><div class="dots mt-xs"><span></span><span></span><span></span></div>`;
+
+const c = getCourse(S.courseId);
+try {
+const text = await callAI(q, 800, [
+{role:‘user’, content:`Курс: "${c?.title}", урок: "${S.lessonData?.title}". Уровень: ${lvlLabel()}.`},
+…S.aiMessages.slice(0,-1)
+]);
+S.aiMessages.push({role:‘assistant’,content:text});
+if (bodyEl) {
+const dots = bodyEl.querySelector(’.dots’);
+if (dots) dots.remove();
+bodyEl.innerHTML += `<br><span style="color:rgba(255,255,255,.6);font-size:0.82rem;">AI:</span> ${text}`;
+}
+} catch {
+if (bodyEl) {
+const dots = bodyEl.querySelector(’.dots’);
+if (dots) dots.innerHTML = ‘Ошибка соединения.’;
+}
+}
 }
 
-function prevStep() {
-  state.lessonStep = 0;
-  render();
+function nextLesson() {
+const enrolled = S.enrolledCourses[S.courseId];
+if (enrolled && !enrolled.completedLessons.includes(S.lessonIdx)) {
+enrolled.completedLessons.push(S.lessonIdx);
+}
+S.lessonIdx++;
+if (S.lessonIdx >= S.lessonTotal) {
+go(‘result’);
+return;
+}
+S.lessonStep = 0;
+S.lessonData = null;
+S.aiMessages = [];
+go(‘lesson’);
+generateLesson();
 }
 
-function answerQuestion(idx) {
-  if (state.lessonStep === 2) return;
-  state.selectedAnswer = idx;
-  const lesson = MODULES[state.currentModule].lessons[state.currentLesson];
-  const q = lesson.question[state.level];
-  state.lastAnswerCorrect = idx === q.correct;
-  state.lessonStep = 2;
-  if (state.lastAnswerCorrect) state.xp += 25;
-  else state.xp += 10;
-  render();
+/* ═══════════════════════════════════════════════════════
+CREATE CUSTOM COURSE
+═══════════════════════════════════════════════════════ */
+async function createCourse() {
+const title = document.getElementById(‘nc-title’)?.value.trim();
+const desc = document.getElementById(‘nc-desc’)?.value.trim();
+if (!title) { alert(‘Введи название курса’); return; }
 
-  // Trigger AI explanation
-  setTimeout(() => loadAIExplanation(q, idx), 100);
+S.newCourseTitle = title;
+S.newCourseDesc = desc;
+
+const lessonCount = S.lessonTotal || 6;
+const prompt = `Создай структуру курса на тему: "${title}". ${desc ? `Контекст: ${desc}` : ''} Уровень: ${lvlLabel()}. Количество уроков: ${lessonCount}. Верни ТОЛЬКО валидный JSON без markdown: { "id": "custom_${Date.now()}", "icon": "📖", "tag": "Мой курс", "title": "${title}", "desc": "краткое описание курса 1 предложение", "modules": ["Модуль 1","Модуль 2","Модуль 3"], "lessons": ${lessonCount}, "free": true }`;
+
+try {
+const raw = await callAI(prompt);
+const meta = JSON.parse(raw.replace(/`json|`/g,’’).trim());
+meta.isCustom = true;
+
+```
+// Add to catalog in state
+CATALOG.push(meta);
+S.enrolledCourses[meta.id] = { completedLessons:[], generatedLessons:{}, _meta: meta };
+S.courseId = meta.id;
+go('course');
+```
+
+} catch(e) {
+alert(‘Не удалось создать курс. Попробуйте ещё раз.’);
+}
 }
 
-async function loadAIExplanation(q, selectedIdx) {
-  const letters = ['A','B','C','D'];
-  const correct = state.lastAnswerCorrect;
-  const lesson = MODULES[state.currentModule].lessons[state.currentLesson];
-  const levelLabel = { beginner: 'новичка', practitioner: 'практика', expert: 'эксперта' }[state.level];
-
-  const prompt = `Ты AI-репетитор по финансам для CFO-курса. 
-Вопрос: "${q.text}"
-Правильный ответ: ${letters[q.correct]}. ${q.options[q.correct]}
-Пользователь выбрал: ${letters[selectedIdx]}. ${q.options[selectedIdx]}
-Результат: ${correct ? 'ВЕРНО' : 'НЕВЕРНО'}
-
-Объяснение из курса: "${q.explanation}"
-
-Напиши краткое объяснение (3-4 предложения) для уровня ${levelLabel}. 
-${correct ? 'Подтверди правильность и добавь одну важную деталь.' : 'Объясни почему выбранный ответ неверен и почему правильный — правильный.'}
-Пиши на русском, без markdown форматирования, живым языком.`;
-
-  try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        messages: [{ role: "user", content: prompt }]
-      })
-    });
-    const data = await response.json();
-    const text = data.content?.[0]?.text || q.explanation;
-
-    const el = document.getElementById('ai-message');
-    if (el) {
-      el.innerHTML = text;
-      state.aiMessages = [{ role: 'assistant', content: text }];
-    }
-  } catch (e) {
-    const el = document.getElementById('ai-message');
-    if (el) el.innerHTML = q.explanation;
-  }
+/* ═══════════════════════════════════════════════════════
+AI HELPER
+═══════════════════════════════════════════════════════ */
+async function callAI(prompt, maxTokens=1000, extraMessages=[]) {
+const messages = […extraMessages, {role:‘user’,content:prompt}];
+const resp = await fetch(“https://api.anthropic.com/v1/messages”, {
+method:“POST”,
+headers:{“Content-Type”:“application/json”},
+body:JSON.stringify({
+model:“claude-sonnet-4-20250514”,
+max_tokens: maxTokens,
+messages
+})
+});
+const data = await resp.json();
+return data.content?.[0]?.text || ‘’;
 }
 
-async function sendFollowUp() {
-  const input = document.getElementById('ai-follow-up');
-  if (!input || !input.value.trim()) return;
-  const question = input.value.trim();
-  input.value = '';
-
-  const lesson = MODULES[state.currentModule].lessons[state.currentLesson];
-  const q = lesson.question[state.level];
-  const levelLabel = { beginner: 'новичка', practitioner: 'практика', expert: 'эксперта' }[state.level];
-
-  state.aiMessages.push({ role: 'user', content: question });
-
-  const msgEl = document.getElementById('ai-message');
-  if (msgEl) {
-    msgEl.innerHTML += `<br><br><strong style="color:var(--gold)">Вы:</strong> ${question}<br><div class="ai-loading" style="margin-top:0.5rem"><span></span><span></span><span></span></div>`;
-  }
-
-  const systemPrompt = `Ты AI-репетитор по финансам для CFO-курса. Тема урока: "${lesson.title}". Уровень пользователя: ${levelLabel}. Отвечай кратко (2-4 предложения), на русском, без markdown.`;
-
-  try {
-    const messages = [
-      { role: 'user', content: `Контекст урока: "${lesson.title}". Вопрос теста: "${q.text}". Правильный ответ: ${q.options[q.correct]}` },
-      ...state.aiMessages
-    ];
-
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages
-      })
-    });
-    const data = await response.json();
-    const text = data.content?.[0]?.text || "Не удалось получить ответ.";
-    state.aiMessages.push({ role: 'assistant', content: text });
-
-    if (msgEl) {
-      // Remove loading
-      const loading = msgEl.querySelector('.ai-loading');
-      if (loading) loading.remove();
-      msgEl.innerHTML += `<br><strong style="color:var(--gold-light)">AI:</strong> ${text}`;
-    }
-  } catch (e) {
-    if (msgEl) {
-      const loading = msgEl.querySelector('.ai-loading');
-      if (loading) loading.remove();
-      msgEl.innerHTML += `<br>Ошибка соединения.`;
-    }
-  }
-}
-
-function finishLesson() {
-  const mod = MODULES[state.currentModule];
-  if (state.currentLesson < mod.lessons.length - 1) {
-    state.currentLesson++;
-    state.lessonStep = 0;
-    state.aiMessages = [];
-    state.screen = 'lesson';
-    render();
-  } else {
-    if (!state.completedModules.includes(state.currentModule)) {
-      state.completedModules.push(state.currentModule);
-    }
-    state.screen = 'result';
-    render();
-  }
-}
-
-// ============================================================
-// INIT
-// ============================================================
+/* ═══════════════════════════════════════════════════════
+INIT
+═══════════════════════════════════════════════════════ */
 render();
 </script>
 
