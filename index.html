@@ -730,13 +730,13 @@ function catalog() {
       <div class="topbar">
         <div class="logo">lern.</div>
         <div class="topbar-right">
-          ${S.streak > 0 ? `<div class="streak-badge">🔥 ${S.streak}</div>` : ''}
+          ${S.streak > 0 ? '<div class="streak-badge">🔥 ' + S.streak + '</div>' : ''}
           <div class="xp-badge">⚡ ${S.xp} XP</div>
         </div>
       </div>
 
       <div style="margin-bottom:1.5rem;">
-        <span class="eyebrow eyebrow-accent">${name ? `Привет, ${name}` : 'Каталог'}</span>
+        <span class="eyebrow eyebrow-accent">${name ? "Привет, " + name : "Каталог"}</span>
         <h2 class="title">Выбери курс</h2>
       </div>
 
@@ -752,13 +752,13 @@ function catalog() {
         const enrolled = !!getEnrolled(c.id);
         const locked = !c.free && !S.user?.isPremium && !enrolled;
         return `
-        <div class="course-card ${locked ? 'locked' : ''}" onclick="${!locked ? `selectCourse('${c.id}')` : 'showPremium()'}">
+        <div class="course-card ${locked ? 'locked' : ''}" onclick="${!locked ? 'selectCourse(' + JSON.stringify(c.id) + ')' : 'showPremium()'}">
           <div class="course-icon">${c.icon}</div>
           <div class="course-info">
             <div class="flex items-center justify-between mb-sm">
               <span class="tag ${c.free ? 'tag-green' : ''}">${c.tag}${!c.free ? ' · Premium' : ''}</span>
               ${locked ? '<span class="tag">🔒 Premium</span>' : ''}
-              ${enrolled && prog > 0 ? `<span class="text-xs text-muted mono">${prog}%</span>` : ''}
+              ${enrolled && prog > 0 ? '<span class="text-xs text-muted mono">' + prog + '%</span>' : ''}
             </div>
             <div class="course-title">${c.title}</div>
             <div class="course-desc">${c.desc}</div>
@@ -773,7 +773,7 @@ function catalog() {
               </div>
             ` : ''}
             <div class="course-meta">
-              ${enrolled ? `<span class="tag tag-accent">Начат</span>` : ''}
+              ${enrolled ? '<span class="tag tag-accent">Начат</span>' : ''}
               <span class="tag">📚 ${c.lessons} уроков</span>
             </div>
           </div>
@@ -1164,7 +1164,7 @@ function result() {
       <div style="font-size:3rem;margin-bottom:1rem;">🎯</div>
       <span class="eyebrow eyebrow-accent">Курс завершён</span>
       <h2 class="title" style="margin:0.5rem 0;">${c?.title}</h2>
-      ${name ? `<p class="body-text mt-xs">Отлично, ${name}!</p>` : ''}
+      ${name ? '<p class="body-text mt-xs">Отлично, ' + name + '!</p>' : ''}
 
       <div class="stat-grid mt-md">
         <div class="stat-cell"><div class="stat-val">${S.xp}</div><div class="stat-lbl">Всего XP</div></div>
@@ -1291,13 +1291,13 @@ S.placementScore = 0;
 go(‘placement’);
 
 const c = getCourse(S.courseId);
-const langNote = S.courseLang !== ‘ru’ ? `Questions in ${S.courseLang}.` : ‘Вопросы на русском языке.’;
+const langNote = S.courseLang !== ‘ru’ ? ’Questions in ’ + S.courseLang + ‘.’ : ‘Вопросы на русском языке.’;
 
 const prompt = `Составь тест для определения уровня знаний по теме: "${c?.title}". Ровно 4 вопроса с возрастающей сложностью. ${langNote} Верни ТОЛЬКО валидный JSON массив без markdown: [{"text":"...","options":["...","...","...","..."],"correct":0}] correct — индекс правильного ответа (0–3). Дистракторы должны быть правдоподобными.`;
 
 try {
 const r = await callAI(prompt);
-S.placementQs = JSON.parse(r.replace(/`json|`/g,’’).trim());
+S.placementQs = JSON.parse(r.replace(/`{3}json|`{3}/g,’’).trim());
 } catch {
 skipPlacement();
 return;
@@ -1352,7 +1352,7 @@ return;
 
 const moduleIdx = Math.floor(S.lessonIdx / Math.ceil(S.lessonTotal / c.modules.length));
 const moduleName = c.modules[Math.min(moduleIdx, c.modules.length-1)];
-const langInstr = S.courseLang===‘ru’ ? ‘Весь контент на русском языке.’ : `All content in ${S.courseLang}.`;
+const langInstr = S.courseLang===‘ru’ ? ‘Весь контент на русском языке.’ : ’All content in ’ + S.courseLang + ‘.’;
 
 const prompt = `Ты AI-преподаватель. Создай урок ${S.lessonIdx+1} из ${S.lessonTotal} для курса “${c.title}”, модуль “${moduleName}”.
 
@@ -1377,7 +1377,7 @@ keypoints — 3 ключевых вывода урока одной фразой
 
 try {
 const raw = await callAI(prompt, 1800);
-const data = JSON.parse(raw.replace(/`json|`/g,’’).trim());
+const data = JSON.parse(raw.replace(/`{3}json|`{3}/g,’’).trim());
 S.lessonData = data;
 // Cache for offline
 if (enrolled) enrolled.generatedLessons[S.lessonIdx] = data;
@@ -1438,7 +1438,7 @@ if (bodyEl) bodyEl.innerHTML += `<br><br><span style="color:rgba(255,255,255,.5)
 const c = getCourse(S.courseId);
 try {
 const text = await callAI(q, 800, [
-{role:‘user’, content:`Курс: "${c?.title}", урок: "${S.lessonData?.title}". Уровень: ${lvlLabel()}.`},
+{role:‘user’, content:‘Курс: “’ + (c && c.title) + ‘”, урок: “’ + (S.lessonData && S.lessonData.title) + ‘”. Уровень: ’ + lvlLabel() + ‘.’},
 …S.aiMessages.slice(0,-1)
 ]);
 S.aiMessages.push({role:‘assistant’,content:text});
@@ -1484,11 +1484,11 @@ S.newCourseTitle = title;
 S.newCourseDesc = desc;
 
 const lessonCount = S.lessonTotal || 6;
-const prompt = `Создай структуру курса на тему: "${title}". ${desc ? `Контекст: ${desc}` : ''} Уровень: ${lvlLabel()}. Количество уроков: ${lessonCount}. Верни ТОЛЬКО валидный JSON без markdown: { "id": "custom_${Date.now()}", "icon": "📖", "tag": "Мой курс", "title": "${title}", "desc": "краткое описание курса 1 предложение", "modules": ["Модуль 1","Модуль 2","Модуль 3"], "lessons": ${lessonCount}, "free": true }`;
+const prompt = `Создай структуру курса на тему: "${title}". ${desc ? 'Контекст: ' + desc : ''} Уровень: ${lvlLabel()}. Количество уроков: ${lessonCount}. Верни ТОЛЬКО валидный JSON без markdown: { "id": "custom_${Date.now()}", "icon": "📖", "tag": "Мой курс", "title": "${title}", "desc": "краткое описание курса 1 предложение", "modules": ["Модуль 1","Модуль 2","Модуль 3"], "lessons": ${lessonCount}, "free": true }`;
 
 try {
 const raw = await callAI(prompt);
-const meta = JSON.parse(raw.replace(/`json|`/g,’’).trim());
+const meta = JSON.parse(raw.replace(/`{3}json|`{3}/g,’’).trim());
 meta.isCustom = true;
 
 ```
