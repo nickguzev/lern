@@ -6,1299 +6,1227 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lern</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-/* ── TOKENS ─────────────────────────────────────────── */
 :root {
   --bg:       #f7f5f0;
   --surface:  #ffffff;
-  --surface2: #f0ede6;
-  --border:   #e4e0d8;
-  --border2:  #ccc8be;
   --ink:      #1a1814;
-  --ink2:     #4a4740;
-  --muted:    #8a8680;
-  --accent:   #2d5be3;
-  --accent-s: rgba(45,91,227,0.08);
-  --green:    #1a7a4a;
-  --green-s:  rgba(26,122,74,0.08);
-  --red:      #c0392b;
-  --red-s:    rgba(192,57,43,0.08);
-  --amber:    #b8860b;
-  --r: 10px;
-  --r-sm: 6px;
+  --ink2:     #3d3a33;
+  --muted:    #9b9589;
+  --border:   #e8e4dc;
+  --border2:  #d4cfc4;
+  --accent:   #2d6a4f;
+  --accent2:  #40916c;
+  --amber:    #e09f3e;
+  --red:      #c1440e;
+  --green:    #2d6a4f;
+  --tag-bg:   #eef4f1;
+  --tag-text: #2d6a4f;
 }
 
-/* ── RESET ───────────────────────────────────────────── */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+- { margin:0; padding:0; box-sizing:border-box; }
+
 html { scroll-behavior: smooth; }
+
 body {
-font-family: ‘Manrope’, sans-serif;
+font-family: ‘DM Sans’, sans-serif;
 background: var(–bg);
 color: var(–ink);
 min-height: 100vh;
 -webkit-font-smoothing: antialiased;
 }
 
-/* ── SCREENS ─────────────────────────────────────────── */
+/* ── SCREENS ── */
 .screen {
 min-height: 100vh;
 display: flex;
 flex-direction: column;
 align-items: center;
-padding: 0 1.25rem 3rem;
-animation: rise .35s cubic-bezier(.4,0,.2,1) both;
+justify-content: center;
+padding: 2rem 1.5rem;
+animation: up .35s ease both;
 }
-@keyframes rise {
-from { opacity:0; transform:translateY(10px); }
+.screen.top { justify-content: flex-start; padding-top: 72px; }
+
+@keyframes up {
+from { opacity:0; transform:translateY(14px); }
 to   { opacity:1; transform:translateY(0); }
 }
-.wrap { width: 100%; max-width: 600px; }
 
-/* ── TOPBAR ──────────────────────────────────────────── */
-.topbar {
-width: 100%;
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 1.1rem 0;
-margin-bottom: 0.5rem;
+.wrap { width:100%; max-width:620px; }
+
+/* ── NAV ── */
+.nav {
+position: fixed; top:0; left:0; right:0;
+height: 56px;
+background: rgba(247,245,240,0.92);
+backdrop-filter: blur(10px);
+border-bottom: 1px solid var(–border);
+display: flex; align-items: center; justify-content: space-between;
+padding: 0 1.5rem;
+z-index: 100;
 }
-.logo {
-font-family: ‘Instrument Serif’, serif;
-font-size: 1.5rem;
-letter-spacing: -0.01em;
+.nav-logo {
+font-family: ‘Fraunces’, serif;
+font-size: 1.3rem;
+font-weight: 600;
+letter-spacing: -.02em;
 color: var(–ink);
 }
-.topbar-right { display:flex; align-items:center; gap:0.75rem; }
+.nav-logo span { color: var(–accent); }
 
-/* ── TYPOGRAPHY ──────────────────────────────────────── */
-.serif { font-family: ‘Instrument Serif’, serif; }
-.mono  { font-family: ‘JetBrains Mono’, monospace; }
-
-.eyebrow {
-font-size: 0.7rem;
-font-weight: 600;
-letter-spacing: 0.12em;
-text-transform: uppercase;
-color: var(–muted);
-display: block;
-margin-bottom: 0.5rem;
-}
-.eyebrow-accent { color: var(–accent); }
+/* ── TYPOGRAPHY ── */
+.serif { font-family: ‘Fraunces’, serif; }
+.mono  { font-family: ‘DM Mono’, monospace; }
 
 h1.display {
-font-family: ‘Instrument Serif’, serif;
-font-size: clamp(2rem, 5vw, 2.8rem);
-line-height: 1.12;
-letter-spacing: -0.02em;
+font-family: ‘Fraunces’, serif;
+font-size: clamp(2.6rem, 6vw, 3.8rem);
+font-weight: 300;
+line-height: 1.08;
+letter-spacing: -.03em;
 color: var(–ink);
 }
+h1.display em { font-style: italic; color: var(–accent); }
+
 h2.title {
-font-family: ‘Instrument Serif’, serif;
-font-size: clamp(1.5rem, 4vw, 2rem);
+font-family: ‘Fraunces’, serif;
+font-size: 1.9rem;
+font-weight: 400;
+letter-spacing: -.02em;
 line-height: 1.2;
-letter-spacing: -0.01em;
-}
-.body-text {
-font-size: 0.95rem;
-line-height: 1.7;
-color: var(–ink2);
 }
 
-/* ── DIVIDER ─────────────────────────────────────────── */
-.divider { height:1px; background:var(–border); margin: 1.5rem 0; }
+.label {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.68rem;
+letter-spacing: .12em;
+text-transform: uppercase;
+color: var(–muted);
+}
+.label.green { color: var(–accent); }
 
-/* ── BUTTONS ─────────────────────────────────────────── */
+.tag {
+display: inline-block;
+background: var(–tag-bg);
+color: var(–tag-text);
+font-family: ‘DM Mono’, monospace;
+font-size: .68rem;
+letter-spacing: .08em;
+text-transform: uppercase;
+padding: .25rem .6rem;
+border-radius: 4px;
+}
+
+/* ── DIVIDER ── */
+.rule { height:1px; background:var(–border); margin:1.5rem 0; }
+
+/* ── BUTTONS ── */
 .btn {
-display: inline-flex; align-items:center; justify-content:center; gap:0.4rem;
-padding: 0.8rem 1.5rem;
-font-family: ‘Manrope’, sans-serif;
-font-size: 0.875rem;
-font-weight: 600;
-border: none;
-border-radius: var(–r-sm);
+display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+padding: .85rem 1.75rem;
+font-family: ‘DM Sans’, sans-serif;
+font-size: .9rem; font-weight: 600;
+border: none; border-radius: 6px;
 cursor: pointer;
 transition: all .18s ease;
-white-space: nowrap;
 }
-.btn-primary { background:var(–ink); color:#fff; }
-.btn-primary:hover { background:#2d2a24; transform:translateY(-1px); box-shadow:0 4px 16px rgba(26,24,20,.18); }
-.btn-accent  { background:var(–accent); color:#fff; }
-.btn-accent:hover  { opacity:.9; transform:translateY(-1px); }
-.btn-ghost   { background:transparent; color:var(–ink2); border:1px solid var(–border2); }
-.btn-ghost:hover   { border-color:var(–ink); color:var(–ink); background:var(–surface2); }
-.btn-surface { background:var(–surface); color:var(–ink); border:1px solid var(–border); }
-.btn-surface:hover { border-color:var(–border2); background:var(–surface2); }
-.btn-danger  { background:var(–red-s); color:var(–red); border:1px solid rgba(192,57,43,.2); }
-.btn-success { background:var(–green-s); color:var(–green); border:1px solid rgba(26,122,74,.2); }
-.btn-full { width:100%; }
-.btn-lg { padding:1rem 1.75rem; font-size:0.95rem; }
-.btn-sm { padding:0.5rem 0.875rem; font-size:0.8rem; }
+.btn-primary { background: var(–ink); color: var(–bg); }
+.btn-primary:hover { background: var(–ink2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,24,20,.18); }
+.btn-accent  { background: var(–accent); color: #fff; }
+.btn-accent:hover { background: var(–accent2); transform: translateY(-1px); }
+.btn-ghost   { background: transparent; color: var(–ink2); border: 1px solid var(–border2); }
+.btn-ghost:hover { border-color: var(–ink); color: var(–ink); }
+.btn-surface { background: var(–surface); color: var(–ink); border: 1px solid var(–border); }
+.btn-surface:hover { border-color: var(–border2); }
+.btn.w { width:100%; }
+.btn.sm { padding: .5rem .875rem; font-size: .82rem; }
 
-/* ── INPUT ───────────────────────────────────────────── */
-.field { margin-bottom:1rem; }
-.field label { display:block; font-size:0.8rem; font-weight:600; color:var(–ink2); margin-bottom:0.4rem; }
+/* ── INPUT ── */
+.field { margin-bottom: 1.25rem; }
+.field label { display:block; font-size:.82rem; font-weight:500; margin-bottom:.4rem; color:var(–ink2); }
 .input {
 width:100%;
-background:var(–surface);
-border:1px solid var(–border);
-border-radius:var(–r-sm);
-padding: 0.8rem 1rem;
-font-family:‘Manrope’,sans-serif;
-font-size:0.9rem;
-color:var(–ink);
-outline:none;
-transition: border-color .18s;
+background: var(–surface);
+border: 1px solid var(–border2);
+border-radius: 6px;
+padding: .8rem 1rem;
+font-family: ‘DM Sans’, sans-serif;
+font-size: .95rem;
+color: var(–ink);
+outline: none;
+transition: border-color .15s, box-shadow .15s;
 }
-.input:focus { border-color:var(–accent); box-shadow:0 0 0 3px var(–accent-s); }
-.input::placeholder { color:var(–muted); }
-select.input { cursor:pointer; }
+.input:focus { border-color: var(–accent); box-shadow: 0 0 0 3px rgba(45,106,79,.1); }
+.input::placeholder { color: var(–muted); }
 
-/* ── CARD ────────────────────────────────────────────── */
+/* ── CARDS ── */
 .card {
-background:var(–surface);
-border:1px solid var(–border);
-border-radius:var(–r);
-padding:1.5rem;
-margin-bottom:0.75rem;
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 1.5rem;
+margin-bottom: 1rem;
 }
+.card.accent-left { border-left: 3px solid var(–accent); }
+.card.hover { cursor:pointer; transition: border-color .2s, box-shadow .2s, transform .2s; }
+.card.hover:hover { border-color: var(–border2); box-shadow: 0 4px 20px rgba(26,24,20,.07); transform: translateY(-2px); }
 
-/* ── PILL / TAG ──────────────────────────────────────── */
-.tag {
-display:inline-flex; align-items:center; gap:0.3rem;
-padding:0.25rem 0.65rem;
-border-radius:100px;
-font-size:0.72rem;
-font-weight:600;
-letter-spacing:0.04em;
-border:1px solid var(–border);
-color:var(–muted);
-background:var(–surface2);
+/* ── COURSE CARD ── */
+.course-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 1.5rem;
+cursor: pointer;
+transition: all .22s ease;
+position: relative;
 }
-.tag-accent { border-color:rgba(45,91,227,.25); color:var(–accent); background:var(–accent-s); }
-.tag-green  { border-color:rgba(26,122,74,.25);  color:var(–green);  background:var(–green-s); }
-.tag-amber  { border-color:rgba(184,134,11,.25); color:var(–amber);  background:rgba(184,134,11,.07); }
+.course-card:hover { border-color: var(–accent); box-shadow: 0 6px 24px rgba(45,106,79,.1); transform: translateY(-2px); }
+.course-card.locked { opacity:.45; cursor:default; pointer-events:none; }
+.course-card .course-title { font-family:‘Fraunces’,serif; font-size:1.15rem; font-weight:400; margin:.5rem 0 .35rem; }
+.course-card .course-desc  { font-size:.83rem; color:var(–muted); line-height:1.55; }
+.course-card .course-meta  { display:flex; gap:1rem; margin-top:1rem; padding-top:1rem; border-top:1px solid var(–border); font-family:‘DM Mono’,monospace; font-size:.7rem; color:var(–muted); }
+.lock-badge { position:absolute; top:1rem; right:1rem; background:var(–border); color:var(–muted); font-family:‘DM Mono’,monospace; font-size:.65rem; padding:.2rem .5rem; border-radius:4px; }
 
-/* ── PILLS GROUP ─────────────────────────────────────── */
-.pills { display:flex; flex-wrap:wrap; gap:0.5rem; }
-.pill {
-padding:0.45rem 1rem;
-border-radius:100px;
-border:1px solid var(–border);
-font-size:0.82rem; font-weight:600;
-cursor:pointer; color:var(–ink2);
-background:var(–surface);
-transition: all .18s;
+/* ── PROGRESS ── */
+.prog-bar { width:100%; height:2px; background:var(–border); border-radius:2px; overflow:hidden; margin-bottom:2rem; }
+.prog-fill { height:100%; background:var(–accent); border-radius:2px; transition: width .5s cubic-bezier(.4,0,.2,1); }
+
+/* ── MODULE PROGRESS ── */
+.module-list { display:flex; flex-direction:column; gap:.5rem; margin: 1rem 0; }
+.module-row {
+display:flex; align-items:center; gap:1rem;
+padding:.875rem 1rem;
+background:var(–surface); border:1px solid var(–border); border-radius:8px;
+transition: border-color .15s;
 }
-.pill:hover { border-color:var(–border2); color:var(–ink); }
-.pill.on { background:var(–ink); color:#fff; border-color:var(–ink); }
-
-/* ── PROGRESS BAR ────────────────────────────────────── */
-.pbar { height:3px; background:var(–border); border-radius:2px; overflow:hidden; margin-bottom:2rem; }
-.pbar-fill { height:100%; background:var(–accent); border-radius:2px; transition:width .5s cubic-bezier(.4,0,.2,1); }
-
-/* ── STREAK ──────────────────────────────────────────── */
-.streak-badge {
-display:flex; align-items:center; gap:0.35rem;
-font-size:0.8rem; font-weight:700; color:var(–amber);
-background:rgba(184,134,11,.1);
-border:1px solid rgba(184,134,11,.2);
-border-radius:100px;
-padding:0.3rem 0.7rem;
+.module-row.active { border-color:var(–accent); background:var(–tag-bg); }
+.module-row.done   { opacity:.6; }
+.mod-num {
+width:28px; height:28px; border-radius:50%;
+border:1px solid var(–border2);
+display:flex; align-items:center; justify-content:center;
+font-family:‘DM Mono’,monospace; font-size:.7rem; color:var(–muted);
+flex-shrink:0;
 }
+.module-row.done .mod-num   { background:var(–accent); border-color:var(–accent); color:#fff; font-size:.8rem; }
+.module-row.active .mod-num { background:var(–accent); border-color:var(–accent); color:#fff; }
+.mod-info { flex:1; }
+.mod-title { font-size:.9rem; font-weight:500; }
+.mod-sub   { font-size:.75rem; color:var(–muted); margin-top:.15rem; }
+.mod-lessons { font-family:‘DM Mono’,monospace; font-size:.68rem; color:var(–muted); }
 
-/* ── XP ──────────────────────────────────────────────── */
-.xp-badge {
-display:flex; align-items:center; gap:0.3rem;
-font-size:0.8rem; font-weight:700; color:var(–accent);
-background:var(–accent-s);
-border:1px solid rgba(45,91,227,.2);
-border-radius:100px;
-padding:0.3rem 0.7rem;
-}
-
-/* ── OPTIONS ─────────────────────────────────────────── */
+/* ── OPTIONS ── */
 .option {
 width:100%; text-align:left;
-background:var(–surface); border:1px solid var(–border);
-border-radius:var(–r-sm);
-padding:0.9rem 1.1rem;
-margin-bottom:0.5rem;
+background:var(–surface); border:1px solid var(–border); border-radius:8px;
+padding:.9rem 1.1rem; margin-bottom:.5rem;
 cursor:pointer;
-font-family:‘Manrope’,sans-serif; font-size:0.9rem;
-color:var(–ink);
-display:flex; align-items:center; gap:0.75rem;
-transition: all .16s;
+font-family:‘DM Sans’,sans-serif; font-size:.9rem; color:var(–ink);
+display:flex; align-items:center; gap:.75rem;
+transition: all .15s ease;
 }
-.option:hover:not(:disabled) { border-color:var(–border2); background:var(–surface2); transform:translateX(3px); }
-.option.opt-correct { border-color:var(–green); background:var(–green-s); color:var(–green); }
-.option.opt-wrong   { border-color:var(–red);   background:var(–red-s);   color:var(–red);   }
-.option.opt-reveal  { border-color:var(–green); color:var(–green); opacity:.55; }
+.option:hover:not(:disabled) { border-color:var(–accent); background:var(–tag-bg); transform:translateX(3px); }
+.option.correct { border-color:var(–green); background:rgba(45,106,79,.06); color:var(–green); }
+.option.wrong   { border-color:var(–red);   background:rgba(193,68,14,.06);  color:var(–red); }
+.option.reveal  { border-color:var(–green); color:var(–green); opacity:.55; }
 .opt-key {
-width:24px; height:24px; flex-shrink:0;
-border-radius:5px; border:1.5px solid currentColor;
+width:22px; height:22px; border-radius:5px;
+border:1px solid currentColor; opacity:.5;
 display:flex; align-items:center; justify-content:center;
-font-family:‘JetBrains Mono’,monospace; font-size:0.68rem; font-weight:400;
-opacity:.6;
+font-family:‘DM Mono’,monospace; font-size:.68rem;
+flex-shrink:0;
 }
 
-/* ── RANGE ───────────────────────────────────────────── */
-.range-wrap { margin-top:0.75rem; }
-.range-row  { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; font-size:0.85rem; }
-.range-val  { font-family:‘JetBrains Mono’,monospace; font-size:0.8rem; color:var(–accent); font-weight:500; }
+/* ── PILLS ── */
+.pills { display:flex; gap:.5rem; flex-wrap:wrap; }
+.pill {
+padding:.45rem .9rem; border-radius:100px;
+border:1px solid var(–border2);
+font-size:.82rem; font-weight:500;
+cursor:pointer; color:var(–muted);
+background:var(–surface);
+transition: all .15s;
+}
+.pill:hover  { border-color:var(–accent); color:var(–accent); }
+.pill.active { background:var(–accent); border-color:var(–accent); color:#fff; }
+
+/* ── RANGE ── */
+.range-wrap { margin:.75rem 0; }
+.range-row  { display:flex; justify-content:space-between; margin-bottom:.5rem; font-size:.82rem; }
+.range-val  { font-family:‘DM Mono’,monospace; font-weight:500; color:var(–accent); }
 input[type=range] {
 width:100%; -webkit-appearance:none;
-height:3px; background:var(–border); border-radius:2px; outline:none; cursor:pointer;
+height:2px; background:var(–border2); border-radius:2px; outline:none;
 }
 input[type=range]::-webkit-slider-thumb {
--webkit-appearance:none; width:17px; height:17px;
-border-radius:50%; background:var(–ink); cursor:pointer;
-border:2.5px solid var(–bg);
-box-shadow:0 1px 6px rgba(26,24,20,.2);
+-webkit-appearance:none; width:16px; height:16px; border-radius:50%;
+background:var(–accent); cursor:pointer;
+box-shadow:0 0 0 3px var(–bg);
 }
 
-/* ── AI PANEL ────────────────────────────────────────── */
-.ai-panel {
-background:var(–ink);
-border-radius:var(–r);
-padding:1.25rem 1.5rem;
-margin-top:1rem;
-animation: rise .3s ease;
-}
-.ai-eyebrow { font-size:0.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:0.6rem; display:block; }
-.ai-text { font-family:‘Instrument Serif’,serif; font-size:1.05rem; line-height:1.7; color:rgba(255,255,255,.85); }
-.ai-input-row { display:flex; gap:0.5rem; margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,.1); }
-.ai-input {
-flex:1; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.15);
-border-radius:var(–r-sm); padding:0.65rem 0.875rem;
-color:#fff; font-family:‘Manrope’,sans-serif; font-size:0.85rem; outline:none;
-}
-.ai-input::placeholder { color:rgba(255,255,255,.3); }
-.ai-input:focus { border-color:rgba(255,255,255,.4); }
-.ai-send {
-background:#fff; color:var(–ink);
-border:none; border-radius:var(–r-sm);
-padding:0.65rem 1rem; cursor:pointer;
-font-family:‘Manrope’,sans-serif; font-size:0.8rem; font-weight:700;
-transition:opacity .18s;
-}
-.ai-send:hover { opacity:.85; }
-.ai-premium-lock {
-display:flex; align-items:center; gap:0.5rem;
-padding:0.75rem 0; color:rgba(255,255,255,.35);
-font-size:0.8rem;
-}
-
-/* ── DOTS LOADER ─────────────────────────────────────── */
-.dots { display:flex; gap:4px; align-items:center; }
-.dots span {
-width:6px; height:6px; border-radius:50%;
-background:rgba(255,255,255,.5);
-animation: dotpop 1.1s infinite;
-}
-.dots span:nth-child(2) { animation-delay:.18s; }
-.dots span:nth-child(3) { animation-delay:.36s; }
-@keyframes dotpop {
-0%,60%,100% { transform:scale(1); opacity:.4; }
-30%          { transform:scale(1.35); opacity:1; }
-}
-
-/* ── LESSON CONTENT ──────────────────────────────────── */
+/* ── LESSON CONTENT ── */
 .lesson-body {
-font-family:‘Instrument Serif’,serif;
-font-size:1.08rem;
-line-height:1.85;
-color:var(–ink2);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 1rem; line-height: 1.85;
+color: var(–ink2);
 }
 .lesson-body h3 {
-font-family:‘Manrope’,sans-serif;
-font-size:0.9rem; font-weight:700;
-color:var(–ink); letter-spacing:.01em;
-margin:1.5rem 0 0.5rem;
-text-transform:uppercase;
+font-family:‘Fraunces’,serif; font-size:1.1rem; font-weight:400;
+color:var(–ink); margin:1.75rem 0 .5rem; letter-spacing:-.01em;
 }
-.lesson-body p { margin-bottom:0.75rem; }
-.lesson-body em { font-style:italic; color:var(–ink); }
-.lesson-body strong { font-weight:600; color:var(–ink); font-style:normal; }
+.lesson-body p { margin-bottom:.75rem; }
 .lesson-body .hl {
-background:rgba(45,91,227,.08);
-color:var(–accent);
-padding:0.1rem 0.35rem;
-border-radius:3px;
-font-style:normal;
+background: rgba(45,106,79,.1);
+color: var(–accent);
+padding:.05rem .35rem; border-radius:3px;
 }
 .lesson-body .example {
-background:var(–surface2);
-border-left:2px solid var(–border2);
-padding:1rem 1.25rem;
-margin:1rem 0;
-border-radius:0 var(–r-sm) var(–r-sm) 0;
-font-size:0.95rem;
+background: var(–bg);
+border-left: 2px solid var(–amber);
+padding: .875rem 1.1rem;
+border-radius:0 6px 6px 0;
+margin: 1rem 0;
+font-size:.92rem; color:var(–ink2);
 }
+.lesson-body .example strong { color:var(–ink); }
 .lesson-body .formula {
-font-family:‘JetBrains Mono’,monospace;
-font-size:0.82rem;
-background:var(–ink);
-color:#a8c4ff;
-padding:0.75rem 1rem;
-border-radius:var(–r-sm);
-margin:1rem 0;
-display:block;
-line-height:1.6;
+font-family:‘DM Mono’,monospace; font-size:.82rem;
+background:var(–ink); color: #a8d5be;
+padding:.75rem 1rem; border-radius:6px;
+margin:1rem 0; display:block;
+}
+.lesson-body .case-box {
+background: var(–surface);
+border: 1px solid var(–border);
+border-top: 3px solid var(–amber);
+border-radius: 0 0 8px 8px;
+padding: 1.25rem;
+margin: 1.5rem 0;
+}
+.lesson-body .case-box .case-label {
+font-family:‘DM Mono’,monospace; font-size:.65rem;
+letter-spacing:.1em; text-transform:uppercase;
+color:var(–amber); margin-bottom:.5rem; display:block;
 }
 
-/* ── COURSE CARD ─────────────────────────────────────── */
-.course-card {
-background:var(–surface);
-border:1px solid var(–border);
-border-radius:var(–r);
-padding:1.5rem;
-cursor:pointer;
-transition: all .2s ease;
-margin-bottom:0.75rem;
-display:flex;
-gap:1.25rem;
-align-items:flex-start;
-}
-.course-card:hover { border-color:var(–border2); transform:translateY(-2px); box-shadow:0 8px 24px rgba(26,24,20,.07); }
-.course-card.locked { opacity:.45; cursor:default; }
-.course-card.locked:hover { transform:none; box-shadow:none; border-color:var(–border); }
-.course-icon {
-width:44px; height:44px; flex-shrink:0;
+/* ── AI PANEL ── */
+.ai-panel {
+background: var(–ink);
+color: #e8e4dc;
 border-radius:10px;
-background:var(–surface2);
-border:1px solid var(–border);
-display:flex; align-items:center; justify-content:center;
-font-size:1.3rem;
+padding:1.25rem;
+margin-top:1rem;
+animation: up .25s ease;
 }
-.course-info { flex:1; min-width:0; }
-.course-title { font-size:1rem; font-weight:700; margin-bottom:0.25rem; }
-.course-desc  { font-size:0.82rem; color:var(–muted); line-height:1.5; margin-bottom:0.6rem; }
-.course-meta  { display:flex; gap:0.5rem; flex-wrap:wrap; }
+.ai-panel .label { color: #6db38a; }
+.ai-body {
+font-family:‘DM Sans’,sans-serif; font-size:.9rem;
+line-height:1.7; color:#c8c4bc; margin-top:.5rem;
+}
+.ai-row {
+display:flex; gap:.5rem; margin-top:1rem;
+padding-top:1rem; border-top:1px solid rgba(255,255,255,.08);
+}
+.ai-input {
+flex:1; background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.12); border-radius:6px;
+padding:.6rem .875rem; color:#e8e4dc;
+font-family:‘DM Sans’,sans-serif; font-size:.85rem; outline:none;
+}
+.ai-input:focus { border-color: #6db38a; }
+.ai-input::placeholder { color:rgba(255,255,255,.25); }
+.ai-send {
+background: var(–accent); color:#fff;
+border:none; border-radius:6px;
+padding:.6rem 1rem; cursor:pointer;
+font-family:‘DM Sans’,sans-serif; font-size:.82rem; font-weight:600;
+transition:opacity .15s;
+}
+.ai-send:hover { opacity:.85; }
 
-/* ── CHAPTER LIST ────────────────────────────────────── */
-.chapter-item {
-display:flex; align-items:center; gap:0.875rem;
-padding:0.875rem 0;
-border-bottom:1px solid var(–border);
+/* ── PREMIUM BADGE ── */
+.premium-badge {
+display:inline-flex; align-items:center; gap:.3rem;
+background: linear-gradient(135deg,#e09f3e,#f4c261);
+color:#5a3e00;
+font-family:‘DM Mono’,monospace; font-size:.65rem;
+padding:.2rem .5rem; border-radius:4px; font-weight:500;
 }
-.chapter-item:last-child { border-bottom:none; }
-.chapter-num {
-width:28px; height:28px; flex-shrink:0;
-border-radius:7px;
-background:var(–surface2);
-border:1px solid var(–border);
-display:flex; align-items:center; justify-content:center;
-font-family:‘JetBrains Mono’,monospace;
-font-size:0.68rem; color:var(–muted);
-}
-.chapter-num.done { background:var(–green); border-color:var(–green); color:#fff; }
-.chapter-num.current { background:var(–accent); border-color:var(–accent); color:#fff; }
-.chapter-name { font-size:0.9rem; font-weight:500; flex:1; }
-.chapter-name.done { text-decoration:line-through; color:var(–muted); font-weight:400; }
-.chapter-name.current { color:var(–accent); font-weight:600; }
 
-/* ── SUMMARY CARD ────────────────────────────────────── */
-.summary-item {
-display:flex; gap:0.75rem; align-items:flex-start;
-padding:0.75rem 0; border-bottom:1px solid var(–border);
-}
-.summary-item:last-child { border-bottom:none; }
-.summary-dot {
-width:6px; height:6px; border-radius:50%;
-background:var(–accent); flex-shrink:0; margin-top:0.55rem;
-}
-.summary-text { font-size:0.9rem; line-height:1.6; color:var(–ink2); }
-
-/* ── GENERATING ──────────────────────────────────────── */
-.generating {
+/* ── LOADER ── */
+.loader {
 display:flex; flex-direction:column; align-items:center;
-justify-content:center; min-height:50vh; gap:1.25rem; text-align:center;
+justify-content:center; gap:1.5rem; min-height:280px; text-align:center;
 }
 .spin {
-width:40px; height:40px; border-radius:50%;
-border:2px solid var(–border);
-border-top-color:var(–accent);
-animation:spin .8s linear infinite;
+width:48px; height:48px; border-radius:50%;
+border:2px solid var(–border2); border-top-color:var(–accent);
+animation: spin .8s linear infinite;
 }
 @keyframes spin { to { transform:rotate(360deg); } }
 
-/* ── SEARCH ──────────────────────────────────────────── */
-.search-wrap { position:relative; margin-bottom:1.25rem; }
-.search-wrap .input { padding-left:2.5rem; }
-.search-icon { position:absolute; left:0.875rem; top:50%; transform:translateY(-50%); color:var(–muted); font-size:0.9rem; pointer-events:none; }
-
-/* ── MODULE PROGRESS ─────────────────────────────────── */
-.mod-progress {
-display:flex; gap:3px; margin:0.75rem 0;
+.dots { display:flex; gap:3px; align-items:center; }
+.dots span {
+width:6px; height:6px; background:var(–accent); border-radius:50%;
+animation: dot 1.2s infinite;
 }
-.mod-pip {
-height:4px; flex:1; border-radius:2px; background:var(–border);
-transition:background .3s;
+.dots span:nth-child(2) { animation-delay:.2s; }
+.dots span:nth-child(3) { animation-delay:.4s; }
+@keyframes dot {
+0%,60%,100% { transform:scale(1); opacity:.4; }
+30% { transform:scale(1.35); opacity:1; }
 }
-.mod-pip.done { background:var(–green); }
-.mod-pip.active { background:var(–accent); }
 
-/* ── PREMIUM GATE ────────────────────────────────────── */
-.premium-banner {
-background:linear-gradient(135deg,#1a1814,#2d2a24);
-border-radius:var(–r);
-padding:1.5rem;
-color:#fff;
-margin-top:1rem;
+/* ── XP ── */
+.xp {
+display:inline-flex; align-items:center; gap:.3rem;
+background:var(–tag-bg); color:var(–accent);
+font-family:‘DM Mono’,monospace; font-size:.72rem;
+padding:.25rem .65rem; border-radius:100px;
 }
-.premium-banner h3 { font-family:‘Instrument Serif’,serif; font-size:1.2rem; margin-bottom:0.4rem; }
-.premium-banner p  { font-size:0.85rem; color:rgba(255,255,255,.6); margin-bottom:1rem; line-height:1.6; }
 
-/* ── STAT GRID ───────────────────────────────────────── */
-.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin:1.25rem 0; }
-.stat-cell {
-background:var(–surface);
-border:1px solid var(–border);
-border-radius:var(–r-sm);
-padding:1.1rem;
+/* ── STATS ── */
+.stats { display:flex; gap:1.5rem; margin:1.5rem 0; }
+.stat-num { font-family:‘Fraunces’,serif; font-size:2rem; font-weight:300; line-height:1; }
+.stat-lbl { font-family:‘DM Mono’,monospace; font-size:.65rem; color:var(–muted); text-transform:uppercase; letter-spacing:.08em; margin-top:.2rem; }
+
+/* ── OFFLINE INDICATOR ── */
+.offline-dot {
+width:6px; height:6px; border-radius:50%; background:var(–green);
+display:inline-block; margin-right:.3rem;
 }
-.stat-val { font-family:‘Instrument Serif’,serif; font-size:1.8rem; line-height:1; margin-bottom:0.25rem; }
-.stat-lbl { font-size:0.75rem; color:var(–muted); font-weight:500; }
 
-/* ── BACK BTN ────────────────────────────────────────── */
-.back-btn {
-display:inline-flex; align-items:center; gap:0.4rem;
-font-size:0.82rem; font-weight:600; color:var(–muted);
-cursor:pointer; background:none; border:none;
-padding:0; margin-bottom:1.5rem;
-transition:color .18s;
-}
-.back-btn:hover { color:var(–ink); }
+/* ── UTIL ── */
+.mt1 { margin-top:.5rem; }
+.mt2 { margin-top:1rem; }
+.mt3 { margin-top:1.5rem; }
+.mt4 { margin-top:2rem; }
+.mb1 { margin-bottom:.5rem; }
+.mb2 { margin-bottom:1rem; }
+.tc  { text-align:center; }
+.muted { color:var(–muted); }
+.small { font-size:.82rem; }
 
-/* ── UTILITY ─────────────────────────────────────────── */
-.mt-xs { margin-top:.35rem; }
-.mt-sm { margin-top:.75rem; }
-.mt-md { margin-top:1.25rem; }
-.mt-lg { margin-top:2rem; }
-.mb-sm { margin-bottom:.75rem; }
-.mb-md { margin-bottom:1.25rem; }
-.gap-sm { gap:.5rem; }
-.flex   { display:flex; }
-.flex-col { flex-direction:column; }
-.items-center { align-items:center; }
-.justify-between { justify-content:space-between; }
-.text-muted { color:var(–muted); }
-.text-sm { font-size:.85rem; }
-.text-xs { font-size:.75rem; }
-.fw-600 { font-weight:600; }
-.fw-700 { font-weight:700; }
-
-@media(max-width:480px){
-.screen { padding:0 1rem 3rem; }
-.stat-grid { grid-template-columns:1fr 1fr; }
+@media(max-width:600px) {
+.screen { padding:1rem; }
+.screen.top { padding-top:64px; }
+h1.display { font-size:2.4rem; }
 }
 </style>
 
 </head>
 <body>
 <div id="app"></div>
-
 <script>
-/* ═══════════════════════════════════════════════════════
-   STATE
-═══════════════════════════════════════════════════════ */
-const DB_KEY = 'lern_v3';
-
-function loadState() {
-  try {
-    const raw = localStorage.getItem(DB_KEY);
-    return raw ? JSON.parse(raw) : null;
-  } catch { return null; }
-}
-
-function saveState() {
-  try { localStorage.setItem(DB_KEY, JSON.stringify(S)); } catch {}
-}
-
-const defaults = {
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+const S = {
   screen: 'welcome',
-  user: null,           // { name, email, isPremium }
+  lang: navigator.language.startsWith('ru') ? 'ru' : 'en',
+  user: null,            // { name, email, premium }
   xp: 0,
-  streak: 0,
-  lastStudyDate: null,
-  lang: 'ru',           // interface + default course lang
 
-  // catalog
-  searchQuery: '',
-  enrolledCourses: {},  // { courseId: { progress, completedLessons:[], generatedLessons:{} } }
+selectedCourse: null,
+level: ‘practitioner’,
+duration: 20,
+goal: ‘interest’,
 
-  // current course
-  courseId: null,
+// placement
+placementQ: [],
+placementStep: 0,
+placementScore: 0,
 
-  // settings
-  level: 'practitioner',
-  duration: 20,
-  goal: 'interest',
-  courseLang: 'ru',
+// lesson
+moduleIndex: 0,
+lessonIndex: 0,
+lessonTotal: 0,
+lessonStep: 0,         // 0=gen 1=content 2=question 3=case 4=feedback
+lessonData: null,      // { title, body, question:{text,options,correct,explanation}, case:{title,body} }
+selectedAnswer: null,
+lastCorrect: false,
+aiMessages: [],
+completedModules: [],
 
-  // placement
-  placementStep: 0,
-  placementScore: 0,
-  placementQs: [],
+// offline cache
+offlineCache: {},      // courseId -> array of lesson data
 
-  // lesson
-  lessonIdx: 0,
-  lessonTotal: 0,
-  lessonStep: 0,        // 0=gen 1=content 2=question 3=feedback 4=summary
-  lessonData: null,     // { title, body, question:{text,options,correct,explanation}, keypoints:[] }
-  selectedAnswer: null,
-  lastCorrect: false,
-  aiMessages: [],
-
-  // create course
-  newCourseTitle: '',
-  newCourseDesc: '',
+// custom course
+customTitle: ‘’,
+customDesc: ‘’,
 };
 
-const saved = loadState();
-const S = saved ? { ...defaults, ...saved, screen: 'welcome' } : { ...defaults };
-
-// Update streak
-const today = new Date().toDateString();
-if (S.lastStudyDate && S.lastStudyDate !== today) {
-  const yesterday = new Date(Date.now() - 86400000).toDateString();
-  if (S.lastStudyDate !== yesterday) S.streak = 0;
+// ═══════════════════════════════════════════
+// I18N
+// ═══════════════════════════════════════════
+const T = {
+ru: {
+appTagline: ‘Твой AI-помощник в мире новых знаний и открытий’,
+appSub: ‘Курсы, которые подстраиваются под тебя — на любом языке’,
+startFree: ‘Начать бесплатно →’,
+alreadyHave: ‘Уже есть аккаунт?’,
+login: ‘Войти’,
+createAccount: ‘Создать аккаунт’,
+regSub: ‘Зарегистрируйтесь, чтобы сохранять прогресс’,
+yourName: ‘Как тебя зовут?’,
+email: ‘Email’,
+namePh: ‘Николай’,
+emailPh: ‘you@example.com’,
+orContinue: ‘или’,
+googleSoon: ‘Google (скоро)’,
+demoNote: ‘Демо-версия — данные сохраняются локально’,
+chooseCourse: ‘Выбери курс’,
+catalogSub: ‘AI генерирует каждый урок под твой уровень’,
+hi: ‘Привет’,
+lessons: ‘уроков’,
+hours: ‘часов’,
+soon: ‘Скоро’,
+about: ‘О курсе’,
+program: ‘Программа’,
+startSetup: ‘Настроить и начать →’,
+personalize: ‘Настрой курс’,
+personalizeSub: ‘AI сгенерирует контент под твои параметры’,
+whyStudy: ‘Зачем тебе этот курс?’,
+whySub: ‘Влияет на примеры и контекст’,
+difficulty: ‘Уровень сложности’,
+diffSub: ‘Глубина объяснений и сложность вопросов’,
+lessonLen: ‘Длина урока’,
+beginner: ‘Новичок’,
+practitioner: ‘Практик’,
+expert: ‘Эксперт’,
+interest: ‘Из интереса’,
+career: ‘Для карьеры’,
+work: ‘Для работы’,
+takePlacement: ‘Пройти тест на уровень →’,
+skipPlacement: ‘Пропустить тест’,
+genPlacement: ‘Составляю тест…’,
+placementTitle: ‘Определяем уровень’,
+question: ‘Вопрос’,
+of: ‘из’,
+genLesson: ‘Генерирую урок’,
+genSub: ‘Подготавливаю материал под твой уровень…’,
+checkYourself: ‘Проверь себя’,
+caseTitle: ‘Практический кейс’,
+toCase: ‘К кейсу →’,
+toQuestion: ‘К вопросу →’,
+back: ‘← Назад’,
+backCourses: ‘← Курсы’,
+backTheory: ‘← Теория’,
+nextLesson: ‘Следующий урок →’,
+finishCourse: ‘Завершить курс →’,
+correct: ‘✓ Верно!’,
+wrong: ‘✗ Не совсем’,
+aiTutor: ‘AI Репетитор’,
+aiPh: ‘Задай уточняющий вопрос…’,
+premiumOnly: ‘Доступно в Premium’,
+upgradeBtn: ‘Попробовать Premium’,
+courseComplete: ‘Курс завершён’,
+wellDone: ‘Отличная работа’,
+backCatalog: ‘К каталогу →’,
+createCourse: ‘+ Создать свой курс’,
+createTitle: ‘Создать курс’,
+createSub: ‘AI сгенерирует полный курс по вашей теме’,
+courseName: ‘Название курса’,
+courseNamePh: ‘Например: Основы права для предпринимателя’,
+courseDescLabel: ‘Уточните тему (необязательно)’,
+courseDescPh: ‘Что хотите изучить? Какой контекст важен?’,
+generateCourse: ‘Сгенерировать курс →’,
+premiumFeature: ‘Функция Premium’,
+offlineSaved: ‘Сохранено офлайн’,
+moduleProgress: ‘Прогресс модуля’,
+settings: ‘Настройки’,
+short: ‘Быстрый’,
+standard: ‘Стандартный’,
+deep: ‘Углублённый’,
+immersive: ‘Полное погружение’,
+},
+en: {
+appTagline: ‘Your AI companion for knowledge and discovery’,
+appSub: ‘Courses that adapt to you — in any language’,
+startFree: ‘Start for free →’,
+alreadyHave: ‘Already have an account?’,
+login: ‘Sign in’,
+createAccount: ‘Create account’,
+regSub: ‘Sign up to save your progress’,
+yourName: “What’s your name?”,
+email: ‘Email’,
+namePh: ‘Alex’,
+emailPh: ‘you@example.com’,
+orContinue: ‘or’,
+googleSoon: ‘Google (coming soon)’,
+demoNote: ‘Demo version — data stored locally’,
+chooseCourse: ‘Choose a course’,
+catalogSub: ‘AI generates each lesson to match your level’,
+hi: ‘Hi’,
+lessons: ‘lessons’,
+hours: ‘hours’,
+soon: ‘Soon’,
+about: ‘About’,
+program: ‘Curriculum’,
+startSetup: ‘Customise & start →’,
+personalize: ‘Personalise’,
+personalizeSub: ‘AI will generate content based on your settings’,
+whyStudy: ‘Why are you taking this course?’,
+whySub: ‘Affects examples and context’,
+difficulty: ‘Difficulty level’,
+diffSub: ‘Depth of explanations and question complexity’,
+lessonLen: ‘Lesson length’,
+beginner: ‘Beginner’,
+practitioner: ‘Practitioner’,
+expert: ‘Expert’,
+interest: ‘Out of curiosity’,
+career: ‘Career growth’,
+work: ‘For work’,
+takePlacement: ‘Take placement test →’,
+skipPlacement: ‘Skip test’,
+genPlacement: ‘Building your test…’,
+placementTitle: ‘Finding your level’,
+question: ‘Question’,
+of: ‘of’,
+genLesson: ‘Generating lesson’,
+genSub: ‘Preparing content for your level…’,
+checkYourself: ‘Check yourself’,
+caseTitle: ‘Case study’,
+toCase: ‘To case study →’,
+toQuestion: ‘To question →’,
+back: ‘← Back’,
+backCourses: ‘← Courses’,
+backTheory: ‘← Theory’,
+nextLesson: ‘Next lesson →’,
+finishCourse: ‘Finish course →’,
+correct: ‘✓ Correct!’,
+wrong: ‘✗ Not quite’,
+aiTutor: ‘AI Tutor’,
+aiPh: ‘Ask a follow-up question…’,
+premiumOnly: ‘Premium feature’,
+upgradeBtn: ‘Try Premium’,
+courseComplete: ‘Course complete’,
+wellDone: ‘Well done’,
+backCatalog: ‘Back to catalogue →’,
+createCourse: ‘+ Create your course’,
+createTitle: ‘Create a course’,
+createSub: ‘AI will build a full course on your topic’,
+courseName: ‘Course title’,
+courseNamePh: ‘e.g. Introduction to Contract Law’,
+courseDescLabel: ‘Describe the topic (optional)’,
+courseDescPh: ‘What do you want to learn? Any specific context?’,
+generateCourse: ‘Generate course →’,
+premiumFeature: ‘Premium feature’,
+offlineSaved: ‘Saved offline’,
+moduleProgress: ‘Module progress’,
+settings: ‘Settings’,
+short: ‘Quick’,
+standard: ‘Standard’,
+deep: ‘In-depth’,
+immersive: ‘Immersive’,
 }
+};
+const t = k => (T[S.lang] || T.ru)[k] || k;
 
-/* ═══════════════════════════════════════════════════════
-   CATALOG DATA
-═══════════════════════════════════════════════════════ */
-const CATALOG = [
-  {
-    id: 'cfo',
-    icon: '📊',
-    tag: 'Финансы',
-    title: 'Думай как CFO',
-    desc: 'Отчётность, оценка компаний, структура капитала — от основ до сделок',
-    modules: ['Финансовая отчётность', 'Оценка и стоимость', 'Управление капиталом', 'M&A и сделки'],
-    lessons: 8,
-    free: true,
-  },
-  {
-    id: 'quantum',
-    icon: '⚛️',
-    tag: 'Наука',
-    title: 'Квантовый мир',
-    desc: 'Суперпозиция, запутанность и квантовые компьютеры — без формул',
-    modules: ['Основы квантового мира', 'Запутанность', 'Квантовые технологии'],
-    lessons: 6,
-    free: false,
-  },
-  {
-    id: 'chemistry',
-    icon: '🧪',
-    tag: 'Наука',
-    title: 'Химия вокруг нас',
-    desc: 'Почему всё горит, ржавеет и взрывается — химия в жизни',
-    modules: ['Атомы и связи', 'Реакции и энергия', 'Химия в быту'],
-    lessons: 6,
-    free: false,
-  },
-  {
-    id: 'macro',
-    icon: '🌍',
-    tag: 'Экономика',
-    title: 'Макроэкономика за кофе',
-    desc: 'Инфляция, ставки, кризисы — как устроена мировая экономика',
-    modules: ['Деньги и инфляция', 'Центробанки', 'Кризисы и циклы'],
-    lessons: 6,
-    free: false,
-  },
+// ═══════════════════════════════════════════
+// COURSES
+// ═══════════════════════════════════════════
+const COURSES = [
+{
+id:‘cfo’, emoji:‘◈’, tag:‘Finance’,
+title:{ ru:‘Думай как CFO’, en:‘Think like a CFO’ },
+desc:{
+ru:‘Финансовая отчётность, оценка компаний, структура капитала и инвестиционные решения’,
+en:‘Financial statements, company valuation, capital structure and investment decisions’
+},
+modules:{
+ru:[‘Финансовая отчётность’,‘Оценка и стоимость’,‘Управление капиталом’,‘M&A и сделки’],
+en:[‘Financial Statements’,‘Valuation’,‘Capital Management’,‘M&A’]
+},
+lessons:12, hours:‘4–8’, locked:false, premium:false,
+},
+{
+id:‘quantum’, emoji:‘◎’, tag:‘Science’,
+title:{ ru:‘Квантовый мир’, en:‘The Quantum World’ },
+desc:{
+ru:‘Квантовая физика без формул — суперпозиция, запутанность и квантовые компьютеры’,
+en:‘Quantum physics without equations — superposition, entanglement and quantum computing’
+},
+modules:{
+ru:[‘Основы квантового мира’,‘Запутанность’,‘Квантовые технологии’],
+en:[‘Quantum Basics’,‘Entanglement’,‘Quantum Technologies’]
+},
+lessons:9, hours:‘3–6’, locked:false, premium:false,
+},
+{
+id:‘chemistry’, emoji:‘○’, tag:‘Science’,
+title:{ ru:‘Химия вокруг нас’, en:‘Chemistry Around Us’ },
+desc:{
+ru:‘Почему всё горит, ржавеет и взрывается — химия в повседневной жизни’,
+en:‘Why things burn, rust and explode — chemistry in everyday life’
+},
+modules:{
+ru:[‘Атомы и связи’,‘Реакции и энергия’,‘Химия в жизни’],
+en:[‘Atoms & Bonds’,‘Reactions & Energy’,‘Chemistry in Life’]
+},
+lessons:9, hours:‘3–5’, locked:false, premium:false,
+},
+{
+id:‘ai’, emoji:‘△’, tag:‘Technology’,
+title:{ ru:‘Как думает AI’, en:‘How AI Thinks’ },
+desc:{
+ru:‘Нейросети, большие языковые модели и будущее искусственного интеллекта’,
+en:‘Neural networks, large language models and the future of AI’
+},
+modules:{
+ru:[‘Основы ML’,‘Нейросети’,‘LLM и генеративный AI’],
+en:[‘ML Basics’,‘Neural Networks’,‘LLMs & Generative AI’]
+},
+lessons:10, hours:‘4–7’, locked:true, premium:true,
+},
 ];
 
-function getCourse(id) { return CATALOG.find(c => c.id === id) || S.enrolledCourses[id]?._meta; }
-function getEnrolled(id) { return S.enrolledCourses[id]; }
-function getProgress(id) {
-  const e = getEnrolled(id);
-  if (!e) return 0;
-  const c = getCourse(id);
-  return c ? Math.round((e.completedLessons.length / c.lessons) * 100) : 0;
-}
+function getCourse() { return COURSES.find(c=>c.id===S.selectedCourse) || COURSES[0]; }
+function cTitle(c)   { return c.title[S.lang] || c.title.ru; }
+function cDesc(c)    { return c.desc[S.lang]  || c.desc.ru; }
+function cModules(c) { return c.modules[S.lang] || c.modules.ru; }
 
-/* ═══════════════════════════════════════════════════════
-   RENDER ENGINE
-═══════════════════════════════════════════════════════ */
+// ═══════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════
 function render() {
-  saveState();
-  const map = {
-    welcome, register, catalog, course,
-    settings, placement, lesson, summary, result, create
-  };
-  document.getElementById('app').innerHTML = (map[S.screen] || welcome)();
+const map = {
+welcome, register, catalog, courseDetail,
+settings, placement, lesson, result, createCourse
+};
+document.getElementById(‘app’).innerHTML = (map[S.screen]||welcome)();
 }
 
-/* ═══════════════════════════════════════════════════════
-   SCREEN: WELCOME
-═══════════════════════════════════════════════════════ */
+// ═══════════════════════════════════════════
+// WELCOME
+// ═══════════════════════════════════════════
 function welcome() {
-  return `
-  <div class="screen" style="justify-content:center;min-height:100vh;">
-    <div class="wrap">
-      <div style="margin-bottom:3rem;">
-        <div class="logo" style="font-size:2rem;margin-bottom:2rem;">lern.</div>
-        <h1 class="display" style="margin-bottom:1rem;">
-          Привет.<br>
-          <em>Я твой личный</em><br>
-          AI-преподаватель.
+return `
+
+  <div class="screen">
+    <div class="wrap tc">
+      <div style="margin-bottom:2.5rem;">
+        <div style="font-family:'Fraunces',serif;font-size:1rem;color:var(--accent);letter-spacing:.05em;margin-bottom:1.25rem;">Lern</div>
+        <h1 class="display" style="margin-bottom:1.25rem;">
+          ${S.lang==='ru' ? 'Знания,<br>которые <em>остаются</em>' : 'Learning<br>that <em>sticks</em>'}
         </h1>
-        <p class="body-text" style="max-width:420px;margin-top:1rem;">
-          Короткие курсы по любой теме, которые подстраиваются под тебя.
-          Никаких лекций на час — только то, что нужно.
-        </p>
+        <p class="serif muted" style="font-size:1.1rem;line-height:1.65;max-width:400px;margin:0 auto .5rem;">${t('appTagline')}</p>
+        <p class="small muted">${t('appSub')}</p>
       </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.6rem;margin-bottom:2.5rem;">
-        ${[
-          ['Адаптивно','Уровень и темп — под тебя'],
-          ['Офлайн','Курсы работают без сети'],
-          ['Любой язык','Учись на удобном языке'],
-        ].map(([t,d]) => `
-          <div class="card" style="padding:1rem;margin:0;">
-            <div class="fw-700" style="font-size:0.82rem;margin-bottom:0.25rem;">${t}</div>
-            <div class="text-xs text-muted" style="line-height:1.4;">${d}</div>
-          </div>
-        `).join('')}
-      </div>
-
-      <button class="btn btn-primary btn-full btn-lg" onclick="go('register')">Начать бесплатно →</button>
-      <button class="btn btn-ghost btn-full mt-sm" onclick="quickLogin()" style="margin-top:0.5rem;">
-        Уже есть аккаунт
-      </button>
-    </div>
-  </div>`;
-}
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN: REGISTER
-═══════════════════════════════════════════════════════ */
-function register() {
-  return `
-  <div class="screen" style="justify-content:center;min-height:100vh;">
-    <div class="wrap" style="max-width:400px;">
-      <button class="back-btn" onclick="go('welcome')">← Назад</button>
-
-      <span class="eyebrow">Регистрация</span>
-      <h2 class="title" style="margin-bottom:0.5rem;">Создать аккаунт</h2>
-      <p class="body-text text-sm mb-md">Зарегистрируйтесь, чтобы сохранять прогресс</p>
-
-      <div class="field">
-        <label>Как тебя зовут?</label>
-        <input class="input" id="r-name" placeholder="Николай" />
-      </div>
-      <div class="field">
-        <label>Email</label>
-        <input class="input" id="r-email" placeholder="you@example.com" type="email" />
-      </div>
-
-      <button class="btn btn-primary btn-full btn-lg mt-sm" onclick="doRegister()">Создать аккаунт →</button>
-
-      <div class="divider"></div>
-
-      <button class="btn btn-surface btn-full" onclick="alert('Google авторизация — скоро!')">
-        G &nbsp; Продолжить с Google
-        <span class="tag" style="margin-left:auto;">скоро</span>
-      </button>
-
-      <p class="text-xs text-muted" style="margin-top:1.25rem;text-align:center;line-height:1.6;">
-        Данные сохраняются локально в вашем браузере.<br>
-        Полноценный бэкенд — в следующей версии.
-      </p>
-    </div>
-  </div>`;
-}
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN: CATALOG
-═══════════════════════════════════════════════════════ */
-function catalog() {
-  const q = S.searchQuery.toLowerCase();
-  const filtered = CATALOG.filter(c =>
-    !q || c.title.toLowerCase().includes(q) || c.tag.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q)
-  );
-  const name = S.user?.name?.split(' ')[0] || '';
-
-  return `
-  <div class="screen" style="padding-top:0;">
-    <div class="wrap">
-      <div class="topbar">
-        <div class="logo">lern.</div>
-        <div class="topbar-right">
-          ${S.streak > 0 ? '<div class="streak-badge">🔥 ' + S.streak + '</div>' : ''}
-          <div class="xp-badge">⚡ ${S.xp} XP</div>
-        </div>
-      </div>
-
-      <div style="margin-bottom:1.5rem;">
-        <span class="eyebrow eyebrow-accent">${name ? "Привет, " + name : "Каталог"}</span>
-        <h2 class="title">Выбери курс</h2>
-      </div>
-
-      <div class="search-wrap">
-        <span class="search-icon">⌕</span>
-        <input class="input" id="search-input" placeholder="Поиск курсов..."
-          value="${S.searchQuery}"
-          oninput="S.searchQuery=this.value;render()" />
-      </div>
-
-      ${filtered.map(c => {
-        const prog = getProgress(c.id);
-        const enrolled = !!getEnrolled(c.id);
-        const locked = !c.free && !S.user?.isPremium && !enrolled;
-        return `
-        <div class="course-card ${locked ? 'locked' : ''}" onclick="${!locked ? 'selectCourse(' + JSON.stringify(c.id) + ')' : 'showPremium()'}">
-          <div class="course-icon">${c.icon}</div>
-          <div class="course-info">
-            <div class="flex items-center justify-between mb-sm">
-              <span class="tag ${c.free ? 'tag-green' : ''}">${c.tag}${!c.free ? ' · Premium' : ''}</span>
-              ${locked ? '<span class="tag">🔒 Premium</span>' : ''}
-              ${enrolled && prog > 0 ? '<span class="text-xs text-muted mono">' + prog + '%</span>' : ''}
-            </div>
-            <div class="course-title">${c.title}</div>
-            <div class="course-desc">${c.desc}</div>
-            ${enrolled && prog > 0 ? `
-              <div class="mod-progress">
-                ${c.modules.map((_,i) => {
-                  const e = getEnrolled(c.id);
-                  const lessonsPerMod = Math.ceil(c.lessons / c.modules.length);
-                  const modDone = e.completedLessons.filter(l => Math.floor(l/lessonsPerMod)===i).length;
-                  return `<div class="mod-pip ${modDone === lessonsPerMod ? 'done' : modDone > 0 ? 'active' : ''}"></div>`;
-                }).join('')}
-              </div>
-            ` : ''}
-            <div class="course-meta">
-              ${enrolled ? '<span class="tag tag-accent">Начат</span>' : ''}
-              <span class="tag">📚 ${c.lessons} уроков</span>
-            </div>
-          </div>
-        </div>`;
-      }).join('')}
-
-      ${!S.user?.isPremium ? `
-      <div class="premium-banner mt-md">
-        <h3>Lern Premium</h3>
-        <p>Все курсы, офлайн-режим, создание своих курсов и AI-репетитор без ограничений.</p>
-        <button class="btn btn-full" style="background:#fff;color:var(--ink);font-size:0.875rem;" onclick="activatePremium()">
-          Попробовать Premium →
-        </button>
-      </div>
-      ` : ''}
-
-      ${S.user?.isPremium ? `
-      <button class="btn btn-surface btn-full mt-md" onclick="go('create')">
-        + Создать свой курс
-      </button>
-      ` : ''}
-    </div>
-  </div>`;
-}
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN: COURSE DETAIL
-═══════════════════════════════════════════════════════ */
-function course() {
-  const c = getCourse(S.courseId);
-  if (!c) { go('catalog'); return ''; }
-  const enrolled = getEnrolled(S.courseId);
-  const prog = getProgress(S.courseId);
-  const completedLessons = enrolled?.completedLessons || [];
-
-  return `
-  <div class="screen" style="padding-top:1.25rem;">
-    <div class="wrap">
-      <button class="back-btn" onclick="go('catalog')">← Каталог</button>
-
-      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
-        <div class="course-icon" style="width:56px;height:56px;font-size:1.6rem;border-radius:12px;">${c.icon}</div>
-        <div>
-          <span class="tag ${c.free ? 'tag-green' : 'tag-amber'}">${c.tag}</span>
-          <h2 class="title" style="margin-top:0.3rem;">${c.title}</h2>
-        </div>
-      </div>
-
-      <p class="body-text mb-md">${c.desc}</p>
-
-      ${prog > 0 ? `
-      <div class="card" style="padding:1.25rem;margin-bottom:1rem;">
-        <div class="flex justify-between items-center mb-sm">
-          <span class="eyebrow" style="margin:0;">Прогресс</span>
-          <span class="mono text-xs" style="color:var(--accent);">${prog}%</span>
-        </div>
-        <div class="pbar" style="margin:0.5rem 0 0;height:5px;">
-          <div class="pbar-fill" style="width:${prog}%;"></div>
-        </div>
-      </div>
-      ` : ''}
-
-      <div class="card">
-        <span class="eyebrow">Программа</span>
-        ${c.modules.map((m, mi) => {
-          const lessonsPerMod = Math.ceil(c.lessons / c.modules.length);
-          const modStart = mi * lessonsPerMod;
-          const modLessons = Array.from({length:lessonsPerMod}, (_,i) => modStart+i).filter(i=>i<c.lessons);
-          const allDone = modLessons.every(i => completedLessons.includes(i));
-          const anyDone = modLessons.some(i => completedLessons.includes(i));
-          const isCurrent = !allDone && anyDone;
-          return `
-          <div class="chapter-item">
-            <div class="chapter-num ${allDone?'done':isCurrent?'current':''}">
-              ${allDone ? '✓' : mi+1}
-            </div>
-            <div class="chapter-name ${allDone?'done':isCurrent?'current':''}">${m}</div>
-            <span class="text-xs text-muted mono">${modLessons.length} ур.</span>
-          </div>`;
-        }).join('')}
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.6rem;margin:1rem 0;">
-        ${[
-          ['📚', c.lessons + ' уроков'],
-          ['🤖', 'AI-репетитор'],
-          ['📥', 'Офлайн'],
-        ].map(([i,l]) => `
-          <div class="card" style="padding:1rem;margin:0;text-align:center;">
-            <div style="font-size:1.2rem;margin-bottom:0.25rem;">${i}</div>
-            <div class="text-xs text-muted">${l}</div>
-          </div>
-        `).join('')}
-      </div>
-
-      <button class="btn btn-primary btn-full btn-lg" onclick="go('settings')">
-        ${enrolled && prog > 0 ? 'Продолжить курс →' : 'Настроить и начать →'}
-      </button>
-    </div>
-  </div>`;
-}
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN: SETTINGS
-═══════════════════════════════════════════════════════ */
-function settings() {
-  const c = getCourse(S.courseId);
-  const durLabel = S.duration<=15?'Быстро (15 мин)':S.duration<=25?'Стандартно':S.duration<=40?'Углублённо':'Полное погружение';
-  return `
-  <div class="screen" style="padding-top:1.25rem;">
-    <div class="wrap">
-      <button class="back-btn" onclick="go('course')">← Назад</button>
-
-      <span class="eyebrow eyebrow-accent">Персонализация</span>
-      <h2 class="title mb-md">Настрой под себя</h2>
-
-      <div class="card">
-        <span class="eyebrow">Цель обучения</span>
-        <p class="text-sm text-muted mb-sm">Влияет на примеры и контекст</p>
-        <div class="pills">
-          ${[['interest','Из интереса'],['career','Для карьеры'],['work','Для работы']].map(([id,l]) =>
-            `<div class="pill ${S.goal===id?'on':''}" onclick="S.goal='${id}';render()">${l}</div>`
-          ).join('')}
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="eyebrow">Уровень</span>
-        <p class="text-sm text-muted mb-sm">Глубина и сложность материала</p>
-        <div class="pills">
-          ${[['beginner','Новичок'],['practitioner','Практик'],['expert','Эксперт']].map(([id,l]) =>
-            `<div class="pill ${S.level===id?'on':''}" onclick="S.level='${id}';render()">${l}</div>`
-          ).join('')}
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="eyebrow">Длина урока</span>
-        <div class="range-wrap">
-          <div class="range-row">
-            <span class="text-sm text-muted" id="dur-label">${durLabel}</span>
-            <span class="range-val" id="dur-val">${S.duration} мин</span>
-          </div>
-          <input type="range" min="10" max="60" step="5" value="${S.duration}" oninput="liveRange(this.value)" />
-          <div class="flex justify-between mt-xs">
-            <span class="text-xs text-muted">10 мин</span>
-            <span class="text-xs text-muted">60 мин</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="eyebrow">Язык курса</span>
-        <select class="input" onchange="S.courseLang=this.value" style="margin-top:0.5rem;">
-          ${[['ru','Русский'],['en','English'],['de','Deutsch'],['fr','Français'],['es','Español']].map(([v,l]) =>
-            `<option value="${v}" ${S.courseLang===v?'selected':''}>${l}</option>`
-          ).join('')}
-        </select>
-      </div>
-
-      <button class="btn btn-primary btn-full btn-lg mt-sm" onclick="startPlacement()">
-        Пройти тест на уровень →
-      </button>
-      <button class="btn btn-ghost btn-full mt-sm" style="margin-top:0.5rem;" onclick="skipPlacement()">
-        Пропустить тест
-      </button>
-    </div>
-  </div>`;
-}
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN: PLACEMENT
-═══════════════════════════════════════════════════════ */
-function placement() {
-  if (!S.placementQs.length) {
-    return `
-    <div class="screen" style="justify-content:center;">
-      <div class="wrap">
-        <div class="generating">
-          <div class="spin"></div>
-          <div>
-            <span class="eyebrow eyebrow-accent">Составляю тест</span>
-            <p class="text-sm text-muted mt-xs">AI генерирует вопросы для определения уровня...</p>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  }
-
-  const q = S.placementQs[S.placementStep];
-  const pct = (S.placementStep / S.placementQs.length) * 100;
-  const keys = ['A','B','C','D'];
-
-  return `
-  <div class="screen" style="padding-top:1.25rem;">
-    <div class="wrap">
-      <div class="flex justify-between items-center mb-md">
-        <button class="back-btn" style="margin:0;" onclick="go('settings')">← Настройки</button>
-        <span class="text-xs text-muted mono">${S.placementStep+1} / ${S.placementQs.length}</span>
-      </div>
-      <div class="pbar"><div class="pbar-fill" style="width:${pct}%"></div></div>
-
-      <span class="eyebrow eyebrow-accent">Определяем уровень</span>
-      <p class="serif" style="font-size:1.2rem;line-height:1.55;margin:0.6rem 0 1.5rem;color:var(--ink);">${q.text}</p>
-
-      ${q.options.map((o,i) => `
-        <button class="option" onclick="answerPlacement(${i})">
-          <span class="opt-key">${keys[i]}</span>${o}
-        </button>
-      `).join('')}
-    </div>
-  </div>`;
-}
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN: LESSON
-═══════════════════════════════════════════════════════ */
-function lesson() {
-  const c = getCourse(S.courseId);
-
-  // Step 0 — generating
-  if (S.lessonStep === 0) {
-    return `
-    <div class="screen" style="justify-content:center;">
-      <div class="wrap">
-        <div class="generating">
-          <div class="spin"></div>
-          <div>
-            <span class="eyebrow eyebrow-accent">Генерирую урок ${S.lessonIdx+1}</span>
-            <p class="text-sm text-muted mt-xs">Подготавливаю материал на уровне «${lvlLabel()}»...</p>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  }
-
-  // Step 1 — content
-  if (S.lessonStep === 1) {
-    const pct = (S.lessonIdx / S.lessonTotal) * 100;
-    return `
-    <div class="screen" style="padding-top:1.25rem;">
-      <div class="wrap">
-        <div class="flex justify-between items-center" style="margin-bottom:1rem;">
-          <button class="back-btn" style="margin:0;" onclick="go('catalog')">← Курсы</button>
-          <div class="xp-badge">⚡ ${S.xp} XP</div>
-        </div>
-        <div class="pbar"><div class="pbar-fill" style="width:${pct}%"></div></div>
-
-        <span class="eyebrow eyebrow-accent">${c?.title} · Урок ${S.lessonIdx+1} из ${S.lessonTotal}</span>
-        <h2 class="title" style="margin:0.4rem 0 1.5rem;">${S.lessonData?.title || ''}</h2>
-
-        <div class="card" style="padding:1.75rem;">
-          <div class="lesson-body">${S.lessonData?.body || ''}</div>
-        </div>
-
-        <button class="btn btn-primary btn-full btn-lg mt-sm" onclick="S.lessonStep=2;render()">
-          К вопросу →
-        </button>
-      </div>
-    </div>`;
-  }
-
-  // Step 2 — question
-  if (S.lessonStep === 2) {
-    const q = S.lessonData?.question;
-    const keys = ['A','B','C','D'];
-    return `
-    <div class="screen" style="padding-top:1.25rem;">
-      <div class="wrap">
-        <div class="flex justify-between items-center" style="margin-bottom:1rem;">
-          <button class="back-btn" style="margin:0;" onclick="S.lessonStep=1;render()">← Теория</button>
-          <div class="xp-badge">⚡ ${S.xp} XP</div>
-        </div>
-
-        <span class="eyebrow eyebrow-accent">Проверь себя</span>
-        <p class="serif" style="font-size:1.15rem;line-height:1.55;margin:0.6rem 0 1.5rem;color:var(--ink);">${q?.text || ''}</p>
-
-        ${(q?.options||[]).map((o,i) => `
-          <button class="option" onclick="answerLesson(${i})">
-            <span class="opt-key">${keys[i]}</span>${o}
-          </button>
-        `).join('')}
-      </div>
-    </div>`;
-  }
-
-  // Step 3 — feedback
-  if (S.lessonStep === 3) {
-    const q = S.lessonData?.question;
-    const keys = ['A','B','C','D'];
-    const isPremium = S.user?.isPremium;
-
-    return `
-    <div class="screen" style="padding-top:1.25rem;">
-      <div class="wrap">
-        <div class="flex justify-between items-center" style="margin-bottom:1rem;">
-          <span class="tag ${S.lastCorrect?'tag-green':''}">
-            ${S.lastCorrect ? '✓ Верно' : '✗ Не совсем'}
-          </span>
-          <div class="xp-badge">⚡ ${S.xp} XP</div>
-        </div>
-
-        <p class="serif" style="font-size:1.1rem;line-height:1.5;margin-bottom:1.25rem;color:var(--ink);">${q?.text||''}</p>
-
-        ${(q?.options||[]).map((o,i) => {
-          let cls = '';
-          if (i === q.correct) cls = 'opt-correct';
-          else if (i === S.selectedAnswer) cls = 'opt-wrong';
-          return `<button class="option ${cls}" disabled><span class="opt-key">${keys[i]}</span>${o}</button>`;
-        }).join('')}
-
-        <div class="ai-panel">
-          <span class="ai-eyebrow">AI Репетитор</span>
-          <div class="ai-text" id="ai-body"><div class="dots"><span></span><span></span><span></span></div></div>
-          ${isPremium ? `
-          <div class="ai-input-row">
-            <input class="ai-input" id="ai-q" placeholder="Задай уточняющий вопрос..."
-              onkeydown="if(event.key==='Enter')sendAI()" />
-            <button class="ai-send" onclick="sendAI()">→</button>
-          </div>
-          ` : `
-          <div class="ai-premium-lock">
-            🔒 Уточняющие вопросы — функция Premium
-            <button class="btn btn-sm" style="margin-left:auto;background:rgba(255,255,255,.1);color:#fff;border:none;" onclick="activatePremium()">Открыть</button>
-          </div>
-          `}
-        </div>
-
-        <button class="btn btn-primary btn-full btn-lg mt-md" onclick="S.lessonStep=4;render()">
-          Резюме урока →
-        </button>
-      </div>
-    </div>`;
-  }
-
-  // Step 4 — summary
-  if (S.lessonStep === 4) {
-    const kp = S.lessonData?.keypoints || [];
-    return `
-    <div class="screen" style="padding-top:1.25rem;">
-      <div class="wrap">
-        <span class="eyebrow eyebrow-accent">Резюме урока</span>
-        <h2 class="title" style="margin:0.4rem 0 1.25rem;">${S.lessonData?.title||''}</h2>
-
-        <div class="card">
-          <span class="eyebrow">Ключевые тезисы</span>
-          ${kp.length ? kp.map(k => `
-            <div class="summary-item">
-              <div class="summary-dot"></div>
-              <div class="summary-text">${k}</div>
-            </div>
-          `).join('') : '<p class="text-sm text-muted">Загрузка...</p>'}
-        </div>
-
-        <div class="stat-grid">
-          <div class="stat-cell">
-            <div class="stat-val">${S.lastCorrect?'+30':'+10'}</div>
-            <div class="stat-lbl">XP за урок</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-val">${S.lessonIdx+1}/${S.lessonTotal}</div>
-            <div class="stat-lbl">Прогресс</div>
-          </div>
-        </div>
-
-        <button class="btn btn-primary btn-full btn-lg mt-sm" onclick="nextLesson()">
-          ${S.lessonIdx+1 < S.lessonTotal ? 'Следующий урок →' : 'Завершить курс →'}
-        </button>
-        <button class="btn btn-ghost btn-full mt-sm" style="margin-top:0.5rem;" onclick="go('catalog')">
-          Вернуться к курсам
-        </button>
-      </div>
-    </div>`;
-  }
-
-  return '<div class="screen"></div>';
-}
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN: RESULT
-═══════════════════════════════════════════════════════ */
-function result() {
-  const c = getCourse(S.courseId);
-  const name = S.user?.name?.split(' ')[0] || '';
-  return `
-  <div class="screen" style="justify-content:center;min-height:100vh;">
-    <div class="wrap" style="text-align:center;">
-      <div style="font-size:3rem;margin-bottom:1rem;">🎯</div>
-      <span class="eyebrow eyebrow-accent">Курс завершён</span>
-      <h2 class="title" style="margin:0.5rem 0;">${c?.title}</h2>
-      ${name ? '<p class="body-text mt-xs">Отлично, ' + name + '!</p>' : ''}
-
-      <div class="stat-grid mt-md">
-        <div class="stat-cell"><div class="stat-val">${S.xp}</div><div class="stat-lbl">Всего XP</div></div>
-        <div class="stat-cell"><div class="stat-val">${S.streak}🔥</div><div class="stat-lbl">Дней подряд</div></div>
-      </div>
-
-      <button class="btn btn-primary btn-full btn-lg mt-md" onclick="go('catalog')">К каталогу →</button>
-    </div>
-  </div>`;
-}
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN: CREATE COURSE (PREMIUM)
-═══════════════════════════════════════════════════════ */
-function create() {
-  return `
-  <div class="screen" style="padding-top:1.25rem;">
-    <div class="wrap">
-      <button class="back-btn" onclick="go('catalog')">← Каталог</button>
-
-      <span class="eyebrow eyebrow-accent">Premium · Создать курс</span>
-      <h2 class="title mb-md">Свой курс</h2>
-      <p class="body-text text-sm mb-md">Введи тему — AI сгенерирует полный курс и сохранит его офлайн.</p>
-
-      <div class="field">
-        <label>Название или тема курса</label>
-        <input class="input" id="nc-title" placeholder="Например: История джаза" value="${S.newCourseTitle}" />
-      </div>
-      <div class="field">
-        <label>Дополнительный контекст (необязательно)</label>
-        <textarea class="input" id="nc-desc" rows="3"
-          placeholder="Для кого, какой фокус, что хочешь понять..."
-          style="resize:vertical;">${S.newCourseDesc}</textarea>
 
 ```
-  </div>
-
-  <div class="card">
-    <span class="eyebrow">Параметры</span>
-    <div class="pills mt-sm">
-      ${[['beginner','Новичок'],['practitioner','Практик'],['expert','Эксперт']].map(([id,l]) =>
-        `<div class="pill ${S.level===id?'on':''}" onclick="S.level='${id}';render()">${l}</div>`
-      ).join('')}
-    </div>
-    <div class="range-wrap mt-sm">
-      <div class="range-row">
-        <span class="text-sm text-muted">Уроков в курсе</span>
-        <span class="range-val" id="lc-val">${S.lessonTotal||6}</span>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin:2rem 0 2.5rem;">
+    ${[
+      ['◈','AI-контент','Каждый урок генерируется под тебя'],
+      ['◎','Любой язык','Курсы на русском, английском и других'],
+      ['○','Офлайн','Сохраняй курсы и учись без сети'],
+    ].map(([i,h,d])=>`
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem .875rem;">
+        <div style="font-size:1.1rem;margin-bottom:.5rem;color:var(--accent);">${i}</div>
+        <div style="font-size:.78rem;font-weight:600;margin-bottom:.25rem;">${h}</div>
+        <div style="font-size:.72rem;color:var(--muted);line-height:1.4;">${d}</div>
       </div>
-      <input type="range" min="3" max="12" step="1" value="${S.lessonTotal||6}"
-        oninput="S.lessonTotal=+this.value;document.getElementById('lc-val').textContent=this.value" />
-    </div>
+    `).join('')}
   </div>
 
-  <button class="btn btn-primary btn-full btn-lg mt-sm" onclick="createCourse()">
-    Создать курс →
-  </button>
+  <button class="btn btn-primary w" style="font-size:.95rem;padding:1rem;" onclick="go('register')">${t('startFree')}</button>
+  <p class="small muted mt2">${t('alreadyHave')} <span style="color:var(--accent);cursor:pointer;" onclick="quickLogin()">${t('login')}</span></p>
+
+  <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:center;gap:1rem;">
+    <span class="small muted" style="cursor:pointer;${S.lang==='ru'?'color:var(--ink);font-weight:600;':''}" onclick="setLang('ru')">RU</span>
+    <span class="small muted">·</span>
+    <span class="small muted" style="cursor:pointer;${S.lang==='en'?'color:var(--ink);font-weight:600;':''}" onclick="setLang('en')">EN</span>
+  </div>
 </div>
 ```
 
   </div>`;
 }
 
-/* ═══════════════════════════════════════════════════════
-ACTIONS
-═══════════════════════════════════════════════════════ */
+// ═══════════════════════════════════════════
+// REGISTER
+// ═══════════════════════════════════════════
+function register() {
+return `
+
+  <div class="screen">
+    <div class="wrap" style="max-width:420px;">
+      <div class="tc" style="margin-bottom:2rem;">
+        <div style="font-family:'Fraunces',serif;font-size:.9rem;color:var(--accent);margin-bottom:.75rem;">Lern</div>
+        <h2 class="title">${t('createAccount')}</h2>
+        <p class="small muted mt1 serif" style="font-size:.95rem;">${t('regSub')}</p>
+      </div>
+
+```
+  <div class="field">
+    <label>${t('yourName')}</label>
+    <input class="input" id="rname" placeholder="${t('namePh')}" />
+  </div>
+  <div class="field">
+    <label>${t('email')}</label>
+    <input class="input" id="remail" placeholder="${t('emailPh')}" type="email" />
+  </div>
+
+  <button class="btn btn-primary w" style="padding:.95rem;" onclick="doRegister()">${t('createAccount')} →</button>
+
+  <div style="display:flex;align-items:center;gap:1rem;margin:1.25rem 0;">
+    <div class="rule" style="flex:1;margin:0;"></div>
+    <span class="label">${t('orContinue')}</span>
+    <div class="rule" style="flex:1;margin:0;"></div>
+  </div>
+
+  <button class="btn btn-surface w" style="padding:.85rem;" onclick="alert('Coming soon!')">
+    G &nbsp; ${t('googleSoon')}
+  </button>
+
+  <p class="small muted tc mt3" style="font-size:.72rem;line-height:1.6;">${t('demoNote')}</p>
+</div>
+```
+
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// CATALOG
+// ═══════════════════════════════════════════
+function catalog() {
+const name = S.user?.name?.split(’ ’)[0] || ‘’;
+return `
+
+  <div class="screen top">
+    <div class="nav">
+      <div class="nav-logo">L<span>e</span>rn</div>
+      <div style="display:flex;align-items:center;gap:.875rem;">
+        <span class="xp">◈ ${S.xp} XP</span>
+        <div style="width:30px;height:30px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.78rem;font-weight:600;cursor:pointer;" onclick="togglePremium()">
+          ${(S.user?.name||'U')[0].toUpperCase()}
+        </div>
+      </div>
+    </div>
+
+```
+<div class="wrap">
+  <div style="margin-bottom:1.75rem;">
+    <div class="label green">${t('hi')}, ${name} 👋</div>
+    <h2 class="title" style="margin-top:.3rem;">${t('chooseCourse')}</h2>
+    <p class="small muted mt1">${t('catalogSub')}</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.875rem;margin-bottom:1.25rem;">
+    ${COURSES.map(c=>`
+      <div class="course-card ${c.locked?'locked':''}" onclick="${!c.locked?`selectCourse('${c.id}')`:``}">
+        ${c.locked?`<div class="lock-badge">${t('soon')}</div>`:''}
+        <div style="font-size:1.25rem;color:var(--accent);margin-bottom:.625rem;">${c.emoji}</div>
+        <div class="tag" style="margin-bottom:.4rem;">${c.tag}</div>
+        <div class="course-title">${cTitle(c)}</div>
+        <div class="course-desc">${cDesc(c)}</div>
+        <div class="course-meta">
+          <span>${c.lessons} ${t('lessons')}</span>
+          <span>${c.hours}h</span>
+        </div>
+      </div>
+    `).join('')}
+  </div>
+
+  ${S.user?.premium ? `
+    <button class="btn btn-surface w" style="padding:.875rem;" onclick="go('createCourse')">
+      ${t('createCourse')}
+    </button>
+  ` : `
+    <button class="btn btn-ghost w" style="padding:.875rem;" onclick="showPremiumPrompt()">
+      ${t('createCourse')} <span class="premium-badge" style="margin-left:.5rem;">Premium</span>
+    </button>
+  `}
+</div>
+```
+
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// COURSE DETAIL
+// ═══════════════════════════════════════════
+function courseDetail() {
+const c = getCourse();
+const modules = cModules(c);
+const completedCount = S.completedModules.length;
+const pct = Math.round(completedCount / modules.length * 100);
+
+return `
+
+  <div class="screen top">
+    <div class="nav">
+      <button class="btn btn-ghost sm" onclick="go('catalog')">${t('backCourses')}</button>
+      <span class="xp">◈ ${S.xp} XP</span>
+    </div>
+
+```
+<div class="wrap">
+  <div style="margin-bottom:1.75rem;">
+    <div style="font-size:1.75rem;color:var(--accent);margin-bottom:.875rem;">${c.emoji}</div>
+    <div class="tag">${c.tag}</div>
+    <h2 class="title" style="margin:.4rem 0 .75rem;">${cTitle(c)}</h2>
+    <p class="serif muted" style="font-size:.95rem;line-height:1.65;">${cDesc(c)}</p>
+  </div>
+
+  ${completedCount > 0 ? `
+    <div class="card" style="margin-bottom:1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;">
+        <span class="label">${t('moduleProgress')}</span>
+        <span class="label green">${pct}%</span>
+      </div>
+      <div class="prog-bar" style="margin-bottom:0;">
+        <div class="prog-fill" style="width:${pct}%"></div>
+      </div>
+    </div>
+  ` : ''}
+
+  <div class="card">
+    <div class="label" style="margin-bottom:1rem;">${t('program')}</div>
+    <div class="module-list" style="margin:0;">
+      ${modules.map((m,i)=>{
+        const done = S.completedModules.includes(i);
+        const active = i === S.moduleIndex && completedCount > 0;
+        return `
+        <div class="module-row ${done?'done':''} ${active?'active':''}">
+          <div class="mod-num">${done?'✓':i+1}</div>
+          <div class="mod-info">
+            <div class="mod-title">${m}</div>
+          </div>
+          <div class="mod-lessons">${Math.ceil(c.lessons/modules.length)} ${t('lessons')}</div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:1.5rem;">
+    ${[[c.emoji,cTitle(c).split(' ')[0]],['◎',c.lessons+' '+t('lessons')],['○','AI Tutor']].map(([i,l])=>`
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.875rem;text-align:center;">
+        <div style="font-size:1rem;color:var(--accent);margin-bottom:.25rem;">${i}</div>
+        <div style="font-size:.72rem;color:var(--muted);">${l}</div>
+      </div>
+    `).join('')}
+  </div>
+
+  <button class="btn btn-primary w" style="padding:1rem;font-size:.95rem;" onclick="go('settings')">${t('startSetup')}</button>
+</div>
+```
+
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════════
+function settings() {
+const durLabel = S.duration<=15?t(‘short’):S.duration<=25?t(‘standard’):S.duration<=40?t(‘deep’):t(‘immersive’);
+return `
+
+  <div class="screen top">
+    <div class="nav">
+      <button class="btn btn-ghost sm" onclick="go('courseDetail')">${t('back')}</button>
+      <span class="label">${t('settings')}</span>
+    </div>
+
+```
+<div class="wrap">
+  <div style="margin-bottom:1.75rem;">
+    <div class="label green">${t('personalize')}</div>
+    <h2 class="title" style="margin-top:.3rem;">${t('personalizeSub')}</h2>
+  </div>
+
+  <div class="card">
+    <div class="label mb1">${t('whyStudy')}</div>
+    <p class="small muted mb2">${t('whySub')}</p>
+    <div class="pills">
+      ${[['interest',t('interest')],['career',t('career')],['work',t('work')]].map(([id,label])=>
+        `<div class="pill ${S.goal===id?'active':''}" onclick="set('goal','${id}')">${label}</div>`
+      ).join('')}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label mb1">${t('difficulty')}</div>
+    <p class="small muted mb2">${t('diffSub')}</p>
+    <div class="pills">
+      ${[['beginner',t('beginner')],['practitioner',t('practitioner')],['expert',t('expert')]].map(([id,label])=>
+        `<div class="pill ${S.level===id?'active':''}" onclick="set('level','${id}')">${label}</div>`
+      ).join('')}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label mb1">${t('lessonLen')}</div>
+    <div class="range-wrap">
+      <div class="range-row">
+        <span class="small muted" id="dur-label">${durLabel}</span>
+        <span class="range-val" id="dur-val">${S.duration} min</span>
+      </div>
+      <input type="range" min="10" max="60" step="5" value="${S.duration}" oninput="liveRange(this.value)" />
+      <div style="display:flex;justify-content:space-between;margin-top:.35rem;">
+        <span class="label">10</span><span class="label">60</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary w" style="padding:1rem;" onclick="startPlacement()">${t('takePlacement')}</button>
+  <button class="btn btn-ghost w mt1" style="padding:.8rem;" onclick="skipPlacement()">${t('skipPlacement')}</button>
+</div>
+```
+
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// PLACEMENT
+// ═══════════════════════════════════════════
+function placement() {
+if (!S.placementQ.length) return ` <div class="screen"> <div class="wrap tc"> <div class="loader"> <div class="spin"></div> <div> <div class="label green mb1">${t('genPlacement')}</div> <p class="small muted">AI составляет вопросы...</p> </div> </div> </div> </div>`;
+
+const q = S.placementQ[S.placementStep];
+const pct = (S.placementStep / S.placementQ.length) * 100;
+const letters = [‘A’,‘B’,‘C’,‘D’];
+return `
+
+  <div class="screen top">
+    <div class="nav">
+      <button class="btn btn-ghost sm" onclick="go('settings')">${t('back')}</button>
+      <span class="label">${t('question')} ${S.placementStep+1} ${t('of')} ${S.placementQ.length}</span>
+    </div>
+    <div class="wrap">
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div class="label green mb1">${t('placementTitle')}</div>
+      <h2 class="serif" style="font-size:1.3rem;font-weight:400;line-height:1.5;margin-bottom:1.5rem;">${q.text}</h2>
+      <div>
+        ${q.options.map((o,i)=>`
+          <button class="option" onclick="answerPlacement(${i})">
+            <span class="opt-key">${letters[i]}</span>${o}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// LESSON
+// ═══════════════════════════════════════════
+function lesson() {
+const c = getCourse();
+
+// 0 — generating
+if (S.lessonStep === 0) return ` <div class="screen"> <div class="wrap tc"> <div class="loader"> <div class="spin"></div> <div> <div class="label green mb1">${t('genLesson')} ${S.lessonIndex+1}</div> <p class="small muted">${t('genSub')}</p> </div> </div> </div> </div>`;
+
+const pct = ((S.lessonIndex) / S.lessonTotal) * 100;
+const d = S.lessonData;
+const letters = [‘A’,‘B’,‘C’,‘D’];
+
+// 1 — content
+if (S.lessonStep === 1) return ` <div class="screen top"> <div class="nav"> <button class="btn btn-ghost sm" onclick="go('catalog')">${t('backCourses')}</button> <span class="xp">◈ ${S.xp} XP</span> </div> <div class="wrap"> <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div> <div class="label green mb1">${cTitle(c)} · ${t('lessons')} ${S.lessonIndex+1}</div> <h2 class="title" style="margin:.3rem 0 1.5rem;">${d?.title||''}</h2> <div class="card" style="margin-bottom:1rem;"> <div class="lesson-body">${d?.body||''}</div> </div> <button class="btn btn-primary w" style="padding:1rem;" onclick="nextLessonStep(1)">${d?.caseStudy ? t('toCase') : t('toQuestion')}</button> </div> </div>`;
+
+// 2 — case study
+if (S.lessonStep === 2 && d?.caseStudy) return ` <div class="screen top"> <div class="nav"> <button class="btn btn-ghost sm" onclick="prevStep()">${t('back')}</button> <span class="xp">◈ ${S.xp} XP</span> </div> <div class="wrap"> <div class="prog-bar"><div class="prog-fill" style="width:${pct+10}%"></div></div> <div class="label green mb1">${t('caseTitle')}</div> <div class="card" style="margin-bottom:1rem;"> <div class="lesson-body"> <div class="case-box"> <span class="case-label">${t('caseTitle')}</span> ${d.caseStudy} </div> </div> </div> <button class="btn btn-primary w" style="padding:1rem;" onclick="nextLessonStep(2)">${t('toQuestion')}</button> </div> </div>`;
+
+// question step (3 or 2 if no case)
+if ((S.lessonStep === 3) || (S.lessonStep === 2 && !d?.caseStudy)) {
+const q = d?.question;
+return ` <div class="screen top"> <div class="nav"> <button class="btn btn-ghost sm" onclick="prevStep()">${t('backTheory')}</button> <span class="xp">◈ ${S.xp} XP</span> </div> <div class="wrap"> <div class="prog-bar"><div class="prog-fill" style="width:${pct+20}%"></div></div> <div class="label green mb1">${t('checkYourself')}</div> <h2 class="serif" style="font-size:1.2rem;font-weight:400;line-height:1.55;margin-bottom:1.5rem;">${q?.text||''}</h2> <div> ${(q?.options||[]).map((o,i)=>`
+<button class="option" onclick="answerLesson(${i})">
+<span class="opt-key">${letters[i]}</span>${o}
+</button>
+`).join('')} </div> </div> </div>`;
+}
+
+// feedback (step 4)
+if (S.lessonStep === 4) {
+const q = d?.question;
+const isOffline = !!S.offlineCache[S.selectedCourse];
+return `<div class="screen top"> <div class="nav"> <button class="btn btn-ghost sm" onclick="go('catalog')">${t('backCourses')}</button> <span class="xp">◈ ${S.xp} XP</span> </div> <div class="wrap"> <div style="margin-bottom:1rem;"> <div class="label ${S.lastCorrect?'green':''}" style="${!S.lastCorrect?'color:var(--red)':''}">${S.lastCorrect?t('correct'):t('wrong')}</div> <p class="serif muted mt1" style="font-size:.95rem;line-height:1.5;">${q?.text||''}</p> </div> <div style="margin-bottom:1rem;"> ${(q?.options||[]).map((o,i)=>{ let cls=''; if(i===q.correct) cls='correct'; else if(i===S.selectedAnswer&&i!==q.correct) cls='wrong'; return`<button class="option ${cls}" disabled><span class="opt-key">${letters[i]}</span>${o}</button>`;
+}).join(’’)}
+</div>
+
+```
+    <div class="ai-panel" id="ai-panel">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
+        <div style="display:flex;align-items:center;gap:.5rem;">
+          <div style="width:18px;height:18px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#fff;">◈</div>
+          <span class="label" style="color:#6db38a;">${t('aiTutor')}</span>
+        </div>
+        ${isOffline?`<span style="font-size:.65rem;color:#6db38a;"><span class="offline-dot"></span>${t('offlineSaved')}</span>`:''}
+      </div>
+      <div class="ai-body" id="ai-body"><div class="dots"><span></span><span></span><span></span></div></div>
+      ${S.user?.premium ? `
+        <div class="ai-row">
+          <input class="ai-input" id="ai-q" placeholder="${t('aiPh')}" onkeydown="if(event.key==='Enter')sendQ()" />
+          <button class="ai-send" onclick="sendQ()">→</button>
+        </div>
+      ` : `
+        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:.78rem;color:rgba(255,255,255,.35);">${t('premiumOnly')}</span>
+          <button class="btn btn-ghost sm" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-size:.72rem;" onclick="showPremiumPrompt()">${t('upgradeBtn')}</button>
+        </div>
+      `}
+    </div>
+
+    <button class="btn btn-primary w mt2" style="padding:1rem;" onclick="nextLesson()">
+      ${S.lessonIndex+1 < S.lessonTotal ? t('nextLesson') : t('finishCourse')}
+    </button>
+  </div>
+</div>`;
+```
+
+}
+
+return `<div class="screen"><p>...</p></div>`;
+}
+
+// ═══════════════════════════════════════════
+// RESULT
+// ═══════════════════════════════════════════
+function result() {
+const c = getCourse();
+return `
+
+  <div class="screen">
+    <div class="wrap tc">
+      <div style="font-size:2.5rem;color:var(--accent);margin-bottom:1rem;">◈</div>
+      <div class="label green">${t('courseComplete')}</div>
+      <h2 class="title" style="margin:.4rem 0 .25rem;">${cTitle(c)}</h2>
+      <p class="muted serif mt1">${t('wellDone')}, ${S.user?.name?.split(' ')[0]||''}!</p>
+      <div class="rule"></div>
+      <div class="stats" style="justify-content:center;">
+        <div><div class="stat-num">${S.xp}</div><div class="stat-lbl">XP</div></div>
+        <div><div class="stat-num">${S.lessonTotal}</div><div class="stat-lbl">${t('lessons')}</div></div>
+        <div><div class="stat-num">${S.level[0].toUpperCase()}</div><div class="stat-lbl">${t(S.level)}</div></div>
+      </div>
+      <button class="btn btn-primary w mt3" style="padding:1rem;" onclick="go('catalog')">${t('backCatalog')}</button>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// CREATE COURSE (Premium)
+// ═══════════════════════════════════════════
+function createCourse() {
+return `
+
+  <div class="screen top">
+    <div class="nav">
+      <button class="btn btn-ghost sm" onclick="go('catalog')">${t('back')}</button>
+      <span class="premium-badge">Premium</span>
+    </div>
+    <div class="wrap">
+      <div style="margin-bottom:1.75rem;">
+        <div class="label green">${t('createTitle')}</div>
+        <h2 class="title" style="margin-top:.3rem;">${t('createSub')}</h2>
+      </div>
+
+```
+  <div class="field">
+    <label>${t('courseName')}</label>
+    <input class="input" id="ctitle" placeholder="${t('courseNamePh')}" value="${S.customTitle}" oninput="S.customTitle=this.value" />
+  </div>
+  <div class="field">
+    <label>${t('courseDescLabel')}</label>
+    <textarea class="input" id="cdesc" placeholder="${t('courseDescPh')}" rows="3" style="resize:vertical;" oninput="S.customDesc=this.value">${S.customDesc}</textarea>
+  </div>
+
+  <div class="card">
+    <div class="label mb1">${t('difficulty')}</div>
+    <div class="pills mt1">
+      ${[['beginner',t('beginner')],['practitioner',t('practitioner')],['expert',t('expert')]].map(([id,label])=>
+        `<div class="pill ${S.level===id?'active':''}" onclick="set('level','${id}')">${label}</div>`
+      ).join('')}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label mb1">${t('lessonLen')}</div>
+    <div class="range-wrap">
+      <div class="range-row">
+        <span class="small muted">${S.duration<=15?t('short'):S.duration<=25?t('standard'):t('deep')}</span>
+        <span class="range-val">${S.duration} min</span>
+      </div>
+      <input type="range" min="10" max="60" step="5" value="${S.duration}" oninput="liveRange(this.value)" />
+    </div>
+  </div>
+
+  <button class="btn btn-accent w" style="padding:1rem;" onclick="doCreateCourse()">${t('generateCourse')}</button>
+</div>
+```
+
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════════
 function go(screen) { S.screen = screen; render(); }
 
+function setLang(l) { S.lang = l; render(); }
+
+function set(key, val) { S[key] = val; render(); }
+
+function liveRange(v) {
+S.duration = parseInt(v);
+const lbl = document.getElementById(‘dur-label’);
+const val = document.getElementById(‘dur-val’);
+if(lbl) lbl.textContent = S.duration<=15?t(‘short’):S.duration<=25?t(‘standard’):S.duration<=40?t(‘deep’):t(‘immersive’);
+if(val) val.textContent = v + ’ min’;
+}
+
 function quickLogin() {
-const name = prompt(‘Введи своё имя:’);
-if (!name) return;
-S.user = { name: name.trim(), email: ‘’, isPremium: false };
+const name = prompt(t(‘yourName’)) || ‘User’;
+S.user = { name, email:’’, premium: false };
 go(‘catalog’);
 }
 
 function doRegister() {
-const name = (document.getElementById(‘r-name’)?.value || ‘’).trim() || ‘Пользователь’;
-const email = (document.getElementById(‘r-email’)?.value || ‘’).trim();
-S.user = { name, email, isPremium: false };
+const name = document.getElementById(‘rname’).value.trim() || ‘User’;
+const email = document.getElementById(‘remail’).value.trim();
+S.user = { name, email, premium: false };
 go(‘catalog’);
 }
 
 function selectCourse(id) {
-S.courseId = id;
-go(‘course’);
+S.selectedCourse = id;
+S.completedModules = [];
+S.moduleIndex = 0;
+go(‘courseDetail’);
 }
 
-function liveRange(v) {
-S.duration = +v;
-const lbl = v<=15?‘Быстро’:v<=25?‘Стандартно’:v<=40?‘Углублённо’:‘Полное погружение’;
-const el = document.getElementById(‘dur-label’);
-const ev = document.getElementById(‘dur-val’);
-if (el) el.textContent = lbl;
-if (ev) ev.textContent = v + ’ мин’;
+function togglePremium() {
+// demo toggle
+S.user.premium = !S.user.premium;
+alert(S.user.premium ? ‘Premium включён (демо)’ : ‘Premium отключён (демо)’);
+render();
 }
 
-function lvlLabel() {
-return {beginner:‘Новичок’,practitioner:‘Практик’,expert:‘Эксперт’}[S.level];
-}
-
-function goalText() {
-return {interest:‘из интереса’,career:‘для карьеры’,work:‘для работы’}[S.goal];
-}
-
-function activatePremium() {
-if (confirm(‘Активировать Premium-режим (демо)?’)) {
-if (!S.user) S.user = { name:‘Пользователь’, email:’’, isPremium:false };
-S.user.isPremium = true;
+function showPremiumPrompt() {
+if(confirm(‘Premium открывает: все курсы, офлайн, AI-вопросы, создание курсов.\n\nВключить Premium (демо)?’)) {
+S.user.premium = true;
 render();
 }
 }
 
-function showPremium() {
-alert(‘Этот курс доступен в Premium. Нажмите «Попробовать Premium» внизу страницы.’);
-}
-
-/* ═══════════════════════════════════════════════════════
-PLACEMENT
-═══════════════════════════════════════════════════════ */
+// ── PLACEMENT ──
 async function startPlacement() {
-S.placementQs = [];
+S.placementQ = [];
 S.placementStep = 0;
 S.placementScore = 0;
 go(‘placement’);
 
-const c = getCourse(S.courseId);
-const langNote = S.courseLang !== ‘ru’ ? ’Questions in ’ + S.courseLang + ‘.’ : ‘Вопросы на русском языке.’;
-
-const prompt = `Составь тест для определения уровня знаний по теме: "${c?.title}". Ровно 4 вопроса с возрастающей сложностью. ${langNote} Верни ТОЛЬКО валидный JSON массив без markdown: [{"text":"...","options":["...","...","...","..."],"correct":0}] correct — индекс правильного ответа (0–3). Дистракторы должны быть правдоподобными.`;
+const c = getCourse();
+const langNote = S.lang === ‘ru’ ? ‘Все вопросы на русском языке.’ : ‘All questions in English.’;
+const prompt = `Create a placement test (4 questions, increasing difficulty) for the course: "${cTitle(c)}". ${langNote} Return ONLY valid JSON array, no markdown: [{"text":"Question text","options":["A","B","C","D"],"correct":0}] Rules: correct is index 0-3, plausible distractors, questions 1-2 basic level, questions 3-4 advanced.`;
 
 try {
-const r = await callAI(prompt);
-S.placementQs = JSON.parse(r.replace(/`{3}json|`{3}/g,’’).trim());
-} catch {
+const r = await callAI(prompt, 800);
+S.placementQ = JSON.parse(r.replace(/`json|`/g,’’).trim());
+} catch(e) {
 skipPlacement();
 return;
 }
@@ -1306,91 +1234,107 @@ render();
 }
 
 function answerPlacement(idx) {
-if (S.placementQs[S.placementStep].correct === idx) S.placementScore++;
+if(idx === S.placementQ[S.placementStep].correct) S.placementScore++;
 S.placementStep++;
-if (S.placementStep >= S.placementQs.length) {
-const ratio = S.placementScore / S.placementQs.length;
-S.level = ratio <= 0.3 ? ‘beginner’ : ratio <= 0.7 ? ‘practitioner’ : ‘expert’;
+if(S.placementStep >= S.placementQ.length) {
+const s = S.placementScore, total = S.placementQ.length;
+S.level = s <= Math.floor(total*.3) ? ‘beginner’ : s <= Math.floor(total*.7) ? ‘practitioner’ : ‘expert’;
 beginCourse();
 } else render();
 }
 
 function skipPlacement() { beginCourse(); }
 
-/* ═══════════════════════════════════════════════════════
-COURSE ENGINE
-═══════════════════════════════════════════════════════ */
+// ── LESSON ENGINE ──
 function beginCourse() {
-const c = getCourse(S.courseId);
-if (!S.enrolledCourses[S.courseId]) {
-S.enrolledCourses[S.courseId] = { completedLessons: [], generatedLessons: {} };
-}
-const enrolled = S.enrolledCourses[S.courseId];
-// Find next uncompleted lesson
-const nextLesson = enrolled.completedLessons.length < c.lessons
-? enrolled.completedLessons.length : 0;
-S.lessonIdx = nextLesson;
+const c = getCourse();
+S.lessonIndex = 0;
 S.lessonTotal = c.lessons;
 S.lessonStep = 0;
 S.lessonData = null;
-S.aiMessages = [];
+S.completedModules = [];
 go(‘lesson’);
 generateLesson();
 }
 
 async function generateLesson() {
-const c = getCourse(S.courseId);
-const enrolled = S.enrolledCourses[S.courseId];
+const c = getCourse();
+const modules = cModules(c);
+const modIdx = Math.min(Math.floor(S.lessonIndex / Math.ceil(S.lessonTotal / modules.length)), modules.length-1);
+const modName = modules[modIdx];
+const levelMap = { beginner: S.lang===‘ru’?‘новичок без специальных знаний’:‘beginner with no prior knowledge’, practitioner: S.lang===‘ru’?‘человек с базовыми знаниями’:‘someone with basic knowledge’, expert: S.lang===‘ru’?‘опытный специалист’:‘experienced specialist’ };
+const goalMap  = { interest: S.lang===‘ru’?‘из интереса’:‘out of curiosity’, career: S.lang===‘ru’?‘для карьеры’:‘for career growth’, work: S.lang===‘ru’?‘для работы’:‘for work’ };
+const langNote = S.lang === ‘ru’ ? ‘Весь текст на русском языке.’ : ‘All text in English.’;
 
-// Check cache (offline support)
-if (enrolled?.generatedLessons?.[S.lessonIdx]) {
-S.lessonData = enrolled.generatedLessons[S.lessonIdx];
+// Check offline cache
+const cacheKey = `${S.selectedCourse}_${S.lessonIndex}_${S.level}`;
+if(S.offlineCache[cacheKey]) {
+S.lessonData = S.offlineCache[cacheKey];
 S.lessonStep = 1;
 render();
 return;
 }
 
-const moduleIdx = Math.floor(S.lessonIdx / Math.ceil(S.lessonTotal / c.modules.length));
-const moduleName = c.modules[Math.min(moduleIdx, c.modules.length-1)];
-const langInstr = S.courseLang===‘ru’ ? ‘Весь контент на русском языке.’ : ’All content in ’ + S.courseLang + ‘.’;
+const prompt = `You are an expert educator. Create lesson ${S.lessonIndex+1} for course “${cTitle(c)}”, module “${modName}”.
 
-const prompt = `Ты AI-преподаватель. Создай урок ${S.lessonIdx+1} из ${S.lessonTotal} для курса “${c.title}”, модуль “${moduleName}”.
+User level: ${levelMap[S.level]}
+Goal: ${goalMap[S.goal]}
+Lesson length: ~${S.duration} minutes reading time
+${langNote}
 
-Параметры:
-
-- Уровень: ${lvlLabel()}
-- Цель: ${goalText()}
-- Длина чтения: ~${S.duration} минут
-  ${langInstr}
-
-Верни ТОЛЬКО валидный JSON без markdown:
+Return ONLY valid JSON (no markdown):
 {
-“title”: “Название урока”,
-“body”: “HTML-контент”,
-“question”: {“text”:”…”,“options”:[”…”,”…”,”…”,”…”],“correct”:0,“explanation”:”…”},
-“keypoints”: [“тезис 1”,“тезис 2”,“тезис 3”]
+“title”: “Specific engaging lesson title”,
+“body”: “HTML lesson content”,
+“caseStudy”: “HTML case study (optional, null if not needed)”,
+“question”: {
+“text”: “Comprehension question”,
+“options”: [“A”,“B”,“C”,“D”],
+“correct”: 0,
+“explanation”: “2-3 sentence explanation”
+}
 }
 
-HTML теги для body: <p>, <h3>, <em class="hl">, <div class="example">, <code class="formula">
-Примеры реальные, конкретные, с цифрами.
-keypoints — 3 ключевых вывода урока одной фразой каждый.`;
+Body HTML rules:
 
-try {
-const raw = await callAI(prompt, 1800);
-const data = JSON.parse(raw.replace(/`{3}json|`{3}/g,’’).trim());
-S.lessonData = data;
-// Cache for offline
-if (enrolled) enrolled.generatedLessons[S.lessonIdx] = data;
-S.lessonStep = 1;
-} catch(e) {
-S.lessonData = {
-title: ‘Ошибка загрузки’,
-body: ‘<p>Не удалось загрузить урок. Проверьте соединение с интернетом.</p>’,
-question: { text:‘Тест недоступен’, options:[’—’,’—’,’—’,’—’], correct:0, explanation:’’ },
-keypoints: []
-};
-S.lessonStep = 1;
+- Use tags: p, h3, span class=hl, div class=example, code class=formula, div class=case-box with span class=case-label inside
+- Depth matches ${S.duration} minutes
+- Real examples with specific numbers
+- Level: ${levelMap[S.level]}
+- engaging, conversational tone — not textbook dry
+- For caseStudy: practical scenario applying the lesson concepts (or null)`;
+  
+  try {
+  const r = await callAI(prompt, 1000);
+  const parsed = JSON.parse(r.replace(/`json|`/g,’’).trim());
+  S.lessonData = parsed;
+  S.offlineCache[cacheKey] = parsed; // cache for offline
+  S.lessonStep = 1;
+  } catch(e) {
+  S.lessonData = {
+  title: ‘Error loading lesson’,
+  body: ‘<p>Could not load lesson. Please check your connection.</p>’,
+  caseStudy: null,
+  question: { text:‘Error’, options:[’—’,’—’,’—’,’—’], correct:0, explanation:’—’ }
+  };
+  S.lessonStep = 1;
+  }
+  render();
+  }
+
+function nextLessonStep(from) {
+const d = S.lessonData;
+if(from === 1) {
+// from content: go to case if exists, else question
+S.lessonStep = d?.caseStudy ? 2 : 3;
+} else if(from === 2) {
+S.lessonStep = 3;
 }
+render();
+}
+
+function prevStep() {
+if(S.lessonStep > 1) S.lessonStep–;
 render();
 }
 
@@ -1398,133 +1342,108 @@ function answerLesson(idx) {
 S.selectedAnswer = idx;
 S.lastCorrect = idx === S.lessonData?.question?.correct;
 S.xp += S.lastCorrect ? 30 : 10;
-// Update streak
-const today = new Date().toDateString();
-if (S.lastStudyDate !== today) {
-S.streak = (S.lastStudyDate === new Date(Date.now()-86400000).toDateString()) ? S.streak+1 : 1;
-S.lastStudyDate = today;
-}
-S.lessonStep = 3;
+S.lessonStep = 4;
 render();
 setTimeout(loadAIFeedback, 80);
 }
 
 async function loadAIFeedback() {
 const q = S.lessonData?.question;
-const keys = [‘A’,‘B’,‘C’,‘D’];
-const prompt = `AI-репетитор. Ответь 2-3 предложениями, без markdown. Вопрос: "${q?.text}" Правильный: ${keys[q?.correct]}. ${q?.options?.[q?.correct]} Ответ пользователя: ${keys[S.selectedAnswer]}. ${q?.options?.[S.selectedAnswer]} Результат: ${S.lastCorrect?'ВЕРНО':'НЕВЕРНО'} Объяснение: "${q?.explanation}" Уровень: ${lvlLabel()} ${S.lastCorrect?'Подтверди + одна интересная деталь.':'Объясни ошибку, supportive тон.'}`;
+if(!q) return;
+const letters = [‘A’,‘B’,‘C’,‘D’];
+const langNote = S.lang === ‘ru’ ? ‘Отвечай на русском языке.’ : ‘Reply in English.’;
+const prompt = `You are an AI tutor. ${langNote} Reply in 2-3 sentences, no markdown. Question: "${q.text}" Correct answer: ${letters[q.correct]}. ${q.options[q.correct]} User chose: ${letters[S.selectedAnswer]}. ${q.options[S.selectedAnswer]} Result: ${S.lastCorrect ? 'CORRECT' : 'WRONG'} Official explanation: "${q.explanation}" User level: ${S.level} ${S.lastCorrect ? 'Confirm and add one interesting nuance.' : 'Explain the mistake supportively. Why is the correct answer right?'}`;
 
 try {
-const text = await callAI(prompt);
-S.aiMessages = [{role:‘assistant’,content:text}];
+const r = await callAI(prompt, 400);
 const el = document.getElementById(‘ai-body’);
-if (el) el.innerHTML = text;
-} catch {
+if(el) el.innerHTML = r;
+S.aiMessages = [{role:‘assistant’,content:r}];
+} catch(e) {
 const el = document.getElementById(‘ai-body’);
-if (el) el.innerHTML = q?.explanation || ‘Объяснение недоступно.’;
+if(el) el.innerHTML = q.explanation;
 }
 }
 
-async function sendAI() {
+async function sendQ() {
 const input = document.getElementById(‘ai-q’);
-if (!input?.value.trim()) return;
-const q = input.value.trim();
+if(!input?.value.trim()) return;
+const question = input.value.trim();
 input.value = ‘’;
-S.aiMessages.push({role:‘user’,content:q});
+S.aiMessages.push({role:‘user’,content:question});
 
 const bodyEl = document.getElementById(‘ai-body’);
-if (bodyEl) bodyEl.innerHTML += `<br><br><span style="color:rgba(255,255,255,.5);font-size:0.82rem;">Ты:</span> ${q}<br><div class="dots mt-xs"><span></span><span></span><span></span></div>`;
+if(bodyEl) bodyEl.innerHTML += `<br><br><span style="color:#6db38a;font-size:.82rem;">${S.lang==='ru'?'Вы':'You'}:</span> ${question}<br><div class="dots" style="margin-top:.4rem"><span></span><span></span><span></span></div>`;
 
-const c = getCourse(S.courseId);
+const langNote = S.lang === ‘ru’ ? ‘Отвечай на русском.’ : ‘Reply in English.’;
+const system = `AI tutor for "${cTitle(getCourse())}". Level: ${S.level}. ${langNote} 2-3 sentences, no markdown.`;
+
 try {
-const text = await callAI(q, 800, [
-{role:‘user’, content:‘Курс: “’ + (c && c.title) + ‘”, урок: “’ + (S.lessonData && S.lessonData.title) + ‘”. Уровень: ’ + lvlLabel() + ‘.’},
-…S.aiMessages.slice(0,-1)
-]);
-S.aiMessages.push({role:‘assistant’,content:text});
-if (bodyEl) {
-const dots = bodyEl.querySelector(’.dots’);
-if (dots) dots.remove();
-bodyEl.innerHTML += `<br><span style="color:rgba(255,255,255,.6);font-size:0.82rem;">AI:</span> ${text}`;
+const r = await callAI(question, 400, system, S.aiMessages.slice(0,-1));
+S.aiMessages.push({role:‘assistant’,content:r});
+if(bodyEl) {
+const d = bodyEl.querySelector(’.dots’);
+if(d) d.remove();
+bodyEl.innerHTML += `<br><span style="color:#a8d5be;font-size:.82rem;">AI:</span> ${r}`;
 }
-} catch {
-if (bodyEl) {
-const dots = bodyEl.querySelector(’.dots’);
-if (dots) dots.innerHTML = ‘Ошибка соединения.’;
-}
+} catch(e) {
+if(bodyEl) { const d=bodyEl.querySelector(’.dots’); if(d) d.innerHTML=‘Connection error.’; }
 }
 }
 
 function nextLesson() {
-const enrolled = S.enrolledCourses[S.courseId];
-if (enrolled && !enrolled.completedLessons.includes(S.lessonIdx)) {
-enrolled.completedLessons.push(S.lessonIdx);
-}
-S.lessonIdx++;
-if (S.lessonIdx >= S.lessonTotal) {
-go(‘result’);
-return;
-}
+const c = getCourse();
+const modules = cModules(c);
+const newModIdx = Math.min(Math.floor(S.lessonIndex / Math.ceil(S.lessonTotal / modules.length)), modules.length-1);
+if(!S.completedModules.includes(newModIdx)) S.completedModules.push(newModIdx);
+
+S.lessonIndex++;
+if(S.lessonIndex >= S.lessonTotal) { go(‘result’); return; }
+
 S.lessonStep = 0;
 S.lessonData = null;
 S.aiMessages = [];
-go(‘lesson’);
+render();
 generateLesson();
 }
 
-/* ═══════════════════════════════════════════════════════
-CREATE CUSTOM COURSE
-═══════════════════════════════════════════════════════ */
-async function createCourse() {
-const title = document.getElementById(‘nc-title’)?.value.trim();
-const desc = document.getElementById(‘nc-desc’)?.value.trim();
-if (!title) { alert(‘Введи название курса’); return; }
+// ── CUSTOM COURSE ──
+async function doCreateCourse() {
+const title = document.getElementById(‘ctitle’)?.value.trim();
+if(!title) { alert(S.lang===‘ru’?‘Введите название курса’:‘Please enter a course title’); return; }
 
-S.newCourseTitle = title;
-S.newCourseDesc = desc;
-
-const lessonCount = S.lessonTotal || 6;
-const prompt = `Создай структуру курса на тему: "${title}". ${desc ? 'Контекст: ' + desc : ''} Уровень: ${lvlLabel()}. Количество уроков: ${lessonCount}. Верни ТОЛЬКО валидный JSON без markdown: { "id": "custom_${Date.now()}", "icon": "📖", "tag": "Мой курс", "title": "${title}", "desc": "краткое описание курса 1 предложение", "modules": ["Модуль 1","Модуль 2","Модуль 3"], "lessons": ${lessonCount}, "free": true }`;
-
-try {
-const raw = await callAI(prompt);
-const meta = JSON.parse(raw.replace(/`{3}json|`{3}/g,’’).trim());
-meta.isCustom = true;
-
-```
-// Add to catalog in state
-CATALOG.push(meta);
-S.enrolledCourses[meta.id] = { completedLessons:[], generatedLessons:{}, _meta: meta };
-S.courseId = meta.id;
-go('course');
-```
-
-} catch(e) {
-alert(‘Не удалось создать курс. Попробуйте ещё раз.’);
-}
+const desc = document.getElementById(‘cdesc’)?.value.trim() || ‘’;
+const customCourse = {
+id: ‘custom_’ + Date.now(),
+emoji: ‘◇’, tag: ‘Custom’,
+title: { ru: title, en: title },
+desc:  { ru: desc||title, en: desc||title },
+modules: { ru: [‘Модуль 1’,‘Модуль 2’,‘Модуль 3’], en: [‘Module 1’,‘Module 2’,‘Module 3’] },
+lessons: 6, hours: ‘2–4’, locked: false, premium: true,
+};
+COURSES.push(customCourse);
+S.selectedCourse = customCourse.id;
+S.completedModules = [];
+go(‘settings’);
 }
 
-/* ═══════════════════════════════════════════════════════
-AI HELPER
-═══════════════════════════════════════════════════════ */
-async function callAI(prompt, maxTokens=1000, extraMessages=[]) {
-const messages = […extraMessages, {role:‘user’,content:prompt}];
-const resp = await fetch(“https://api.anthropic.com/v1/messages”, {
-method:“POST”,
-headers:{“Content-Type”:“application/json”},
-body:JSON.stringify({
-model:“claude-sonnet-4-20250514”,
-max_tokens: maxTokens,
-messages
-})
+// ── AI HELPER ──
+async function callAI(prompt, maxTokens=1000, system=null, history=[]) {
+const messages = […history.map(m=>({role:m.role,content:m.content})), {role:‘user’,content:prompt}];
+const body = { model:‘claude-sonnet-4-20250514’, max_tokens:maxTokens, messages };
+if(system) body.system = system;
+const r = await fetch(‘https://api.anthropic.com/v1/messages’, {
+method:‘POST’,
+headers:{‘Content-Type’:‘application/json’},
+body:JSON.stringify(body)
 });
-const data = await resp.json();
-return data.content?.[0]?.text || ‘’;
+const data = await r.json();
+return data.content?.map(b=>b.type===‘text’?b.text:’’).join(’’) || ‘’;
 }
 
-/* ═══════════════════════════════════════════════════════
-INIT
-═══════════════════════════════════════════════════════ */
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
 render();
 </script>
 
